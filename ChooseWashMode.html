@@ -15,19 +15,57 @@
     </head>
 <body>
     <h2>選擇洗衣模式</h2>
-    <div class="w3-row-padding w3-section">
+
+      <div class="w3-row-padding w3-section">
+        <form method="post" action="">
         <div class="w3-half">
           <div class="w3-card">
             <img src="img_london.jpg" alt="London" style="width:100%">
             <div class="w3-container">
-              <form method="post">
-                <p>London is the capital city of England.</p>
-                <p>It is the most populous city in the United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
-              </form>
+              <p>London is the capital city of England.</p>
+                <input type="" name="SendWay" value="7-11取貨" />7-11取貨&nbsp;
+                <input type="radio" name="SendWay" value="全家取貨" />全家取貨&nbsp;
+                <input type="radio" name="SendWay" value="宅配到府" checked />宅配到府
+              <!-- 洗衣模式:洗滌 -->
+              <select name="SendTo_Way">
+                  <option value="" disabled>請選擇洗滌模式</option>
+                  <option value="SentTo_Panda">外送</option>
+                  <option value="SentTo_Cabinet" selected>集中櫃</option>
+                  <option value="SentTo_Self">自送</option>
+              </select>
+              <!-- 洗衣模式:脫水 -->
+              <select name="SendTo_Way">
+                <option value="" disabled>請選擇洗滌模式</option>
+                <option value="SentTo_Panda">外送</option>
+                <option value="SentTo_Cabinet" selected>集中櫃</option>
+                <option value="SentTo_Self">自送</option>
+              </select>
+              <!-- 洗衣模式:乾燥 -->
+              <select name="SendTo_Way">
+                <option value="" disabled>請選擇洗滌模式</option>
+                <option value="SentTo_Panda">外送</option>
+                <option value="SentTo_Cabinet" selected>集中櫃</option>
+                <option value="SentTo_Self">自送</option>
+              </select>
+              <!-- 洗衣模式:折衣 -->
+              <select name="SendTo_Way">
+                <option value="" disabled>請選擇洗滌模式</option>
+                <option value="SentTo_Panda">外送</option>
+                <option value="SentTo_Cabinet" selected>集中櫃</option>
+                <option value="SentTo_Self">自送</option>
+              </select>
+<!-- 送洗方式 -->
+                <select name="SendTo_Way">
+                  <option value="" disabled>請選擇送洗方式</option>
+                  <option value="SentTo_Panda">外送</option>
+                  <option value="SentTo_Cabinet" selected>集中櫃</option>
+                  <option value="SentTo_Self">自送</option>
+                </select>
+              <p>It is the most populous city in the United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
             </div>
           </div>
         </div>
-        
+        </form>
         <div class="w3-half">
           <div class="w3-card">
             <img src="img_london.jpg" alt="London" style="width:100%">
