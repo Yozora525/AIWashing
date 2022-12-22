@@ -16,29 +16,6 @@
   <script src="static/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
   <title>選擇模式</title>
-  <script>
-    $(function () {
-      //全部選擇隱藏
-      $('div[id^="tab1_"]').hide();
-      $('#slt1').change(function () {
-        let sltValue = $(this).val();
-        console.log(sltValue);
-
-        $('div[id^="tab1_"]').hide();
-        //指定選擇顯示
-        $(sltValue).show();
-      });
-      $('div[id^="tab2_"]').hide();
-      $('#slt2').change(function () {
-        let sltValue = $(this).val();
-        console.log(sltValue);
-
-        $('div[id^="tab2_"]').hide();
-        //指定選擇顯示
-        $(sltValue).show();
-      });
-    });
-  </script>
 </head>
 
 <body>
@@ -88,9 +65,12 @@
         <p>脫水模式: 弱脫水</p>
         <p>乾燥模式: 電熱烘乾</p>
         <p>折衣模式: 機器人</p>
+        <p>送洗方式: 集中櫃</p>
+        <p>領取方式: 外送</p>
         <p>衣物重量: 0.8kg</p>
         <p>下單時間: 2022-12-30 00:00:01</p>
         <h5><b>洗衣總額: NT$ 974</b></h5>
+        <!-- 等待時間00:00時 自動出現下一步按紐 -->
         <p><input type="submit" value="下一步" class="" onclick="" /></p>
     </div>
   </main>
