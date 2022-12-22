@@ -53,11 +53,11 @@
         <form method="post" action="">
         <p>預計還需等待</p>
         <!-- 剩下的時間 -->
-        <h1 class="text-success display-1 ">10:59 在路上</h1>
+        <h1 class="text-success display-1 ">00:00 已完成!</h1>
         <br>
         <!-- 進度條 -->
         <div class="progress" style="height: 2px;">
-            <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <h5><b>訂單詳情</b></h5>
         <p>訂單編號: O202212110874</p>
@@ -66,9 +66,17 @@
         <p>脫水模式: 弱脫水</p>
         <p>乾燥模式: 電熱烘乾</p>
         <p>折衣模式: 機器人</p>
-        <p>送洗方式: 集中櫃</p>
-        <p>領取方式: 外送</p>
+        <p>送洗方式: 自送</p>
+        <p>領取方式: 自取</p>
         <p>衣物重量: 0.8kg</p>
+
+        <p>碳排放: 55g</p>
+        <p>碳點: 80</p>
+        <!-- <input type="hidden" name="age" value="50">碳稅: 80 -->
+        <p id="tax" style="display:none">碳稅: 80</p>
+        <p>隨機碼: 0000</p>
+        <p>公司名: AI智慧喜</p>
+
         <p>下單時間: 2022-12-30 00:00:01</p>
         <h5><b>洗衣總額: NT$ 974</b></h5>
         <!-- 等待時間00:00時 自動出現下一步按紐 -->
