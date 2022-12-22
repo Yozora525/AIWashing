@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!-- <?php
+    require_once('connect.php');
+?> -->
+
+<html lang="en">
+
+<head>
+  <!-- <?php include('templates/frame/head.html') ?> -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/css/all.css">
+  <link rel="stylesheet" href="static/css/header.css" />
+  <link href="static/css/bootstrap.min.css" rel="stylesheet">
+  <script src="static/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <title>選擇模式</title>
+  <script>
+    $(function () {
+      //全部選擇隱藏
+      $('div[id^="tab1_"]').hide();
+      $('#slt1').change(function () {
+        let sltValue = $(this).val();
+        console.log(sltValue);
+
+        $('div[id^="tab1_"]').hide();
+        //指定選擇顯示
+        $(sltValue).show();
+      });
+      $('div[id^="tab2_"]').hide();
+      $('#slt2').change(function () {
+        let sltValue = $(this).val();
+        console.log(sltValue);
+
+        $('div[id^="tab2_"]').hide();
+        //指定選擇顯示
+        $(sltValue).show();
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-default bg-amos" role="navigation">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="">
+          <img src="img/washing-machine.png" width="50" alt="AI智慧喜" class="d-inline-block align-text-top"
+            id="logo-img"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+          data-target-sidebar=".side-collapse-right">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!--頁面選單-->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+            <li class="nav-item">
+              <a class="nav-link" href="">首頁</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">智慧洗</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">訂單管理</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+        <p>預計還需等待</p>
+        <!-- 剩下的時間 -->
+        <h1 class="text-success display-1 ">10:59</h1>
+        <br>
+        <!-- 進度條 -->
+        <div class="progress" style="height: 2px;">
+            <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <h5><b>訂單詳情</b></h5>
+        <p>訂單編號: O202212110874</p>
+        <p>洗衣門市: 中原門市</p>
+        <p>洗滌模式: 冷</p>
+        <p>脫水模式: 弱脫水</p>
+        <p>乾燥模式: 電熱烘乾</p>
+        <p>折衣模式: 機器人</p>
+        <p>衣物重量: 0.8kg</p>
+        <p>下單時間: 2022-12-30 00:00:01</p>
+        <h5><b>洗衣總額: NT$ 974</b></h5>
+        <p><input type="submit" value="下一步" class="" onclick="" /></p>
+    </div>
+  </main>
+  <footer></footer>
+</body>
+
+</html>
