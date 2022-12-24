@@ -13,7 +13,7 @@ body, h1, h2, h3, h4, h5, h6  {
 .img_border{
     overflow: hidden;
     /* border: .5rem solid #fafafa;  */
-    border: .5rem solid #bed0be; 
+    border: .4rem solid #bed0be; 
     /* 換頭像框的顏色從上面變 */
     background-color: #fafafa;
     box-shadow: 0 0 .5rem #babbbc;
