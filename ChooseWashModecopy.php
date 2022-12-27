@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<!-- <?php
-    require_once('connect.php');
-?> -->
+
 
 <html lang="en">
 
@@ -18,10 +16,10 @@
   <title>選擇模式</title>
   <script>
     // 選擇領送/回時，啟用js
-    $(function () {
+    $(function() {
       //全部選擇隱藏
       $('div[id^="tab1_"]').hide();
-      $('#slt1').change(function () {
+      $('#slt1').change(function() {
         let sltValue = $(this).val();
         console.log(sltValue);
 
@@ -30,7 +28,7 @@
         $(sltValue).show();
       });
       $('div[id^="tab2_"]').hide();
-      $('#slt2').change(function () {
+      $('#slt2').change(function() {
         let sltValue = $(this).val();
         console.log(sltValue);
 
@@ -40,6 +38,30 @@
       });
     });
   </script>
+  <?php
+  $WashMode_ = array(
+    "WashMode_Cold" => "冷水",
+    "WashMode_Hot" => "熱水",
+    "WashMode_Power" => "強力"
+  );
+  $DehydrationMode_ = array(
+    "DehydrationMode_Power" => "強脫水",
+    "DehydrationMode_Median" => "中脫水",
+    "DehydrationMode_Small" => "弱脫水",
+    "DehydrationMode_Not" => "不脫水"
+  );
+  $DryMode_ = array(
+    "DryMode_Electric" => "電熱烘乾",
+        "DryMode_Power" => "急速烘乾",
+    "DryMode_Sun" => "日曬"
+  );
+
+  $FoldMode_Way = array(
+    "FoldMode_Robot" => "機器人",
+    "FoldMode_Hand" => "手工",
+    "FoldMode_Not" => "不折"
+  );
+  ?>
 </head>
 
 <body>
@@ -47,11 +69,8 @@
     <nav class="navbar navbar-expand-lg navbar-default bg-amos" role="navigation">
       <div class="container-fluid">
         <a class="navbar-brand" href="">
-          <img src="img/washing-machine.png" width="50" alt="AI智慧喜" class="d-inline-block align-text-top"
-            id="logo-img"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-          data-target-sidebar=".side-collapse-right">
+          <img src="img/washing-machine.png" width="50" alt="AI智慧喜" class="d-inline-block align-text-top" id="logo-img"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" data-target-sidebar=".side-collapse-right">
           <span class="navbar-toggler-icon"></span>
         </button>
         <!--頁面選單-->
@@ -71,49 +90,43 @@
       </div>
     </nav>
   </header>
-
   <main>
     <div class="container">
       <h2>選擇洗衣模式</h2>
+      <form method="post" action="SendToWash_Cabinetcopy.php">
 
-      <form method="post" action="result.php">
         <!-- 洗衣模式:洗滌 -->
-        <p>洗滌模式:
-          <select name="WashMode_" id="WashMode">
-            <option value="" disabled>請選擇洗滌模式</option>
-            <option value="WashMode_Hot">熱水</option>
-            <option value="WashMode_Cold" selected>冷水</option>
-            <option value="WashMode_Power">強力</option>
-          </select>
-        </p>
+        <label for="Wash">洗滌模式：</label>
+        <select name="WashMode_" id="Wash">
+          <?php foreach ($WashMode_ as $Wash_english => $Wash_chinese) : ?>
+            <option value="<?= $Wash_chinese ?>"><?= $Wash_chinese ?></option>
+          <?php endforeach; ?>
+        </select><br><br>
+
         <!-- 洗衣模式:脫水 -->
-        <p>脫水模式:
-          <select name="DehydrationMode_">
-            <option value="" disabled>請選擇脫水模式</option>
-            <option value="DehydrationMode_Not">不脫水</option>
-            <option value="DehydrationMode_Power" selected>強脫水</option>
-            <option value="DehydrationMode_Median">中脫水</option>
-            <option value="DehydrationMode_Small">弱脫水</option>
-          </select>
-        </p>
+        <label for="Dehydration">脫水模式：</label>
+        <select name="DehydrationMode_" id="Dehydration">
+          <?php foreach ($DehydrationMode_ as $Dehydration_english => $Dehydration_chinese) : ?>
+            <option value="<?= $Dehydration_chinese ?>"><?= $Dehydration_chinese ?></option>
+          <?php endforeach; ?>
+        </select><br><br>
+
         <!-- 洗衣模式:乾燥 -->
-        <p>乾燥模式:
-          <select name="DryMode_">
-            <option value="" disabled>請選擇乾燥模式</option>
-            <option value="DryMode_Sun">日曬</option>
-            <option value="DryMode_Electric" selected>電熱烘乾</option>
-            <option value="DryMode_Power">急速烘乾</option>
-          </select>
-        </p>
+        <label for="Dry">乾燥模式：</label>
+        <select name="DryMode_" id="Dry">
+          <?php foreach ($DryMode_ as $Dry_english => $Dry_chinese) : ?>
+            <option value="<?= $Dry_chinese ?>"><?= $Dry_chinese ?></option>
+          <?php endforeach; ?>
+        </select><br><br>
+
         <!-- 洗衣模式:折衣 -->
-        <p>折衣模式:
-          <select name="FoldMode_Way">
-            <option value="" disabled>請選擇折衣模式</option>
-            <option value="FoldMode_Not">不折</option>
-            <option value="FoldMode_Robot" selected>機器人</option>
-            <option value="FoldMode_Hand">手工</option>
-          </select>
-        </p>
+        <label for="Fold">折衣模式：</label>
+        <select name="FoldMode_Way" id="Fold">
+          <?php foreach ($FoldMode_Way as $Fold_english => $Fold_chinese) : ?>
+            <option value="<?= $Fold_chinese ?>"><?= $Fold_chinese ?></option>
+          <?php endforeach; ?>
+        </select><br><br>
+
 
         <h2>選擇送/領方式</h2>
 
@@ -160,24 +173,24 @@
               <option value="" disabled>請選擇門市</option>
               <option value="">桃園門市</option>
               <option value="">光壢門市</option>
-              <option value="" >大中原門市</option>
-              <option value="" >統上門市</option>
-              <option value="" >北原門市</option>
+              <option value="">大中原門市</option>
+              <option value="">統上門市</option>
+              <option value="">北原門市</option>
             </select>
           </p>
         </div>
 
         <div class="A-6" id="tab2_3">
           <p>自取門市:
-          <select max-length="10">
-            <option value="" disabled>請選擇門市</option>
-            <option value="">桃園門市</option>
-            <option value="">光壢門市</option>
-            <option value="" >大中原門市</option>
-            <option value="" >統上門市</option>
-            <option value="" >北原門市</option>
-          </select>
-        </p>
+            <select max-length="10">
+              <option value="" disabled>請選擇門市</option>
+              <option value="">桃園門市</option>
+              <option value="">光壢門市</option>
+              <option value="">大中原門市</option>
+              <option value="">統上門市</option>
+              <option value="">北原門市</option>
+            </select>
+          </p>
         </div>
 
         <h2>選擇付款卡</h2>
@@ -187,7 +200,7 @@
             <option value="" disabled>請選擇付款卡片</option>
             <option value="">184487185030836</option>
             <option value="">929197863610113</option>
-            <option value="" >3551698980587396</option>
+            <option value="">3551698980587396</option>
           </select>
         </p>
 
