@@ -48,7 +48,7 @@
 </header>
     <script>
         $.ajax({
-        url:"testGetAjax.php",
+        url:"src/testGetAjax.php",
         type: "POST",
         async:true,
         dataType: "json",
