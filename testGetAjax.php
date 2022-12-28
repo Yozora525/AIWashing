@@ -1,8 +1,8 @@
 <?php
     header("Content-type: text/html; charset=UTF-8");
-
+    // http://www.tastones.com/zh-tw/tutorial/php/php-json-parsing/ -> php json教學(可以參考)
     $test = $_POST['test'];
-    $marks = array("Peter"=>65, "Harry"=>80, "John"=>78, "Clark"=>90);
+    $oRes = array("res"=>'success', "data"=>[$test]);
  
-    echo json_encode($marks);
+    echo json_encode($oRes);
 ?>
