@@ -57,39 +57,39 @@
           <!-- 洗衣模式:洗滌 -->
           <!-- <h2>選擇洗衣模式</h2> -->
           <p>洗滌模式：
-            <select class="form-select form-select-sm mt-3" name="WashMode_">
+            <select class="form-select form-select-sm mt-3" name="WashMode_" data-select="washMode">
               <option selected="selected" disabled="disabled" style="display:none" value="">請選擇洗滌模式</option>
-              <option value="WashMode_Hot">熱水</option>
-              <option value="WashMode_Cold">冷水</option>
-              <option value="WashMode_Power">強力</option>
+              <option value="">熱水</option>
+              <option value="">冷水</option>
+              <option value="">強力</option>
             </select>
           </p>
           <!-- 洗衣模式:脫水 -->
           <p>脫水模式：
             <select class="form-select form-select-sm mt-3" name="DehydrationMode_">
               <option selected="selected" disabled="disabled" style="display:none" value="">請選擇脫水模式</option>
-              <option value="DehydrationMode_Not">不脫水</option>
-              <option value="DehydrationMode_Power">強脫水</option>
-              <option value="DehydrationMode_Median">中脫水</option>
-              <option value="DehydrationMode_Small">弱脫水</option>
+              <option value="">不脫水</option>
+              <option value="">強脫水</option>
+              <option value="">中脫水</option>
+              <option value="">弱脫水</option>
             </select>
           </p>
           <!-- 洗衣模式:乾燥 -->
           <p>乾燥模式：
             <select class="form-select form-select-sm mt-3" name="DryMode_">
               <option selected="selected" disabled="disabled" style="display:none" value="">請選擇乾燥模式</option>
-              <option value="DryMode_Sun">日曬</option>
-              <option value="DryMode_Electric">電熱烘乾</option>
-              <option value="DryMode_Power">急速烘乾</option>
+              <option value="">日曬</option>
+              <option value="">電熱烘乾</option>
+              <option value="">急速烘乾</option>
             </select>
           </p>
           <!-- 洗衣模式:折衣 -->
           <p>折衣模式：
             <select class="form-select form-select-sm mt-3" name="FoldMode_Way">
               <option selected="selected" disabled="disabled" style="display:none" value="">請選擇折衣模式</option>
-              <option value="FoldMode_Not">不折</option>
-              <option value="FoldMode_Robot">機器人</option>
-              <option value="FoldMode_Hand">手工</option>
+              <option value="">不折</option>
+              <option value="">機器人</option>
+              <option value="">手工</option>
             </select>
           </p>
 
@@ -108,18 +108,18 @@
           <!-- 選擇送洗方式 -->
           <!-- To後端:value值要給領回方式的id編號 -->
           <p>送洗方式：
-            <select name="SendTo_Way" class="form-select form-select-sm mt-3" id="slt1" data-send1="sendWay">
+            <select name="SendTo_Way" class="form-select form-select-sm mt-3" data-send1="sendWay">
               <option selected="selected" disabled="disabled" style="display:none" value="">請選擇送洗方式</option>
-              <option value="#tab1_1">外送</option>
-              <option value="#tab1_2">集中櫃</option>
-              <option value="#tab1_3">自送</option>
+              <option value="">外送</option>
+              <option value="">集中櫃</option>
+              <option value="">自送</option>
             </select>
           </p>
 
           <!-- 輸入送洗詳細資料 -->
           <!-- <div class="A-4" id="tab1_1"> -->
           <!-- <p>外送地址: -->
-          <div class="input-group input-group-sm mb-3 A-4" id="tab1_1">
+          <div class="input-group input-group-sm mb-3 A-4">
             <span class="input-group-text">外送地址：</span>
             <input type="text" class="form-control" value="" placeholder="請輸入外送地址" maxlength="50" size="30">
             <!-- </div><input type="text" value="" placeholder="請輸入外送地址" minlength="8" maxlength="50" size="30"></p> -->
@@ -152,11 +152,11 @@
           <!-- 選擇領回方式 -->
            <!-- To後端:value值要給領回方式的id編號 -->
           <p>領回方式：
-            <select name="SendBack_Way" class="form-select form-select-sm mt-3" id="slt2" data-send2="sendWay">
+            <select name="SendBack_Way" class="form-select form-select-sm mt-3" data-send2="sendWay">
               <option selected="selected" disabled="disabled" style="display:none" value="">請選擇領回方式</option>
-              <option value="#tab2_1">外送</option>
-              <option value="#tab2_2">集中櫃</option>
-              <option value="#tab2_3">自取</option>
+              <option value="">外送</option>
+              <option value="">集中櫃</option>
+              <option value="">自取</option>
             </select>
           </p>
 
@@ -164,12 +164,12 @@
           <!-- <div class="A-4" id="tab2_1">
           <p>外送地址:<input type="text" placeholder="請輸入外送地址" minlength="8" maxlength="50" size="30"></p>
         </div> -->
-          <div class="input-group input-group-sm mb-3 A-4" id="tab2_1">
+          <div class="input-group input-group-sm mb-3 A-4">
             <span class="input-group-text">外送地址：</span>
             <input type="text" class="form-control" value="" placeholder="請輸入外送地址" maxlength="50" size="30">
             <!-- </div><input type="text" value="" placeholder="請輸入外送地址" minlength="8" maxlength="50" size="30"></p> -->
           </div>
-          <div class="A-5" id="tab2_2">
+          <div class="A-5">
             <p>集中櫃門市：
               <select max-length="10">
                 <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市</option>
@@ -182,7 +182,7 @@
             </p>
           </div>
 
-          <div class="A-6" id="tab2_3">
+          <div class="A-6">
             <p>自取門市：
               <select max-length="10">
                 <option value="" disabled>請選擇門市</option>
