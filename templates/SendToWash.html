@@ -34,15 +34,25 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
             <li class="nav-item">
-              <a class="nav-link" href="">首頁</a>
+              <a class="nav-link" href="index.html">首頁</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">智慧洗</a>
+              <a class="nav-link" href="ChooseWashMode.html">智慧洗</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">訂單管理</a>
+              <a class="nav-link" href="Member.html">會員管理</a>
             </li>
           </ul>
+
+          
+<!-- <?php
+echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
+?>
+ -->
+          <!-- To後端:登入/登出按紐 -->
+          <!-- 用if 判斷session 是否有資料 決定要秀登入or 登出 -->
+          <input class="btn btn-outline-light" type="submit" onclick="" value="登出" >
+          <input class="btn btn-outline-light" type="submit" onclick="" value="登入" >
         </div>
       </div>
     </nav>
@@ -54,14 +64,12 @@
         <br>
         <p>預計完成的時間:</p>
         <!-- 剩下的時間 -->
-        <p class="h1 text-success"><b>12:59 等待中</b></p>
-        <!-- 進度條 -->
-        <div class="progress" style="height: 4px;">
-          <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0"
-            aria-valuemax="100"></div>
-        </div>
+        <p class="h1 text-success"><b>2022-12-28 12:28</b></p>
         <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
 
+        <label for="start">約定取件時間:</label>
+        <input type="datetime-local" id="birthdaytime" name="birthdaytime">
+        <br><br>
         <p class="fs-5"><b>訂單詳情</b></p>
         <span class="fs-6">訂單編號: O202212110874</span><br>
         <span class="fs-6">洗衣門市: 中原門市</span><br>
@@ -78,12 +86,9 @@
         <span class="fs-6">碳點: 30</span><br>
         <span class="fs-6">下單時間: 2022-12-30 00:00:01</span><br>
         <p class="fs-5"><b>總額: NT$ 974</b></p>
-        <hr>
-        <label for="start">約定取件時間:</label>
-        <input type="datetime-local" id="birthdaytime" name="birthdaytime">
-        <br><br>
+
         <!-- 等待時間00:00時 自動出現下一步按紐 -->
-        <p><input type="submit" value="下一步" class="btn btn-success" onclick="" /></p>
+        <p><input type="submit" value="確定" class="btn btn-success" onclick="" /></p>
       </form>
     </div>
   </main>
