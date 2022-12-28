@@ -10,6 +10,7 @@ $WashMode_ = $_POST["WashMode_"];
 $DehydrationMode_ = $_POST["DehydrationMode_"];
 $DryMode_ = $_POST["DryMode_"];
 $FoldMode_Way = $_POST["FoldMode_Way"];
+$creditcard = $_POST["creditcard"];
 
 ?>
 
