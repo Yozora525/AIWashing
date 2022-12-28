@@ -51,15 +51,17 @@
   <main>
     <div class="container">
       <form method="post" action="">
-        <p>請在時間內自送到指定門市</p>
+        <br>
+        <p>預計完成的時間:</p>
         <!-- 剩下的時間 -->
-        <p class="h1 text-success"><b>10:59 等待中</b></p>
+        <p class="h1 text-success"><b>12:59 等待中</b></p>
         <!-- 進度條 -->
         <div class="progress" style="height: 4px;">
           <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0"
             aria-valuemax="100"></div>
         </div>
         <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
+
         <p class="fs-5"><b>訂單詳情</b></p>
         <span class="fs-6">訂單編號: O202212110874</span><br>
         <span class="fs-6">洗衣門市: 中原門市</span><br>
@@ -76,6 +78,10 @@
         <span class="fs-6">碳點: 30</span><br>
         <span class="fs-6">下單時間: 2022-12-30 00:00:01</span><br>
         <p class="fs-5"><b>總額: NT$ 974</b></p>
+        <hr>
+        <label for="start">約定取件時間:</label>
+        <input type="datetime-local" id="birthdaytime" name="birthdaytime">
+        <br><br>
         <!-- 等待時間00:00時 自動出現下一步按紐 -->
         <p><input type="submit" value="下一步" class="btn btn-success" onclick="" /></p>
       </form>
