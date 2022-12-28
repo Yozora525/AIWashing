@@ -104,11 +104,11 @@
           </p>
 
           <!-- <p class="fs-2">選擇送/領方式</p> -->
-
           <!-- 選擇送洗方式 -->
           <!-- To後端:value值要給領回方式的id編號 -->
+
           <p>送洗方式：
-            <select name="SendTo_Way" class="form-select form-select-sm mt-3" data-send1="sendWay">
+            <select name="SendTo_Way" class="form-select form-select-sm mt-3" data-send="sendToWay1">
               <option selected="selected" disabled="disabled" style="display:none" value="">請選擇送洗方式</option>
               <option value="">外送</option>
               <option value="">集中櫃</option>
@@ -117,16 +117,15 @@
           </p>
 
           <!-- 輸入送洗詳細資料 -->
-          <!-- <div class="A-4" id="tab1_1"> -->
           <!-- <p>外送地址: -->
-          <div class="input-group input-group-sm mb-3 A-4">
+            
+          <div class="input-group input-group-sm mb-3 A-4" id="SentToPanda" style="display:none" >
             <span class="input-group-text">外送地址：</span>
             <input type="text" class="form-control" value="" placeholder="請輸入外送地址" maxlength="50" size="30">
-            <!-- </div><input type="text" value="" placeholder="請輸入外送地址" minlength="8" maxlength="50" size="30"></p> -->
           </div>
 
-          <div class="A-5" id="tab1_2">
-            <p>集中櫃地址：
+          <div id="SentToCabinet" style="display:none" >
+            <p>集中櫃門市：
               <select max-length="10">
                 <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市</option>
                 <option value="">桃園門市</option>
@@ -137,7 +136,7 @@
               </select></p>
           </div>
 
-          <div class="A-6" id="tab1_3">
+          <div id="SentToSelf" style="display:none" >
             <p>自送門市：
               <select max-length="10">
                 <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市</option>
@@ -152,8 +151,8 @@
           <!-- 選擇領回方式 -->
            <!-- To後端:value值要給領回方式的id編號 -->
           <p>領回方式：
-            <select name="SendBack_Way" class="form-select form-select-sm mt-3" data-send2="sendWay">
-              <option selected="selected" disabled="disabled" style="display:none" value="">請選擇領回方式</option>
+            <select name="SendBack_Way" class="form-select form-select-sm mt-3" data-send="sendBackWay2">
+              <option selected="selected" disabled="disabled" value="">請選擇領回方式</option>
               <option value="">外送</option>
               <option value="">集中櫃</option>
               <option value="">自取</option>
@@ -164,12 +163,12 @@
           <!-- <div class="A-4" id="tab2_1">
           <p>外送地址:<input type="text" placeholder="請輸入外送地址" minlength="8" maxlength="50" size="30"></p>
         </div> -->
-          <div class="input-group input-group-sm mb-3 A-4">
+          <div class="input-group input-group-sm mb-3 A-4" style="display:none" id="SelfBackPanda" >
             <span class="input-group-text">外送地址：</span>
             <input type="text" class="form-control" value="" placeholder="請輸入外送地址" maxlength="50" size="30">
             <!-- </div><input type="text" value="" placeholder="請輸入外送地址" minlength="8" maxlength="50" size="30"></p> -->
           </div>
-          <div class="A-5">
+          <div id="SelfBackCabinet" style="display:none" >
             <p>集中櫃門市：
               <select max-length="10">
                 <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市</option>
@@ -182,7 +181,7 @@
             </p>
           </div>
 
-          <div class="A-6">
+          <div style="display:none" id="SelfBackSelf">
             <p>自取門市：
               <select max-length="10">
                 <option value="" disabled>請選擇門市</option>
