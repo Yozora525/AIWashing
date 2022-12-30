@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- <?php
-      require_once('connect.php');
+      //require_once('connect.php');
       ?> -->
 
 <html lang="en">
@@ -10,7 +10,9 @@ $WashMode_ = $_POST["WashMode_"];
 $DehydrationMode_ = $_POST["DehydrationMode_"];
 $DryMode_ = $_POST["DryMode_"];
 $FoldMode_Way = $_POST["FoldMode_Way"];
-$creditcard = $_POST["creditcard"];
+$Ai_laundry_bag = $_POST["Ai_laundry_bag"];
+$SendTo_Way = $_POST["SendTo_Way"];
+$SendBack_Way = $_POST["SendBack_Way"];
 
 ?>
 
@@ -73,8 +75,8 @@ $creditcard = $_POST["creditcard"];
         <span class="fs-6">脫水模式: <?php echo $DehydrationMode_ ?> </span><br>
         <span class="fs-6">乾燥模式: <?php echo $DryMode_ ?></span><br>
         <span class="fs-6">折衣模式: <?php echo $FoldMode_Way ?></span><br>
-        <span class="fs-6">送洗方式: </span><br>
-        <span class="fs-6">領取方式: </span><br>
+        <span class="fs-6">送洗方式: <?php echo $SendTo_Way ?></span><br>
+        <span class="fs-6">領取方式: <?php echo $SendBack_Way ?></span><br>
         <span class="fs-6">衣物重量: </span><br>
         <span class="fs-6">洗衣總額: </span><br>
         <span class="fs-6 dis_none">運費:NT$ </span>

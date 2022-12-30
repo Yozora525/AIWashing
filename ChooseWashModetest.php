@@ -3,33 +3,36 @@
 <html lang="en">
 
 <head>
-<?php//include('templates/frame/head.html') ?>
+  <?php //include('templates/frame/head.html') 
+  ?>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../static/css/all.css">
   <link rel="stylesheet" href="../static/css/header.css" />
   <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-  <script src="../static/js/bootstrap.bundle.min.js"></script>
-  <script src="../static/lib/Frontend_lib/jquery/jquery-3.1.0.js"></script>
-  <script src="../static/js/ChooseWashMode.js"></script>
+  <script src="static/js/bootstrap.bundle.min.js"></script>
+  <script src="static/lib/Frontend_lib/jquery/jquery-3.1.0.js"></script>
+  <script src="static/js/ChooseWashMode.js"></script>
   <title>選擇模式</title>
 </head>
 <?php
 require_once('connectcopy.php');
-$sql = "SELECT  `name` FROM `test1` WHERE 2;";
-$user_name = mysqli_query($conn, $sql);
+$sql = "SELECT  * FROM `test1` ;"; //改資料表名字
+$WashMode_ = mysqli_query($conn, $sql);
+$DehydrationMode_ = mysqli_query($conn, $sql);
+$DryMode_ = mysqli_query($conn, $sql);
+$FoldMode_Way= mysqli_query($conn, $sql);
+$ai_laundry_bag= mysqli_query($conn, $sql);
 ?>
+
 <body>
   <header>
     <nav class="navbar navbar-expand-lg navbar-default bg-amos" role="navigation">
       <div class="container-fluid">
         <a class="navbar-brand" href="">
-          <img src="../img/washing-machine.png" width="50" alt="AI智慧喜" class="d-inline-block align-text-top"
-            id="logo-img"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-          data-target-sidebar=".side-collapse-right">
+          <img src="../img/washing-machine.png" width="50" alt="AI智慧喜" class="d-inline-block align-text-top" id="logo-img"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" data-target-sidebar=".side-collapse-right">
           <span class="navbar-toggler-icon"></span>
         </button>
         <!--頁面選單-->
@@ -47,8 +50,8 @@ $user_name = mysqli_query($conn, $sql);
           </ul>
         </div>
         <!-- <?php
-                       // echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
-                    ?>
+              // echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
+              ?>
                 -->
         <!-- To後端:登入/登出按紐 -->
         <!-- 用if 判斷session 是否有資料 決定要秀登入or 登出 -->
@@ -62,61 +65,62 @@ $user_name = mysqli_query($conn, $sql);
     <section style="padding:.5 rem">
       <div class="container">
         <br>
-        <form method="post" action="">
+        <form method="post" action="SendToWash_Cabinetcopy.php">
           <!-- 洗衣模式:洗滌 -->
           <!-- <h2>選擇洗衣模式</h2> -->
           <p>洗滌模式：
             <select class="form-select form-select-sm mt-3" name="WashMode_" data-select="washMode">
-            <?php while ($name = mysqli_fetch_array($user_name, MYSQLI_ASSOC)) :; ?>
-                <option value="<?php echo $name['name']; ?>">
-                    <?php echo $name['name']; ?>
+              <?php while ($Wash = mysqli_fetch_array($WashMode_, MYSQLI_ASSOC)) :; ?>
+                <option value="<?php echo $Wash['name']; ?>">
+                  <!-- ['name']改欄位名稱 -->
+                  <?php echo $Wash['name']; ?>
                 </option>
-            <?php
-            endwhile;
-            ?>  
-            
-            <!--<option selected="selected" disabled="disabled" style="display:none" value="">請選擇洗滌模式</option>
-              <option value="">熱水</option>
-              <option value="">冷水</option>
-              <option value="">強力</option>-->
+              <?php endwhile; ?>
             </select>
           </p>
           <!-- 洗衣模式:脫水 -->
           <p>脫水模式：
             <select class="form-select form-select-sm mt-3" name="DehydrationMode_">
-              <option selected="selected" disabled="disabled" style="display:none" value="">請選擇脫水模式</option>
-              <option value="">不脫水</option>
-              <option value="">強脫水</option>
-              <option value="">中脫水</option>
-              <option value="">弱脫水</option>
+              <?php while ($Dehydration = mysqli_fetch_array($DehydrationMode_, MYSQLI_ASSOC)) :; ?>
+                <option value="<?php echo $Dehydration['phone']; ?>">
+                  <!-- ['phone']改欄位名稱 -->
+                  <?php echo $Dehydration['phone']; ?>
+                </option>
+              <?php endwhile; ?>
             </select>
           </p>
           <!-- 洗衣模式:乾燥 -->
           <p>乾燥模式：
             <select class="form-select form-select-sm mt-3" name="DryMode_">
-              <option selected="selected" disabled="disabled" style="display:none" value="">請選擇乾燥模式</option>
-              <option value="">日曬</option>
-              <option value="">電熱烘乾</option>
-              <option value="">急速烘乾</option>
+              <?php while ($Dry = mysqli_fetch_array($DryMode_, MYSQLI_ASSOC)) :; ?>
+                <option value="<?php echo $Dry['phone']; ?>">
+                  <!-- ['phone']改欄位名稱 -->
+                  <?php echo $Dry['phone']; ?>
+                </option>
+              <?php endwhile; ?>
             </select>
           </p>
           <!-- 洗衣模式:折衣 -->
           <p>折衣模式：
             <select class="form-select form-select-sm mt-3" name="FoldMode_Way">
-              <option selected="selected" disabled="disabled" style="display:none" value="">請選擇折衣模式</option>
-              <option value="">不折</option>
-              <option value="">機器人</option>
-              <option value="">手工</option>
+            <?php while ($FoldMode = mysqli_fetch_array($FoldMode_Way, MYSQLI_ASSOC)) :; ?>
+                <option value="<?php echo $FoldMode['phone']; ?>">
+                  <!-- ['phone']改欄位名稱 -->
+                  <?php echo $FoldMode['phone']; ?>
+                </option>
+              <?php endwhile; ?>
             </select>
           </p>
 
           <!-- 選擇AI洗衣袋 -->
           <p>AI洗衣袋：
-            <select class="form-select form-select-sm mt-3" max-length="10" name="FoldMode_Way">
-              <option selected="selected" disabled="disabled" style="display:none" value="">請選擇AI洗衣袋</option>
-              <option value="">5451632135084617</option>
-              <option value="">4916271159538174</option>
-              <option value="">4556438447000425</option>
+            <select class="form-select form-select-sm mt-3" max-length="10" name="ai_laundry_bag"><!--NAME重複了!-->
+              <?php while ($ai_laundry = mysqli_fetch_array($ai_laundry_bag, MYSQLI_ASSOC)) :; ?>
+                <option value="<?php echo $ai_laundry['phone']; ?>">
+                  <!-- ['phone']改欄位名稱 -->
+                  <?php echo $ai_laundry['phone']; ?>
+                </option>
+              <?php endwhile; ?>
             </select>
           </p>
 
@@ -150,7 +154,8 @@ $user_name = mysqli_query($conn, $sql);
                 <option value="">大中原門市</option>
                 <option value="">統上門市</option>
                 <option value="">北原門市</option>
-              </select></p>
+              </select>
+            </p>
           </div>
 
           <div id="SentToSelf" style="display:none">
@@ -162,7 +167,8 @@ $user_name = mysqli_query($conn, $sql);
                 <option value="">大中原門市</option>
                 <option value="">統上門市</option>
                 <option value="">北原門市</option>
-              </select></p>
+              </select>
+            </p>
           </div>
 
           <!-- 選擇領回方式 -->
