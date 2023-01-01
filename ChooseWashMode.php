@@ -25,8 +25,14 @@ $getWashMode = mysqli_query($conn, $sql);
     <section style="padding:.5 rem">
     <div class="container">
         <br>
-        <?php 
+        <?php
+            $washMode = array();
+            $i = 0;
             
+            while($row = $getWashMode->fetch_assoc()) {
+                $washMode[$i] = $row;
+                $i++;
+            }
         ?>
         <form method="post" action="SendToWash_Cabinetcopy.php">
         <!-- 洗衣模式:洗滌 -->
@@ -34,10 +40,11 @@ $getWashMode = mysqli_query($conn, $sql);
         <p>洗滌模式：
             <select class="form-select form-select-sm mt-3" name="WashMode_" data-select="washMode">
                 <?php 
-                    while($row = $getWashMode->fetch_assoc()) {
-                        if($row['mode_type'] == 1){
+                    for ($i=0; $i < count($washMode); $i++)
+                    {
+                        if($washMode[$i]['mode_type'] == 1){
                 ?>
-                        <option value="<?php echo $row['mode_id']; ?>"><?php echo $row['mode_name']; ?></option>
+                        <option value="<?php echo $washMode[$i]['mode_id']; ?>"><?php echo $washMode[$i]['mode_name']; ?></option>
                 <?php
                         }
                     }
@@ -57,12 +64,13 @@ $getWashMode = mysqli_query($conn, $sql);
         </p>
         <!-- 洗衣模式:乾衣 -->
         <p>乾衣模式：
-        <select class="form-select form-select-sm mt-3" name="DryMode_">
+            <select class="form-select form-select-sm mt-3" name="DryMode_">
                 <?php 
-                    while($row = $getWashMode->fetch_assoc()) {
-                        if($row['mode_type'] == 2){
+                    for ($i=0; $i < count($washMode); $i++)
+                    {
+                        if($washMode[$i]['mode_type'] == 2){
                 ?>
-                        <option value="<?php echo $row['mode_id']; ?>"><?php echo $row['mode_name']; ?></option>
+                        <option value="<?php echo $washMode[$i]['mode_id']; ?>"><?php echo $washMode[$i]['mode_name']; ?></option>
                 <?php
                         }
                     }
@@ -73,10 +81,11 @@ $getWashMode = mysqli_query($conn, $sql);
         <p>折衣模式：
             <select class="form-select form-select-sm mt-3" name="FoldMode_Way">
                 <?php 
-                    while($row = $getWashMode->fetch_assoc()) {
-                        if($row['mode_type'] == 4){
+                    for ($i=0; $i < count($washMode); $i++)
+                    {
+                        if($washMode[$i]['mode_type'] == 4){
                 ?>
-                        <option value="<?php echo $row['mode_id']; ?>"><?php echo $row['mode_name']; ?></option>
+                        <option value="<?php echo $washMode[$i]['mode_id']; ?>"><?php echo $washMode[$i]['mode_name']; ?></option>
                 <?php
                         }
                     }
