@@ -9,13 +9,18 @@
 <?php
 // session_start();
 require_once('connect.php');
+// get wash mode
 $sql = "select * from wash_mode";
 $getWashMode = mysqli_query($conn, $sql);
+
 // if ($_SESSION['MemId']) {
 //     $sql = "select * from bag_borrow_record where return_time = null and mem_id = " + "get MemId from session";
 //     $getBag = mysqli_query($conn, $sql);
 // }
 
+// get delivery mode
+$sql = "select * from delivery_method";
+$getDeliveryMode = mysqli_query($conn, $sql);
 ?>
 
 <body>
@@ -26,11 +31,21 @@ $getWashMode = mysqli_query($conn, $sql);
     <div class="container">
         <br>
         <?php
+            // 將洗衣模式存在陣列中，下方用陣列方式存取
             $washMode = array();
             $i = 0;
             
             while($row = $getWashMode->fetch_assoc()) {
                 $washMode[$i] = $row;
+                $i++;
+            }
+
+            // 將洗衣模式存在陣列中，下方用陣列方式存取
+            $deliveryMode = array();
+            $i = 0;
+            
+            while($row = $getDeliveryMode->fetch_assoc()) {
+                $deliveryMode[$i] = $row;
                 $i++;
             }
         ?>
@@ -106,8 +121,16 @@ $getWashMode = mysqli_query($conn, $sql);
 
           <p>送洗方式：
             <select name="SendTo_Way" class="form-select form-select-sm mt-3" data-send="sendToWay1">
-              <option selected="selected" disabled="disabled" style="display:none" value="">請選擇送洗方式</option>
-
+                <?php 
+                    for ($i=0; $i < count($deliveryMode); $i++)
+                    {
+                        if($deliveryMode[$i]['delivery_type'] == 1){
+                ?>
+                        <option value="<?php echo $deliveryMode[$i]['delivery_id']; ?>"><?php echo $deliveryMode[$i]['delivery_name']; ?></option>
+                <?php
+                        }
+                    }
+                ?>
             </select>
           </p>
 
@@ -132,29 +155,35 @@ $getWashMode = mysqli_query($conn, $sql);
             </p>
           </div>
 
-          <div id="SentToSelf" style="display:none">
+        <div id="SentToSelf" style="display:none">
             <p>自送門市：
-              <select max-length="10">
-                <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市</option>
-                <option value="">桃園門市</option>
-                <option value="">光壢門市</option>
-                <option value="">大中原門市</option>
-                <option value="">統上門市</option>
-                <option value="">北原門市</option>
-              </select>
+                <select max-length="10">
+                    <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市</option>
+                    <option value="">桃園門市</option>
+                    <option value="">光壢門市</option>
+                    <option value="">大中原門市</option>
+                    <option value="">統上門市</option>
+                    <option value="">北原門市</option>
+                </select>
             </p>
-          </div>
+        </div>
 
-          <!-- 選擇領回方式 -->
-          <!-- To後端:value值要給領回方式的id編號 -->
-          <p>領回方式：
+        <!-- 選擇領回方式 -->
+        <!-- To後端:value值要給領回方式的id編號 -->
+        <p>領回方式：
             <select name="SendBack_Way" class="form-select form-select-sm mt-3" data-send="sendBackWay2">
-              <option selected="selected" disabled="disabled" value="">請選擇領回方式</option>
-              <option value="">外送</option>
-              <option value="">集中櫃</option>
-              <option value="">自取</option>
+                <?php 
+                    for ($i=0; $i < count($deliveryMode); $i++)
+                    {
+                        if($deliveryMode[$i]['delivery_type'] == 2){
+                ?>
+                        <option value="<?php echo $deliveryMode[$i]['delivery_id']; ?>"><?php echo $deliveryMode[$i]['delivery_name']; ?></option>
+                <?php
+                        }
+                    }
+                ?>
             </select>
-          </p>
+        </p>
 
           <!-- 輸入送洗詳細資料 -->
           <!-- <div class="A-4" id="tab2_1">
