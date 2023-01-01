@@ -5,10 +5,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <?php include('templates/frame/head.html') ?>
+    <?php include('src/commonTools.php') ?>
 <body>
     <?php
-
-        echo '111'
+        $id = IdProducer('Mem');
+        echo $id;
     ?>
 </body>
 </html>
