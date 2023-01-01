@@ -3,61 +3,15 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../static/css/all.css">
-  <link rel="stylesheet" href="../static/css/header.css" />
-  <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-  <script src="static/js/bootstrap.bundle.min.js"></script>
-  <script src="static/lib/Frontend_lib/jquery/jquery-3.1.0.js"></script>
-  <script src="static/js/ChooseWashMode.js"></script>
-  <title>選擇模式</title>
+    <?php include('templates/frame/head.html') ?>
+
 </head>
 <?php
-require_once('connectcopy.php');
-$sql = "SELECT  * FROM `test1` ;"; //改資料表名字
-$WashMode_ = mysqli_query($conn, $sql);
-$DehydrationMode_ = mysqli_query($conn, $sql);
-$DryMode_ = mysqli_query($conn, $sql);
-$FoldMode_Way= mysqli_query($conn, $sql);
-$ai_laundry_bag= mysqli_query($conn, $sql);
+require_once('connect.php');
 ?>
 
 <body>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-default bg-amos" role="navigation">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="">
-          <img src="../img/washing-machine.png" width="50" alt="AI智慧喜" class="d-inline-block align-text-top" id="logo-img"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" data-target-sidebar=".side-collapse-right">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <!--頁面選單-->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">首頁</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="ChooseWashMode.html">智慧洗</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Member.html">會員管理</a>
-            </li>
-          </ul>
-        </div>
-        <!-- <?php
-              // echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
-              ?>
-                -->
-        <!-- To後端:登入/登出按紐 -->
-        <!-- 用if 判斷session 是否有資料 決定要秀登入or 登出 -->
-        <input class="btn btn-outline-light" type="submit" onclick="" value="登出">
-        <input class="btn btn-outline-light" type="submit" onclick="" value="登入">
-      </div>
-    </nav>
-  </header>
+    <?php include('templates/frame/header.html') ?>
 
   <main>
     <section style="padding:.5 rem">
