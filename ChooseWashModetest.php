@@ -233,7 +233,7 @@ $ai_laundry_bag= mysqli_query($conn, $sql);
     </section>
   </main>
   <footer></footer>
-  <!-- 環保愛地球，智慧喜你我 -->
+  <!-- 環保愛地球，智慧喜你我 --> 
 </body>
 
 </html>
