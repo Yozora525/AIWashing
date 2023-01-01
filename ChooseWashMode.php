@@ -7,31 +7,45 @@
 
 </head>
 <?php
+// session_start();
 require_once('connect.php');
+$sql = "select * from wash_mode";
+$getWashMode = mysqli_query($conn, $sql);
+// if ($_SESSION['MemId']) {
+//     $sql = "select * from bag_borrow_record where return_time = null and mem_id = " + "get MemId from session";
+//     $getBag = mysqli_query($conn, $sql);
+// }
+
 ?>
 
 <body>
     <?php include('templates/frame/header.html') ?>
 
-  <main>
+<main>
     <section style="padding:.5 rem">
-      <div class="container">
+    <div class="container">
         <br>
+        <?php 
+            
+        ?>
         <form method="post" action="SendToWash_Cabinetcopy.php">
-          <!-- 洗衣模式:洗滌 -->
-          <!-- <h2>選擇洗衣模式</h2> -->
-          <p>洗滌模式：
+        <!-- 洗衣模式:洗滌 -->
+        <!-- <h2>選擇洗衣模式</h2> -->
+        <p>洗滌模式：
             <select class="form-select form-select-sm mt-3" name="WashMode_" data-select="washMode">
-              <?php while ($Wash = mysqli_fetch_array($WashMode_, MYSQLI_ASSOC)) :; ?>
-                <option value="<?php echo $Wash['name']; ?>">
-                  <!-- ['name']改欄位名稱 -->
-                  <?php echo $Wash['name']; ?>
-                </option>
-              <?php endwhile; ?>
+                <?php 
+                    while($row = $getWashMode->fetch_assoc()) {
+                        if($row['mode_type'] == 1){
+                ?>
+                        <option value="<?php echo $row['mode_id']; ?>"><?php echo $row['mode_name']; ?></option>
+                <?php
+                        }
+                    }
+                ?>
             </select>
-          </p>
-          <!-- 洗衣模式:脫水 -->
-          <p>脫水模式：
+        </p>
+        <!-- 洗衣模式:脫水 -->
+        <p>脫水模式：
             <select class="form-select form-select-sm mt-3" name="DehydrationMode_">
               <?php while ($Dehydration = mysqli_fetch_array($DehydrationMode_, MYSQLI_ASSOC)) :; ?>
                 <option value="<?php echo $Dehydration['phone']; ?>">
@@ -40,39 +54,40 @@ require_once('connect.php');
                 </option>
               <?php endwhile; ?>
             </select>
-          </p>
-          <!-- 洗衣模式:乾燥 -->
-          <p>乾燥模式：
-            <select class="form-select form-select-sm mt-3" name="DryMode_">
-              <?php while ($Dry = mysqli_fetch_array($DryMode_, MYSQLI_ASSOC)) :; ?>
-                <option value="<?php echo $Dry['phone']; ?>">
-                  <!-- ['phone']改欄位名稱 -->
-                  <?php echo $Dry['phone']; ?>
-                </option>
-              <?php endwhile; ?>
+        </p>
+        <!-- 洗衣模式:乾衣 -->
+        <p>乾衣模式：
+        <select class="form-select form-select-sm mt-3" name="DryMode_">
+                <?php 
+                    while($row = $getWashMode->fetch_assoc()) {
+                        if($row['mode_type'] == 2){
+                ?>
+                        <option value="<?php echo $row['mode_id']; ?>"><?php echo $row['mode_name']; ?></option>
+                <?php
+                        }
+                    }
+                ?>
             </select>
-          </p>
-          <!-- 洗衣模式:折衣 -->
-          <p>折衣模式：
+        </p>
+        <!-- 洗衣模式:折衣 -->
+        <p>折衣模式：
             <select class="form-select form-select-sm mt-3" name="FoldMode_Way">
-            <?php while ($FoldMode = mysqli_fetch_array($FoldMode_Way, MYSQLI_ASSOC)) :; ?>
-                <option value="<?php echo $FoldMode['phone']; ?>">
-                  <!-- ['phone']改欄位名稱 -->
-                  <?php echo $FoldMode['phone']; ?>
-                </option>
-              <?php endwhile; ?>
+                <?php 
+                    while($row = $getWashMode->fetch_assoc()) {
+                        if($row['mode_type'] == 4){
+                ?>
+                        <option value="<?php echo $row['mode_id']; ?>"><?php echo $row['mode_name']; ?></option>
+                <?php
+                        }
+                    }
+                ?>
             </select>
-          </p>
+        </p>
 
-          <!-- 選擇AI洗衣袋 -->
-          <p>AI洗衣袋：
+        <!-- 選擇AI洗衣袋 -->
+        <p>AI洗衣袋：
             <select class="form-select form-select-sm mt-3" max-length="10" name="ai_laundry_bag"><!--NAME重複了!-->
-              <?php while ($ai_laundry = mysqli_fetch_array($ai_laundry_bag, MYSQLI_ASSOC)) :; ?>
-                <option value="<?php echo $ai_laundry['phone']; ?>">
-                  <!-- ['phone']改欄位名稱 -->
-                  <?php echo $ai_laundry['phone']; ?>
-                </option>
-              <?php endwhile; ?>
+
             </select>
           </p>
 
@@ -83,9 +98,7 @@ require_once('connect.php');
           <p>送洗方式：
             <select name="SendTo_Way" class="form-select form-select-sm mt-3" data-send="sendToWay1">
               <option selected="selected" disabled="disabled" style="display:none" value="">請選擇送洗方式</option>
-              <option value="">外送</option>
-              <option value="">集中櫃</option>
-              <option value="">自送</option>
+
             </select>
           </p>
 
