@@ -4,23 +4,36 @@
 
 <head>
     <?php include('templates/frame/head.html') ?>
-
 </head>
 <?php
-// session_start();
+// session 判斷，若無登入不可使用本功能
+
 require_once('connect.php');
 // get wash mode
 $sql = "select * from wash_mode";
 $getWashMode = mysqli_query($conn, $sql);
 
+// get bag
 // if ($_SESSION['MemId']) {
 //     $sql = "select * from bag_borrow_record where return_time = null and mem_id = " + "get MemId from session";
 //     $getBag = mysqli_query($conn, $sql);
+//         if ($getBag->num_rows == 0) {
+            # alert if you want to wash cloth, you need having a bag
+//         }
 // }
 
 // get delivery mode
 $sql = "select * from delivery_method";
 $getDeliveryMode = mysqli_query($conn, $sql);
+
+// get payment
+// if ($_SESSION['MemId']) {
+//     $sql = "select * from payment where card_status = 1 and mem_id = " + "get MemId from session";
+//     $getPayment = mysqli_query($conn, $sql);
+//         if ($getBag->num_rows == 0) {
+            # alert if you want to wash cloth, you need setting payment
+//         }
+// }
 ?>
 
 <body>
