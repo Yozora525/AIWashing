@@ -1,8 +1,5 @@
 <?
-    function IdProducer($Feature){
-        // D equal Data
-        $Feature = $Feature || 'D';
-        
+    function IdProducer(string $Feature){
         // get current timestamp
         $timestamp = (string) time();
         list($msec, $sec) = explode(' ', microtime());
@@ -21,5 +18,5 @@
         return $id;
     }
 
-    
+
 ?>
