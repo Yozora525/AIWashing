@@ -15,7 +15,7 @@
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
     <script src="../static/js/bootstrap.bundle.min.js"></script>
     <script src="../static/lib/Frontend_lib/jquery/jquery-3.1.0.js"></script>
-    <title>訂單成立!</title>
+    <title>付款成功</title>
 </head>
 
 <body>
@@ -45,8 +45,8 @@
                     </ul>
                 </div>
                 <!-- <?php
-              echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
-              ?>
+                        echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
+                    ?>
                 -->
                 <!-- To後端:登入/登出按紐 -->
                 <!-- 用if 判斷session 是否有資料 決定要秀登入or 登出 -->
@@ -57,29 +57,41 @@
     </header>
 
     <main>
-        <div class="container">
-            <form method="post" action="OrderManage.html">
-                <!-- 訂單成立 -->
-                <br><br>
-                <p class="h1 text-success"><b>訂單成立!</b></p>
-                <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
-                <p class="fs-5"><b>訂單詳情</b></p>
-                <span class="fs-6">訂單編號：O202212110874</span><br>
-                <span class="fs-6">洗衣門市：中原門市</span><br>
-                <span class="fs-6">洗滌模式：冷</span><br>
-                <span class="fs-6">脫水模式：弱脫水</span><br>
-                <span class="fs-6">乾燥模式：電熱烘乾</span><br>
-                <span class="fs-6">折衣模式：機器人</span><br>
-                <span class="fs-6">送洗方式：集中櫃</span><br>
-                <span class="fs-6">領取方式：外送</span><br>
-                <span class="fs-6">衣物重量：0.8kg</span><br>
-                <span class="fs-6">洗衣總額：NT$664</span><br>
-                <span class="fs-6">運費：NT$ 0</span><br>
-                <span class="fs-6">碳點：30</span><br>
-                <span class="fs-6">下單時間：2022-12-30 00:00:01</span><br>
-                <p class="fs-5"><b>總額：NT$ 974</b></p>
-                <!-- 等待時間00:00時 自動出現下一步按紐 -->
-                <p><input type="submit" value="前往付款" class="btn btn-success" onclick="" /></p>
+        <div class="container ">
+            <form method="post" action="">
+                <p><img src="../static/img/yes.png" alt="結帳成功!" class="ounded mx-auto d-block"></p>
+                <p class="h1 text-success text-center"><b>付款成功!</b></p>
+                <br>
+                <!-- <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
+                <span class="fs-6">訂單編號: O202212110874</span><br>
+                <span class="fs-6">付款金額: NT$ 955</span><br>
+                <span class="fs-6">收款方: AI智慧喜公司</span><br> -->
+                <div class="card">
+                    <div class="card-header">
+                        <p class="text-center">發票</p>
+                        <span class="fs-6">訂單編號：O202212110874<br></span>
+                        <span class="fs-6">付款金額：NT$ <b style="color:red">955</b><br></span>
+                        <span class="fs-6">洗衣門市: 中原門市</span><br>
+                        <span class="fs-6">洗滌模式: 冷</span><br>
+                        <span class="fs-6">脫水模式: 弱脫水</span><br>
+                        <span class="fs-6">乾燥模式: 電熱烘乾</span><br>
+                        <span class="fs-6">折衣模式: 機器人</span><br>
+                        <span class="fs-6">送洗方式: 自送</span><br>
+                        <span class="fs-6">領取方式: 自取</span><br>
+                        <span class="fs-6">衣物重量: 0.8kg</span><br>
+                        <span class="fs-6">洗衣總額: NT$664</span><br>
+                        <span class="fs-6">運費: NT$ 0</span><br>
+                        <span class="fs-6">碳排放: 55g</span><br>
+                        <span class="fs-6">碳點: 80</span><br>
+                        <span id="tax" style="display:none">碳稅: 80</span>
+                        <span class="fs-6">隨機碼: 0000</span><br>
+                        <span class="fs-6">公司名: AI智慧喜</span><br>
+                        <span class="fs-6">下單時間: 2022-12-30 00:00:01</span><br>
+                        <p class="fs-5"><b>總額: NT$ 974</b></p>
+                    </div>
+                </div>
+                <!-- 等待時間00:00時 自動出現下一步按紐 --><br>
+                <p><input type="submit" value="完成" class="btn btn-success" onclick="" /></p>
             </form>
         </div>
     </main>
