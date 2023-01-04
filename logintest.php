@@ -22,7 +22,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
         <label>密碼：</label>
         <input type="password" name="password" /> <br />
         <input type="submit" value="提交" />
-        <a href="singup.html">還沒有帳號？現在就註冊！</a>
+        <a href="signup.html">還沒有帳號？現在就註冊！</a>
     </form>
 </body>
 
