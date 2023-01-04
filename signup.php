@@ -14,19 +14,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     elseif ($account == "" || $username == "" || $password == "" || $confirm == "" || $phone == "") {
         echo "<script>alert('資訊不能為空！重新填寫');window.location.href='signup.html'</script>";
-    } elseif (mysqli_fetch_array(mysqli_query($conn, "select * from member where account = '$account'"))) {
+    } elseif (mysqli_fetch_array(mysqli_query($conn, "select * from member where mem_account = '$account'"))) {
         echo "<script>alert('帳號已註冊過');window.location.href='signup.html'</script>";
     } elseif ($password != $confirm) {
         echo "<script>alert('兩次密碼不相同！重新填寫');window.location.href='signup.html'</script>";
     } else {
-        $singup = "insert into `member`(account,username,password,confirm,phone) values ('$account','$username','$password','$confirm','$phone')"; //向資料庫插入表單傳來的值的sql
+        $singup = "insert into `member`(mem_account,mem_name,mem_pwd,mem_pwdconfirm,mem_phone) values ('$account','$username','$password','$confirm','$phone')"; //向資料庫插入表單傳來的值的sql
         $reslut = mysqli_query($conn, $singup); //執行sql
     }
 
     if (!$reslut) {
         die('Error: ' . mysqli_error($conn)); //如果sql執行失敗輸出錯誤
     } else {
-        echo "<script>alert('註冊成功');window.location.href='login.html'</script>"; //成功輸出註冊成功
+        echo "<script>alert('註冊成功');window.location.href='member.php'</script>"; //成功輸出註冊成功
     }
 }
 mysqli_close($conn); //關閉資料庫

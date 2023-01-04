@@ -8,15 +8,15 @@ $password = $_POST["password"];
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $sql = "SELECT * FROM member WHERE account ='" . $account . "'";
+    $sql = "SELECT * FROM member WHERE mem_account ='" . $account . "'";
     $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) == 1 && $password == mysqli_fetch_assoc($result)["password"]) {
+    if (mysqli_num_rows($result) == 1 && $password == mysqli_fetch_assoc($result)["mem_pwd"]) {
         session_start();
         // Store data in session variables
         $_SESSION["loggedin"] = true;
         //這些是之後可以用到的變數
-        $_SESSION["id"] = mysqli_fetch_assoc($result)["id"];
-        $_SESSION["account"] = mysqli_fetch_assoc($result)["account"];
+        $_SESSION["id"] = mysqli_fetch_assoc($result)["mem_id"];
+        $_SESSION["account"] = mysqli_fetch_assoc($result)["mem_account"];
         header("location:member.php");
     } else {
         function_alert("帳號或密碼錯誤");
