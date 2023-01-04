@@ -1,33 +1,38 @@
 <?php
-
 require_once('connectcopy.php');
-$account = $_POST['account'];
-$username = $_POST['name']; //post獲取表單裡的name
-$password = $_POST['password']; //post獲取表單裡的password
-$confirm = $_POST['passwordconfirm']; //post獲取表單裡的passwordconfirm
-$phone = $_POST['phone']; //post獲取表單裡的phone
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $account = $_POST["account"];
+    $password = $_POST["password"];
+    //檢查帳號是否重複
+    $check = "SELECT * FROM user WHERE account='" . $account . "'";
+    if (mysqli_num_rows(mysqli_query($conn, $check)) == 0) {
+        $sql = "INSERT INTO user (id,account, password)
+            VALUES(NULL,'" . $account . "','" . $password . "')";
 
-
-/*註冊*/
-if (!isset($_POST['submit'])) {
-    exit("錯誤執行");
-} //判斷是否有submit操作
-
-elseif ($account == "" || $username == "" || $password == "" || $confirm == "" || $phone == "") {
-    echo "<script>alert('資訊不能為空！重新填寫');window.location.href='singup.html'</script>";
-} elseif (mysqli_fetch_array(mysqli_query($conn, "select * from member where account = '$account'"))) {
-    echo "<script>alert('帳號已註冊過');window.location.href='singup.html'</script>";
-} elseif ($password != $confirm) {
-    echo "<script>alert('兩次密碼不相同！重新填寫');window.location.href='singup.html'</script>";
-} else {
-    $singup = "insert into `member`(account,username,password,confirm,phone) values ('$account','$username','$password','$confirm','$phone')"; //向資料庫插入表單傳來的值的sql
-    $reslut = mysqli_query($conn, $singup); //執行sql
+        if (mysqli_query($conn, $sql)) {
+            echo "註冊成功!3秒後將自動跳轉頁面<br>";
+            echo "<a href='index.php'>未成功跳轉頁面請點擊此</a>";
+            header("refresh:32;url=index.php");
+            exit;
+        } else {
+            echo "Error creating table: " . mysqli_error($conn);
+        }
+    } else {
+        echo "該帳號已有人使用!<br>3秒後將自動跳轉頁面<br>";
+        echo "<a href='register.html'>未成功跳轉頁面請點擊此</a>";
+        header('HTTP/1.0 302 Found');
+        //header("refresh:3;url=register.html",true);
+        exit;
+    }
 }
+mysqli_close($conn); //關閉資料庫
 
-if (!$reslut) {
-    die('Error: ' . mysqli_error($conn)); //如果sql執行失敗輸出錯誤
-} else {
-    echo "<script>alert('註冊成功');window.location.href='login.html'</script>"; //成功輸出註冊成功
+function function_alert($message)
+{
+    // Display the alert box  
+    echo "<script>alert('$message');
+     window.location.href='index.php';
+    </script>";
+
+    return false;
 }
-mysqli_close($conn);//關閉資料庫
-?>

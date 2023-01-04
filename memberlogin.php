@@ -1,22 +1,41 @@
 <?php
-session_start();
-//連線mysql
+// Include config file
 require_once('connectcopy.php');
-//$_POST使用者名稱和密碼
-$account = $_POST['account'];
-$password = $_POST['password'];
-//sql查詢語句
-$sql = "SELECT `member_id` from `member` where `account`='$account' && `password`='$password'";//改連接的資料庫
-//執行
-$result = mysqli_query($conn, $sql);
-$num = mysqli_num_rows($result); // 函式返回結果集中行的數量
-if ($num) {
-    echo "<script>alert('登入成功');window.location.href = 'ChooseWashMode.php'</script>";//改登入成功網址
+// Define variables and initialize with empty values
+$account = $_POST["account"];
+$password = $_POST["password"];
+//增加hash可以提高安全性
+$password_hash = password_hash($password, PASSWORD_DEFAULT);
+// Processing form data when form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $sql = "SELECT * FROM member WHERE account ='" . $account . "'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) == 1 && $password == mysqli_fetch_assoc($result)["password"]) {
+        session_start();
+        // Store data in session variables
+        $_SESSION["loggedin"] = true;
+        //這些是之後可以用到的變數
+        $_SESSION["id"] = mysqli_fetch_assoc($result)["id"];
+        $_SESSION["account"] = mysqli_fetch_assoc($result)["account"];
+        header("location:member.php");
+    } else {
+        function_alert("帳號或密碼錯誤");
+    }
 } else {
-    echo "<script>alert('帳號或密碼錯誤');window.location.href = 'login.html'</script>";//改成登入頁面的網址
+    function_alert("Something wrong");
 }
 
-$_SESSION['memberid'] =mysqli_fetch_assoc($result);['member_id']; // session
-$_SESSION["account"] = mysqli_fetch_assoc($result)["account"];
+// Close connection
 mysqli_close($conn);
+
+function function_alert($message)
+{
+
+    // Display the alert box  
+    echo "<script>alert('$message');
+     window.location.href='index.php';
+    </script>";
+    return false;
+}
+?>
 ?>
