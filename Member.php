@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<!-- <?php
-    require_once('connect.php');
-?> -->
 
 <html lang="en">
+<?php require_once('connectcopy.php'); ?>
 
 <head>
     <!-- <?php include('templates/frame/head.html') ?> -->
@@ -29,17 +27,28 @@
         }
     </style>
 </head>
+<?php
+session_start();
+$memid = $_SESSION['userid'];
+require_once('connectcopy.php');
+$sql = "SELECT mem_name,mem_id FROM member WHERE mem_id='{$memid}'";
+//執行
+
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$mem_id = $row['mem_id'];
+$name = $row['mem_name'];
+mysqli_close($conn);
+
+?>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-default bg-amos" role="navigation">
             <div class="container-fluid">
                 <a class="navbar-brand" href="">
-                    <img src="static/img/washing-machine.png" width="50" alt="AI智慧喜"
-                        class="d-inline-block align-text-top" id="logo-img"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation" data-target-sidebar=".side-collapse-right">
+                    <img src="static/img/washing-machine.png" width="50" alt="AI智慧喜" class="d-inline-block align-text-top" id="logo-img"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" data-target-sidebar=".side-collapse-right">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <!--頁面選單-->
@@ -57,13 +66,13 @@
                     </ul>
                 </div>
                 <!-- <?php
-                       /// echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
-                    ?>
+                        /// echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
+                        ?>
                 -->
                 <!-- To後端:登入/登出按紐 -->
                 <!-- 用if 判斷session 是否有資料 決定要秀登入or 登出 -->
                 <a href="logout.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登出"></a>
-                <a href="logintest.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登入"></a>
+                <a href="login.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登入"></a>
             </div>
         </nav>
     </header>
@@ -81,15 +90,13 @@
                             <a href="Member.html" class="stretched-link custom-card">
                                 <div class="row g-0">
                                     <div class="col-md-4 img_border">
-                                        <img src="static/img/user.png" class="w-100 amos-my-card-img" alt="頭像"
-                                            style="border-radius: 50%;">
+                                        <img src="static/img/user.png" class="w-100 amos-my-card-img" alt="頭像" style="border-radius: 50%;">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <h5 class="card-title">劉士豪</h5>
-
+                                            <h5 class="card-title"><?php echo $name ?></h5>
                                             <p class="card-text">累積碳點: 85</p>
-                                            <p class="card-text"><small class="text-muted">會員編號</small></p>
+                                            <p class="card-text"><small class="text-muted">會員編號<?php echo $mem_id; ?></small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -100,11 +107,10 @@
                     <!-- 訂單管理 -->
                     <div class="col-12 col-md-6">
                         <div class="card mb-3" style="max-width: 540px;">
-                            <a href="OrderManage.html" class="stretched-link custom-card">
+                            <a href="OrderManage.php" class="stretched-link custom-card">
                                 <div class="row g-0">
                                     <div class="col-md-4">
-                                        <img src="static/img/filter.png" class="w-100 amos-my-card-img" alt="訂單管理"
-                                            style="border-radius: 50%;">
+                                        <img src="static/img/filter.png" class="w-100 amos-my-card-img" alt="訂單管理" style="border-radius: 50%;">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
@@ -123,8 +129,7 @@
                         <a href="WashBagManage.html" class="stretched-link custom-card">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    <img src="static/img/clothes.png" class="w-100 amos-my-card-img" alt="AI洗衣袋管理"
-                                        style="border-radius: 50%;">
+                                    <img src="static/img/clothes.png" class="w-100 amos-my-card-img" alt="AI洗衣袋管理" style="border-radius: 50%;">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
@@ -135,25 +140,24 @@
                         </a>
                     </div>
                 </div>
-                
-                                <!-- 付款卡管理 -->
-                                <div class="col-12 col-md-6">
-                                    <div class="card mb-3" style="max-width: 540px;">
-                                        <a href="CardManage.html" class="stretched-link custom-card">
-                                            <div class="row g-0">
-                                                <div class="col-md-4">
-                                                    <img src="static/img/card.png" class="w-100 amos-my-card-img" alt="訂單管理"
-                                                        style="border-radius: 50%;">
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="card-body">
-                                                        <h2 class="card-title">付款卡管理</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
+
+                <!-- 付款卡管理 -->
+                <div class="col-12 col-md-6">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <a href="CardManage.php" class="stretched-link custom-card">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="static/img/card.png" class="w-100 amos-my-card-img" alt="訂單管理" style="border-radius: 50%;">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h2 class="card-title">付款卡管理</h2>
                                     </div>
                                 </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
 
             </form>
         </div>

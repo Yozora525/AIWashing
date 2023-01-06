@@ -3,5 +3,5 @@
 session_start(); 
 $_SESSION = array(); 
 session_destroy(); 
-header('location:member.php');
+header('location:index.html');//改成回首頁
 ?>

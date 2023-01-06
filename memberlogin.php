@@ -1,41 +1,18 @@
 <?php
-// Include config file
+session_start();
 require_once('connectcopy.php');
 // Define variables and initialize with empty values
 $account = $_POST["account"];
 $password = $_POST["password"];
-//增加hash可以提高安全性
-$password_hash = password_hash($password, PASSWORD_DEFAULT);
-// Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $sql = "SELECT * FROM member WHERE mem_account ='" . $account . "'";
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) == 1 && $password == mysqli_fetch_assoc($result)["mem_pwd"]) {
-        session_start();
-        // Store data in session variables
-        $_SESSION["loggedin"] = true;
-        //這些是之後可以用到的變數
-        $_SESSION["id"] = mysqli_fetch_assoc($result)["mem_id"];
-        $_SESSION["account"] = mysqli_fetch_assoc($result)["mem_account"];
-        header("location:member.php");
-    } else {
-        function_alert("帳號或密碼錯誤");
-    }
+
+$sql = "SELECT mem_id from member where mem_account='$account' and mem_pwd='$password'";
+$result = mysqli_query($conn, $sql);
+$num = mysqli_num_rows($result); // 函式返回結果集中行的數量
+if ($num) {
+    $row = mysqli_fetch_assoc($result);
+    $_SESSION['login'] = $row['mem_id']; // session
+    echo "<script>window.location.href = 'member.php'</script>";
 } else {
-    function_alert("Something wrong");
+    echo "<script>alert('登入失敗，帳號或密碼錯誤');window.location.href = 'logintest.php'</script>";
 }
-
-// Close connection
 mysqli_close($conn);
-
-function function_alert($message)
-{
-
-    // Display the alert box  
-    echo "<script>alert('$message');
-     window.location.href='index.php';
-    </script>";
-    return false;
-}
-?>
-?>
