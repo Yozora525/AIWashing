@@ -29,7 +29,7 @@
 </head>
 <?php
 session_start();
-$memid = $_SESSION['userid'];
+$memid = $_SESSION['login'];
 require_once('connectcopy.php');
 $sql = "SELECT mem_name,mem_id FROM member WHERE mem_id='{$memid}'";
 //執行
