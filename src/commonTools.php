@@ -1,20 +1,11 @@
 <?
     function IdProducer(string $Feature){
         // get current timestamp
-        $timestamp = (string) time();
-        list($msec, $sec) = explode(' ', microtime());
-        
-        // get ms
-        $msectime = (float) sprintf('%.0f', (floatval($msec) + floatval($sec)) * 1000);
-
-        $idNumber = $timestamp + (string)$msectime;
-
-        if (strlen($idNumber) > 16) {
-            $idNumber = substr($idNumber, 0, 16);
-        }
-        
-        $id = $Feature.$idNumber;
-
+        $timestamp =  microtime(true);
+        $timestamp = (string) $timestamp * 1000;
+        $id = $Feature.$timestamp;
+        $id = explode('.', $id)[0];
+        // $id = $id[0];
         return $id;
     }
 
