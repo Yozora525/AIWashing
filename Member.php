@@ -66,7 +66,7 @@ mysqli_close($conn);
                     </ul>
                 </div>
                 <!-- <?php
-                        /// echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
+                        ///  echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
                         ?>
                 -->
                 <!-- To後端:登入/登出按紐 -->

@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['name']; //post獲取表單裡的name
     $password = $_POST['password']; //post獲取表單裡的password
     $confirm = $_POST['passwordconfirm']; //post獲取表單裡的passwordconfirm
-    $phone = $_POST['phone']; //post獲取表單裡的phone
+    $phone = $_POST['phone']; //post獲取表單裡的phone 
 
     /*註冊*/
     if (!isset($_POST['submit'])) {
