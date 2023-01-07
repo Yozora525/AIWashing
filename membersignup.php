@@ -1,5 +1,5 @@
 <?php
-require_once('connectcopy.php');
+require_once('connect.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $account = $_POST['account'];
     $username = $_POST['name']; //post獲取表單裡的name
@@ -13,11 +13,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } //判斷是否有submit操作
 
     elseif ($account == "" || $username == "" || $password == "" || $confirm == "" || $phone == "") {
-        echo "<script>alert('資訊不能為空！重新填寫');window.location.href='signup.html'</script>";
+        echo "<script>alert('資訊不能為空！重新填寫');window.location.href='signup.php'</script>";
     } elseif (mysqli_fetch_array(mysqli_query($conn, "SELECT * from member where mem_account = '$account'"))) {
-        echo "<script>alert('帳號已註冊過');window.location.href='signup.html'</script>";
+        echo "<script>alert('帳號已註冊過');window.location.href='signup.php'</script>";
     } elseif ($password != $confirm) {
-        echo "<script>alert('兩次密碼不相同！重新填寫');window.location.href='signup.html'</script>";
+        echo "<script>alert('兩次密碼不相同！重新填寫');window.location.href='signup.php'</script>";
     } else {
         $singup = "INSERT into `member`(mem_account,mem_name,mem_pwd,mem_pwdconfirm,mem_phone) values ('$account','$username','$password','$confirm','$phone')"; //向資料庫插入表單傳來的值的sql
         $reslut = mysqli_query($conn, $singup); //執行sql

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
-require_once('connectcopy.php');
+require_once('connect.php');
+session_start();
 ?>
 
 <html lang="en">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once('connectcopy.php');
+require_once('connect.php');
 session_start();
 if (isset($_SESSION['login']) == true) {
     header('location:member.php'); //改成會員界面

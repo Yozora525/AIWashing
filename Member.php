@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require_once('connectcopy.php');
+<?php require_once('connect.php');
 session_start();
 if (isset($_SESSION['login']) == false) {
     header('location:login.php');
     exit; //記得要跳出來，不然會重複轉址過多次
 }
 $memid = $_SESSION['login'];
-require_once('connectcopy.php');
 $sql = "SELECT mem_name,mem_id FROM member WHERE mem_id='{$memid}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
@@ -18,8 +17,6 @@ mysqli_close($conn);
 ?>
 
 <head>
-    <?php //include('templates/frame/head.html') 
-    ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,7 +105,7 @@ mysqli_close($conn);
                     <!-- 訂單管理 -->
                     <div class="col-12 col-md-6">
                         <div class="card mb-3" style="max-width: 540px;">
-                            <a href="OrderManage.html" class="stretched-link custom-card">
+                            <a href="OrderManage.php" class="stretched-link custom-card">
                                 <div class="row g-0">
                                     <div class="col-md-4">
                                         <img src="static/img/filter.png" class="w-100 amos-my-card-img" alt="訂單管理" style="border-radius: 50%;">
@@ -127,7 +124,7 @@ mysqli_close($conn);
                 <!-- AI洗衣袋管理 -->
                 <div class="col-12 col-md-6">
                     <div class="card mb-3" style="max-width: 540px;">
-                        <a href="WashBagManage.html" class="stretched-link custom-card">
+                        <a href="WashBagManage.php" class="stretched-link custom-card">
                             <div class="row g-0">
                                 <div class="col-md-4">
                                     <img src="static/img/clothes.png" class="w-100 amos-my-card-img" alt="AI洗衣袋管理" style="border-radius: 50%;">
