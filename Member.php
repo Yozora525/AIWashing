@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<?php require_once('connectcopy.php'); ?>
+<?php require_once('connectcopy.php');
+session_start();
+if (isset($_SESSION['login']) == false) {
+    header('location:login.php');
+    exit; //記得要跳出來，不然會重複轉址過多次
+}
+$memid = $_SESSION['login'];
+require_once('connectcopy.php');
+$sql = "SELECT mem_name,mem_id FROM member WHERE mem_id='{$memid}'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$mem_id = $row['mem_id'];
+$name = $row['mem_name'];
+mysqli_close($conn);
+
+?>
 
 <head>
-    <?php //include('templates/frame/head.html') ?>
+    <?php //include('templates/frame/head.html') 
+    ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,20 +42,7 @@
         }
     </style>
 </head>
-<?php
-session_start();
-$memid = $_SESSION['login'];
-require_once('connectcopy.php');
-$sql = "SELECT mem_name,mem_id FROM member WHERE mem_id='{$memid}'";
-//執行
 
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
-$mem_id = $row['mem_id'];
-$name = $row['mem_name'];
-mysqli_close($conn);
-
-?>
 
 <body>
     <header>
@@ -55,24 +57,23 @@ mysqli_close($conn);
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">首頁</a>
+                            <a class="nav-link" href="Index.php">首頁</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="ChooseWashMode.html">智慧洗</a>
+                            <a class="nav-link" href="ChooseWashMode.php">智慧洗</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Member.html">會員管理</a>
+                            <a class="nav-link" href="Member.php">會員管理</a>
                         </li>
                     </ul>
                 </div>
-                <!-- <?php
-                        ///  echo '<script>location.href="/"</script>';$i = time() str $xxxId = 'XX'+$i
-                        ?>
-                -->
                 <!-- To後端:登入/登出按紐 -->
                 <!-- 用if 判斷session 是否有資料 決定要秀登入or 登出 -->
-                <a href="logout.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登出"></a>
-                <a href="login.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登入"></a>
+                <?php if (isset($_SESSION['login']) == true) { ?>
+                    <a href="logout.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登出"></a>
+                <?php } else { ?>
+                    <a href="Login.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登入"></a>
+                <?php } ?>
             </div>
         </nav>
     </header>
@@ -87,7 +88,7 @@ mysqli_close($conn);
 
                     <div class="col-12 col-md-6">
                         <div class="card mb-3" style="max-width: 540px;">
-                            <a href="Member.html" class="stretched-link custom-card">
+                            <a href="member.php" class="stretched-link custom-card">
                                 <div class="row g-0">
                                     <div class="col-md-4 img_border">
                                         <img src="static/img/user.png" class="w-100 amos-my-card-img" alt="頭像" style="border-radius: 50%;">
@@ -107,7 +108,7 @@ mysqli_close($conn);
                     <!-- 訂單管理 -->
                     <div class="col-12 col-md-6">
                         <div class="card mb-3" style="max-width: 540px;">
-                            <a href="OrderManage.php" class="stretched-link custom-card">
+                            <a href="OrderManage.html" class="stretched-link custom-card">
                                 <div class="row g-0">
                                     <div class="col-md-4">
                                         <img src="static/img/filter.png" class="w-100 amos-my-card-img" alt="訂單管理" style="border-radius: 50%;">

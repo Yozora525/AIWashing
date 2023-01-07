@@ -13,6 +13,6 @@ if ($num) {
     $_SESSION['login'] = $row['mem_id']; // session
     echo "<script>window.location.href = 'member.php'</script>";
 } else {
-    echo "<script>alert('登入失敗，帳號或密碼錯誤');window.location.href = 'logintest.php'</script>";
+    echo "<script>alert('登入失敗，帳號或密碼錯誤');window.location.href = 'login.php'</script>";
 }
 mysqli_close($conn);

@@ -2,10 +2,11 @@
 <?php
 require_once('connectcopy.php');
 session_start();
-?>
-<?php
-/* $id = IdProducer('Mem');
-echo $id; */
+$member_memid = $_SESSION['login'];
+$member_sql = "SELECT mem_id FROM member WHERE mem_id='{$member_memid}'";
+$member_result = mysqli_query($conn, $member_sql);
+$member_row = mysqli_fetch_assoc($member_result);
+$member_mem_id = $member_row['mem_id'];
 ?>
 
 <html lang="en">
@@ -19,20 +20,8 @@ echo $id; */
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <script src="static/js/bootstrap.bundle.min.js"></script>
     <script src="static/lib/Frontend_lib/jquery/jquery-3.1.0.js"></script>
-    <title>首頁</title>
-    <style>
-        .amos-my-card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        a.custom-card,
-        a.custom-card:hover {
-            color: inherit;
-            text-decoration: none;
-        }
-    </style>
+    <script src="static/js/OrderManage.js"></script>
+    <title>AI洗衣袋管理</title>
 </head>
 
 <body>
@@ -70,31 +59,38 @@ echo $id; */
     </header>
 
     <main>
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item  active">
-                    <img src="static/img/BIGphoto.jpg" class="d-block w-100" alt="...">
-                    <!-- <div class="carousel-caption d-none d-md-block">
-            <h1 class="logo.title">AI智慧喜</h1>
-            <p>AI智慧喜創立於20xx年，本公司以讓蕃薯國家裡不再有洗烘脫衣機，以達到節能減碳為目標。</p>
-          </div> -->
-                </div>
-            </div>
-        </div>
-        <div class="container text-center index" style="display:block">
+        <div class="container">
+            <form method="post" action="">
+                <br>
+                <h4>顯示現有的付款卡<button class="btn btn-success" type="button" onclick="location.href='addCard.php'" value="">新增</button></h4>
+                <?php
+                $payment_sql = "SELECT * FROM payment";
+                $payment_result = mysqli_query($conn, $payment_sql);
+                if ($payment_result->num_rows > 0) {
+                    while ($payment_row = $payment_result->fetch_assoc()) {
+                        if ($member_mem_id == $payment_row['member_id']) {
+                ?>
+                            <div class="card">
+                                <div class="card-header">
+                                    付款卡名稱： <?php echo $payment_row['card_name'] ?>
+                                </div>
+                                <div class="card-body">
+                                    <span class="fs-6">付款卡卡號: <?php echo $payment_row['card_num'] ?><br></span>
+                                    <span class="fs-6">到期日: <?php echo $payment_row['expired_month'] ?>/<?php echo $payment_row['expired_year'] ?><br></span>
+                                </div>
+                            </div>
+                            <br>
+                <?php
+                        }
+                    }
+                }
+                mysqli_close($conn); ?>
 
-            <!-- <img src="img/BIGphoto.jpg" class="img-fluid" alt="..."> -->
-
-            <p class="fs-1 logo.title">智慧喜</p>
-            <p class="index.title fs-6 ">
-                AI智慧喜創立於20xx年，本公司以讓蕃薯國家裡不再有洗烘脫衣機，以達到節能減碳為目標。</p>-
-            <br> <br>
-            <p class="index.title fs-6 ">
-                本公司也有與政府單位「碳治郎」合作，在本商店洗衣都會紀錄該次交易的碳排量，如碳排量低於標準值可獲得碳點，碳點可於碳治郎平台，兌換特(奢)別(華)的「服務❤️」
-            </p>
+            </form>
         </div>
     </main>
     <footer></footer>
 </body>
+
 
 </html>
