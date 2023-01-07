@@ -61,6 +61,11 @@
             <br><br><br>
             <form method="post" action="Member.html">
                 <div class="form-group">
+                    <label>持卡人姓名：</label>
+                    <input type="text" class="form-control" aria-describedby="CertifiedHelp" placeholder="請輸入持卡人姓名"
+                        name="">
+                </div>
+                <div class="form-group">
                     <label>付款卡名稱：</label>
                     <input type="text" class="form-control" aria-describedby="CertifiedHelp" placeholder="請輸入付款卡名稱"
                         name="">
@@ -78,12 +83,12 @@
                 <div class="form-group">
                     <label>安全碼：</label>
                     <input type="text" class="form-control" placeholder="請輸入安全碼" name="">
-                    <div class="d-md-flex justify-content-md-end" style="margin-top: 1rem;">
+                    <div class="d-md-flex" style="margin-top: 1rem;">
                         <input type="button" class="btn btn-outline-success " onclick="window.alert('此功能尚未開放!');"
                             value="簡訊驗證碼" />
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group"  style="display:none">
                     <label>驗證碼：</label>
                     <input type="text" class="form-control" placeholder="請輸入驗證碼" name="">
                 </div>
