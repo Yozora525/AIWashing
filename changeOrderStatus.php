@@ -4,7 +4,7 @@
     
     // Get OrderId and Status Code
     $orderId = $_POST['orderId'];
-    $status = $_POST['status'];
+    $status = (int)$_POST['status'];
     
     // update syntax
     $sql = "update washing_order set status=" . $status . "where order_id=" . $orderId;
