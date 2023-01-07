@@ -30,24 +30,29 @@ function ChangeOrderStatus(OrderId, Status,href,ConfirmMsg) {
 
     ConfirmMsg = ConfirmMsg || '確定更改訂單狀態嗎？';
 
-    $.ajax({
-        url:"changeOrderStatus.php",
-        type: "POST",
-        async:true,
-        dataType: "json",
-        data: {'orderId':OrderId,'status':Status},
-        success: function(data) {
-            console.log(data);
-            if (data.res != 'success') {
-                alert(data.msg);
-                return;
-            } else {
-                location.href = href;
+    isChange = confirm(ConfirmMsg);
+
+    if (isChange) {
+        $.ajax({
+            url:"changeOrderStatus.php",
+            type: "POST",
+            async:true,
+            dataType: "json",
+            data: {'orderId':OrderId,'status':Status},
+            success: function(data) {
+                console.log(data);
+                if (data.res != 'success') {
+                    alert(data.msg);
+                    return;
+                } else {
+                    location.href = href;
+                }
+            },
+            error: function(jqXHR) {
+                alert(jqXHR.statusText);
+                alert(jqXHR.responseText);
             }
-        },
-        error: function(jqXHR) {
-            alert(jqXHR.statusText);
-            alert(jqXHR.responseText);
-        }
-    });
+        });
+    }
+    
 }
