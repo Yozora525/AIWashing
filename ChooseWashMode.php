@@ -7,6 +7,8 @@ $member_sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$member_memid}'";
 $member_result = mysqli_query($conn, $member_sql);
 $member_row = mysqli_fetch_assoc($member_result);
 $member_mem_id = $member_row['mem_id'];
+
+
 ?>
 
 <html lang="en">
@@ -62,7 +64,6 @@ $member_mem_id = $member_row['mem_id'];
         <section style="padding:.5 rem">
             <div class="container">
                 <br>
-
                 <?php
                 $sql = "SELECT * FROM `wash_mode`";
                 $getWashMode = mysqli_query($conn, $sql);
@@ -82,7 +83,7 @@ $member_mem_id = $member_row['mem_id'];
                             for ($i = 0; $i < count($wash_mode); $i++) {
                                 if ($wash_mode[$i]['mode_type'] == 1) {
                             ?>
-                                    <option value="<?php echo $wash_mode[$i]['mode_id']; ?>"><?php echo $wash_mode[$i]['mode_name']; ?></option>
+                                    <option value="<?php echo $wash_mode[$i]['mode_name']; ?>"><?php echo $wash_mode[$i]['mode_name']; ?></option>
                             <?php
                                 }
                             }
@@ -99,7 +100,7 @@ $member_mem_id = $member_row['mem_id'];
                             for ($i = 0; $i < count($wash_mode); $i++) {
                                 if ($wash_mode[$i]['mode_type'] == 2) {
                             ?>
-                                    <option value="<?php echo $wash_mode[$i]['mode_id']; ?>"><?php echo $wash_mode[$i]['mode_name']; ?></option>
+                                    <option value="<?php echo $wash_mode[$i]['mode_name']; ?>"><?php echo $wash_mode[$i]['mode_name']; ?></option>
                             <?php
                                 }
                             }
@@ -116,7 +117,7 @@ $member_mem_id = $member_row['mem_id'];
                             for ($i = 0; $i < count($wash_mode); $i++) {
                                 if ($wash_mode[$i]['mode_type'] == 3) {
                             ?>
-                                    <option value="<?php echo $wash_mode[$i]['mode_id']; ?>"><?php echo $wash_mode[$i]['mode_name']; ?></option>
+                                    <option value="<?php echo $wash_mode[$i]['mode_name']; ?>"><?php echo $wash_mode[$i]['mode_name']; ?></option>
                             <?php
                                 }
                             }
@@ -133,7 +134,7 @@ $member_mem_id = $member_row['mem_id'];
                             for ($i = 0; $i < count($wash_mode); $i++) {
                                 if ($wash_mode[$i]['mode_type'] == 4) {
                             ?>
-                                    <option value="<?php echo $wash_mode[$i]['mode_id']; ?>"><?php echo $wash_mode[$i]['mode_name']; ?></option>
+                                    <option value="<?php echo $wash_mode[$i]['mode_name']; ?>"><?php echo $wash_mode[$i]['mode_name']; ?></option>
                             <?php
                                 }
                             }
@@ -143,7 +144,7 @@ $member_mem_id = $member_row['mem_id'];
 
                     <!-- 選擇AI洗衣袋 -->
                     <p>AI洗衣袋：
-                        <select class="form-select form-select-sm mt-3" max-length="10" name="FoldMode_Way">
+                        <select class="form-select form-select-sm mt-3" max-length="10" name="Aibag">
                             <option selected="selected" disabled="disabled" style="display:none" value="">請選擇AI洗衣袋
                             </option>
                             <?php
@@ -172,16 +173,15 @@ $member_mem_id = $member_row['mem_id'];
                         $i++;
                     }
                     ?>
-
+                    <!-- 選擇送洗方式 -->
                     <p>送洗方式：
                         <select name="SendTo_Way" class="form-select form-select-sm mt-3" data-send="sendToWay1">
-                            <option selected="selected" disabled="disabled" style="display:none" value="">請選擇送洗方式
-                            </option>
+                            <option selected="selected" disabled="disabled" style="display:none" value="">請選擇送洗方式 </option>
                             <?php
                             for ($i = 0; $i < count($delivery_method); $i++) {
                                 if ($delivery_method[$i]['delivery_type'] == 1) {
                             ?>
-                                    <option value="<?php echo $delivery_method[$i]['delivery_id']; ?>"><?php echo $delivery_method[$i]['delivery_name']; ?></option>
+                                    <option value="<?php echo $delivery_method[$i]['delivery_name']; ?>"><?php echo $delivery_method[$i]['delivery_name']; ?></option>
                             <?php
                                 }
                             }
@@ -192,15 +192,14 @@ $member_mem_id = $member_row['mem_id'];
                     <!-- 輸入送洗詳細資料 -->
                     <div id="SentToPanda" class="input-group input-group-sm mb-3 A-4" style="display:none">
                         <span class="input-group-text">外送地址：</span>
-                        <input type="text" class="form-control" value="" placeholder="請輸入外送地址" maxlength="50" size="30">
+                        <input type="text" name="SendTo_Panda" class="form-control" value="" placeholder="請輸入外送地址" maxlength="50" size="30">
                     </div>
 
 
                     <div id="SentToCabinet" style="display:none">
                         <p>集中櫃門市：
-                            <select max-length="10">
-                                <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市
-                                </option>
+                            <select max-length="10" name="SendTo_Cabinet">
+                                <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市 </option>
                                 <option value="">桃園門市</option>
                                 <option value="">光壢門市</option>
                                 <option value="">大中原門市</option>
@@ -212,9 +211,8 @@ $member_mem_id = $member_row['mem_id'];
 
                     <div id="SentToSelf" style="display:none">
                         <p>自送門市：
-                            <select max-length="10">
-                                <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市
-                                </option>
+                            <select max-length="10" name="SendTo_Self">
+                                <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市 </option>
                                 <option value="">桃園門市</option>
                                 <option value="">光壢門市</option>
                                 <option value="">大中原門市</option>
@@ -228,10 +226,16 @@ $member_mem_id = $member_row['mem_id'];
                     <!-- To後端:value值要給領回方式的id編號 -->
                     <p>領回方式：
                         <select name="SendBack_Way" class="form-select form-select-sm mt-3" data-send="sendBackWay2">
-                            <option selected="selected" disabled="disabled" value="">請選擇領回方式</option>
-                            <option value="">外送</option>
-                            <option value="">集中櫃</option>
-                            <option value="">自取</option>
+                            <option selected="selected" disabled="disabled" style="display:none" value="">請選擇領回方式 </option>
+                            <?php
+                            for ($i = 0; $i < count($delivery_method); $i++) {
+                                if ($delivery_method[$i]['delivery_type'] == 2) {
+                            ?>
+                                    <option value="<?php echo $delivery_method[$i]['delivery_name']; ?>"><?php echo $delivery_method[$i]['delivery_name']; ?></option>
+                            <?php
+                                }
+                            }
+                            ?>
                         </select>
                     </p>
 
@@ -239,12 +243,12 @@ $member_mem_id = $member_row['mem_id'];
 
                     <div class="input-group input-group-sm mb-3 A-4" style="display:none" id="SelfBackPanda">
                         <span class="input-group-text">外送地址：</span>
-                        <input type="text" class="form-control" value="" placeholder="請輸入外送地址" maxlength="50" size="30">
+                        <input type="text" name="SendBack_Panda" class="form-control" value="" placeholder="請輸入外送地址" maxlength="50" size="30">
                         <!-- </div><input type="text" value="" placeholder="請輸入外送地址" minlength="8" maxlength="50" size="30"></p> -->
                     </div>
                     <div id="SelfBackCabinet" style="display:none">
                         <p>集中櫃門市：
-                            <select max-length="10">
+                            <select name="SendBack_Cabinet" max-length="10">
                                 <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市
                                 </option>
                                 <option value="">桃園門市</option>
@@ -258,7 +262,7 @@ $member_mem_id = $member_row['mem_id'];
 
                     <div style="display:none" id="SelfBackSelf">
                         <p>自取門市：
-                            <select max-length="10">
+                            <select max-length="10" name="SendBack_Self">
                                 <option value="" disabled>請選擇門市</option>
                                 <option value="">桃園門市</option>
                                 <option value="">光壢門市</option>
@@ -271,7 +275,7 @@ $member_mem_id = $member_row['mem_id'];
 
                     <!-- 選擇付款卡 -->
                     <p>付款卡：
-                        <select class="form-select form-select-sm mt-3" max-length="10">
+                        <select class="form-select form-select-sm mt-3" max-length="10" name="creditcard">
                             <option selected="selected" disabled="disabled" style="display:none" value="">請選擇付款卡片
                             </option>
                             <?php
@@ -281,7 +285,7 @@ $member_mem_id = $member_row['mem_id'];
                                 while ($payment_row = $payment_result->fetch_assoc()) {
                                     if ($member_mem_id == $payment_row['mem_id']) {
                             ?>
-                                        <option value=""><?php echo $payment_row['card_name'] ?>&nbsp;<?php echo $payment_row['card_num'] ?></option>
+                                        <option value="<?php echo $payment_row['card_name'] ?>"><?php echo $payment_row['card_name'] ?>&nbsp;<?php echo $payment_row['card_num'] ?></option>
                             <?php }
                                 }
                             } ?>
@@ -289,7 +293,7 @@ $member_mem_id = $member_row['mem_id'];
                     </p>
 
                     <!-- 前往下一頁按紐 -->
-                    <p><input type="submit" value="下一步" class="btn btn-success" onclick="" /></p>
+                    <p><input type="submit" name="submit" value="下一步" class="btn btn-success" onclick="" /></p>
 
                 </form>
             </div>

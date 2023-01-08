@@ -1,8 +1,35 @@
 <!DOCTYPE html>
 <?php
 require_once('connectcopy.php');
-session_start(); ?>
+session_start();
+$memid = $_SESSION['login'];
+$sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$memid}'";
+$getmemid = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($getmemid);
+$mem_id = $row['mem_id'];
 
+
+$WashMode = $_POST['WashMode_']; //洗滌
+$DehydrationMode = $_POST['DehydrationMode_']; //脫水
+$DryMode = $_POST['DryMode_']; //乾燥
+$FoldMode_Way = $_POST['FoldMode_Way']; //折衣
+
+$Aibag = $_POST['Aibag']; //AI洗衣袋
+
+$SendTo_Way = $_POST['SendTo_Way']; //送洗方式
+$SendTo_Panda = $_POST['SendTo_Panda']; //外送送洗
+$SendTo_Cabinet = $_POST['SendTo_Cabinet']; //集中送洗
+$SendTo_Self = $_POST['SendTo_Self']; //到店送
+$sendto = $SendTo_Panda . $SendTo_Cabinet . $SendTo_Self;
+
+$SendBack_Way = $_POST['SendBack_Way']; //取回方式
+$SendBack_Panda = $_POST['SendBack_Panda']; //外送取回
+$SendBack_Cabinet = $_POST['SendBack_Cabinet']; //集中取回
+$SendBack_Self = $_POST['SendBack_Self']; //到店取回
+$sendBack = $SendBack_Panda . $SendBack_Cabinet . $SendBack_Self;
+
+$creditcard = $_POST['creditcard']; //信用卡
+?>
 <html lang="en">
 
 <head>
@@ -50,7 +77,9 @@ session_start(); ?>
             </div>
         </nav>
     </header>
+    <?php
 
+    ?>
     <main>
         <div class="container">
             <form method="post" action="showOrder.html">
@@ -65,14 +94,16 @@ session_start(); ?>
                 <br><br>
                 <p class="fs-5"><b>訂單詳情</b></p>
                 <span class="fs-6">訂單編號：O202212110874</span><br>
-                <span class="fs-6">洗衣門市：中原門市</span><br>
-                <span class="fs-6">集中櫃編號：3-3</span><br>
-                <span class="fs-6">洗滌模式：冷</span><br>
-                <span class="fs-6">脫水模式：弱脫水</span><br>
-                <span class="fs-6">乾燥模式：電熱烘乾</span><br>
-                <span class="fs-6">折衣模式：機器人</span><br>
-                <span class="fs-6">送洗方式：集中櫃</span><br>
-                <span class="fs-6">領取方式：集中櫃</span><br>
+                <span class="fs-6">集中櫃編號：<?php  ?></span><br>
+                <span class="fs-6">洗滌模式：<?php echo $WashMode ?></span><br>
+                <span class="fs-6">脫水模式：<?php echo $DehydrationMode ?></span><br>
+                <span class="fs-6">乾燥模式：<?php echo $DryMode ?></span><br>
+                <span class="fs-6">折衣模式：<?php echo $FoldMode_Way ?></span><br>
+                <span class="fs-6">送洗方式：<?php echo $SendTo_Way ?></span><br>
+                <span class="fs-6">洗衣門市/地址：<?php echo $sendto ?></span><br>
+                <span class="fs-6">領取方式：<?php echo $SendBack_Way ?></span><br>
+                <span class="fs-6">取衣門市/地址：<?php echo $sendBack ?></span><br>
+
                 <!-- <span class="fs-6">衣物重量: 0.8kg</span><br> -->
                 <span class="fs-6">洗衣總額：NT$664</span><br>
                 <span class="fs-6">運費：NT$ 20</span><br>
