@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require_once('connect.php');
+require_once('connectcopy.php');
 session_start();
 ?>
 <?php

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require_once('connect.php');
+require_once('connectcopy.php');
 session_start();
 ?>
 
@@ -45,10 +45,9 @@ session_start();
                 </div>
                 <!-- To後端:登入/登出按紐 -->
                 <!-- 用if 判斷session 是否有資料 決定要秀登入or 登出 -->
-                <?php if (isset($_SESSION['login']) == false) { ?>
-                    <a href="logout.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登出"></a>
-                <?php } ?>
                 <?php if (isset($_SESSION['login']) == true) { ?>
+                    <a href="logout.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登出"></a>
+                <?php } else { ?>
                     <a href="Login.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登入"></a>
                 <?php } ?>
             </div>

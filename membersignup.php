@@ -1,5 +1,5 @@
 <?php
-require_once('connect.php');
+require_once('connectcopy.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $account = $_POST['account'];
     $username = $_POST['name']; //post獲取表單裡的name
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     elseif ($account == "" || $username == "" || $password == "" || $confirm == "" || $phone == "") {
         echo "<script>alert('資訊不能為空！重新填寫');window.location.href='signup.php'</script>";
-    } elseif (mysqli_fetch_array(mysqli_query($conn, "SELECT * from member where mem_account = '$account'"))) {
+    } elseif (mysqli_fetch_array(mysqli_query($conn, "SELECT * from `member` where `mem_account` = '$account'"))) {
         echo "<script>alert('帳號已註冊過');window.location.href='signup.php'</script>";
     } elseif ($password != $confirm) {
         echo "<script>alert('兩次密碼不相同！重新填寫');window.location.href='signup.php'</script>";
@@ -30,13 +30,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 mysqli_close($conn); //關閉資料庫
-
-function function_alert($message)
-{
-    // Display the alert box  
-    echo "<script>alert('$message');
-     window.location.href='index.php';
-    </script>";
-
-    return false;
-}
+?>

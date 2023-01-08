@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once('connect.php');
+require_once('connectcopy.php');
 session_start();
 if (isset($_SESSION['login']) == true) {
     header('location:member.php'); //改成會員界面
@@ -80,7 +80,7 @@ if (isset($_SESSION['login']) == true) {
                 </div>
             </form>
             <p class="text-center">
-                沒有帳號嗎?<a href="Signup.php">前往註冊</a>
+                沒有帳號嗎? <a href="Signup.php">前往註冊</a>
             </p>
         </div>
     </main>

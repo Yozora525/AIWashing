@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <?php
 require_once('connectcopy.php');
-session_start();
-$member_memid = $_SESSION['login'];
-$member_sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$member_memid}'";
-$member_result = mysqli_query($conn, $member_sql);
-$member_row = mysqli_fetch_assoc($member_result);
-$member_mem_id = $member_row['mem_id'];
-?>
+session_start(); ?>
 
 <html lang="en">
 
@@ -20,8 +14,7 @@ $member_mem_id = $member_row['mem_id'];
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <script src="static/js/bootstrap.bundle.min.js"></script>
     <script src="static/lib/Frontend_lib/jquery/jquery-3.1.0.js"></script>
-    <script src="static/js/OrderManage.js"></script>
-    <title>AI洗衣袋管理</title>
+    <title>選擇模式</title>
 </head>
 
 <body>
@@ -60,30 +53,35 @@ $member_mem_id = $member_row['mem_id'];
 
     <main>
         <div class="container">
-            <form method="post" action="">
+            <form method="post" action="showOrder.html">
                 <br>
-                <h4>顯示現有的AI洗衣袋</h4>
-                <?php
-                $laundry_bag_sql = "SELECT * FROM laundry_bag";
-                $laundry_bag_result = mysqli_query($conn, $laundry_bag_sql);
-                if ($laundry_bag_result->num_rows > 0) {
-                    while ($laundry_bag_row = $laundry_bag_result->fetch_assoc()) {
-                        if ($member_mem_id == $laundry_bag_row['mem_id']) {
-                ?>
-                            <div class="card">
-                                <div class="card-header">
-                                    AI洗衣袋編號: <?php echo $laundry_bag_row['bag_id'] ?>
-                                </div>
-                                <div class="card-body">
-                                    <blockquote class="blockquote mb-0  dis-none" data-detail="">
-                                        <footer class="blockquote-footer"><?php echo $laundry_bag_row['bag_addTime'] ?> </footer>
-                                    </blockquote>
-                                </div>
-                            </div>
-                            <br>
-                <?php }
-                    }
-                } ?>
+                <p>預計完成的時間:</p>
+                <!-- 剩下的時間 -->
+                <p class="h1 text-success"><b>2022-12-28 12:28</b></p>
+                <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
+
+                <label for="start">約定取件時間:</label>
+                <input type="datetime-local" id="birthdaytime" name="birthdaytime">
+                <br><br>
+                <p class="fs-5"><b>訂單詳情</b></p>
+                <span class="fs-6">訂單編號：O202212110874</span><br>
+                <span class="fs-6">洗衣門市：中原門市</span><br>
+                <span class="fs-6">集中櫃編號：3-3</span><br>
+                <span class="fs-6">洗滌模式：冷</span><br>
+                <span class="fs-6">脫水模式：弱脫水</span><br>
+                <span class="fs-6">乾燥模式：電熱烘乾</span><br>
+                <span class="fs-6">折衣模式：機器人</span><br>
+                <span class="fs-6">送洗方式：集中櫃</span><br>
+                <span class="fs-6">領取方式：集中櫃</span><br>
+                <!-- <span class="fs-6">衣物重量: 0.8kg</span><br> -->
+                <span class="fs-6">洗衣總額：NT$664</span><br>
+                <span class="fs-6">運費：NT$ 20</span><br>
+                <span class="fs-6">碳稅：NT$ 30</span><br>
+                <span class="fs-6">碳點：30</span><br>
+                <p class="fs-5"><b>總額: NT$ 974</b></p>
+
+                <!-- 等待時間00:00時 自動出現下一步按紐 -->
+                <p><input type="submit" value="確定" class="btn btn-success" onclick="" /></p>
             </form>
         </div>
     </main>

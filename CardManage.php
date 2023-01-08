@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <?php
-require_once('connect.php');
+require_once('connectcopy.php');
 session_start();
 $member_memid = $_SESSION['login'];
-$member_sql = "SELECT mem_id FROM member WHERE mem_id='{$member_memid}'";
+$member_sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$member_memid}'";
 $member_result = mysqli_query($conn, $member_sql);
 $member_row = mysqli_fetch_assoc($member_result);
 $member_mem_id = $member_row['mem_id'];
@@ -64,7 +64,7 @@ $member_mem_id = $member_row['mem_id'];
                 <br>
                 <h4>顯示現有的付款卡<button class="btn btn-success" type="button" onclick="location.href='addCard.php'" value="">新增</button></h4>
                 <?php
-                $payment_sql = "SELECT * FROM payment";
+                $payment_sql = "SELECT * FROM `payment`";
                 $payment_result = mysqli_query($conn, $payment_sql);
                 if ($payment_result->num_rows > 0) {
                     while ($payment_row = $payment_result->fetch_assoc()) {

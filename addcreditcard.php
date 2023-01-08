@@ -1,8 +1,8 @@
 <?php
-require_once('connect.php');
+require_once('connectcopy.php');
 session_start();
 $memid = $_SESSION['login'];
-$sql = "SELECT mem_id FROM member WHERE mem_id='{$memid}'";
+$sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$memid}'";
 //執行
 $getmemid = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($getmemid);
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     elseif ($creditname == "" || $creditnum == "" || $month == "" || $year == "" || $securitycode == "" || $username == "") {
         echo "<script>alert('資訊不能為空！重新填寫');window.location.href='addCard.php'</script>";
-    } elseif (mysqli_fetch_array(mysqli_query($conn, "SELECT * from `payment` where card_name = '$creditname' & card_num = '$creditnum'"))) {
+    } elseif (mysqli_fetch_array(mysqli_query($conn, "SELECT * from `payment` where `card_name` = '$creditname' & `card_num` = '$creditnum'"))) {
         echo "<script>alert('卡片已存在');window.location.href='addCard.php'</script>";
     } else {
         $addcreditcard = "INSERT into `payment`(mem_id,card_name,card_num,owner_name ,expired_month,expired_year,security_code) values ('$mem_id','$creditname','$creditnum','$username','$month','$year','$securitycode')"; 
@@ -38,13 +38,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 mysqli_close($conn); //關閉資料庫
-
-function function_alert($message)
-{
-    // Display the alert box  
-    echo "<script>alert('$message');
-     window.location.href='index.php';
-    </script>";
-
-    return false;
-}
+?>

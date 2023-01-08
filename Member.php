@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require_once('connect.php');
+<?php require_once('connectcopy.php');
 session_start();
 if (isset($_SESSION['login']) == false) {
     header('location:login.php');
     exit; //記得要跳出來，不然會重複轉址過多次
 }
 $memid = $_SESSION['login'];
-$sql = "SELECT mem_name,mem_id FROM member WHERE mem_id='{$memid}'";
+$sql = "SELECT `mem_name`,`mem_id` FROM `member` WHERE `mem_id`='{$memid}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $mem_id = $row['mem_id'];

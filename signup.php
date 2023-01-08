@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require_once('connect.php');
+require_once('connectcopy.php');
 session_start();
 ?>
 
@@ -77,8 +77,10 @@ session_start();
                 </div>
                 <div class="form-group">
                     <label>電 話：</label>
-                    <input type="password" class="form-control" placeholder="請再輸入密碼一次" name="phone">
-                    <input type="button" onclick="window.alert('此功能尚未開放!');" value="手機驗證碼" />
+                    <input type="password" class="form-control" placeholder="請輸入電話" name="phone">
+                    <div class="d-md-flex justify-content-md-end" style="margin-top: 1rem;">
+                        <input type="button" class="btn btn-outline-success " onclick="window.alert('此功能尚未開放!');" value="手機驗證碼" />
+                    </div>
 
                 </div>
                 <br>
