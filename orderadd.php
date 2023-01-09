@@ -7,6 +7,16 @@ $getmemid = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($getmemid);
 $mem_id = $row['mem_id'];
 
+// IdProducer 製造Id的 function, 給Id特徵即可生成獨一無二的Id
+function IdProducer(string $Feature){
+    // get current timestamp
+    $timestamp =  microtime(true);
+    $timestamp = (string) $timestamp * 1000;
+    $id = $Feature.$timestamp;
+    $id = explode('.', $id)[0];
+    return $id;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $WashMode = $_POST['WashMode_']; //洗滌
     $DehydrationMode = $_POST['DehydrationMode_']; //脫水
@@ -35,6 +45,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($WashMode == "" || $DehydrationMode == "" || $DryMode == "" || $FoldMode_Way == "" || $Aibag == "" || $SendTo_Way == "" || $SendBack_Way == "" || $creditcard == "") {
         echo "<script>alert('資訊不能為空！重新填寫');window.location.href='ChooseWashMode.php'</script>";
     } else {
+        /* 計算碳點、碳排、碳稅 */
+        $ListMode = [$WashMode,$DehydrationMode,$DryMode,$FoldMode_Way];
+        $weight = 3; // 重量統一用3kg來算
+        $point = 0; // 碳點
+        $emission = 0; // 碳排(單位：公斤)
+
+        //! 撈出該模式下所需的碳排、點、稅，並加起來    -> 尚未測試(沒資料及table可能還會更改)
+        for ($i=0; $i < count($ListMode); $i++) {
+            $sql = "select * from wash_mode where mode_id = {$ListMode[$i]}";
+
+            // 找出每公斤的碳點、碳排
+            $res = mysqli_query($conn, $sql);
+
+            if (mysqli_num_rows($res) > 0) {
+                
+                while($row = mysqli_fetch_assoc($res)) {
+                    $point += $weight * $row["mode_point"];
+                    $emission += $weight * $row["carbonEmissions"];
+                }
+            }
+            
+        }
+
+        $tax = $emission / 1000 * 3000; // 碳稅(每公噸3000)
+        /* 計算碳點、碳排、碳稅 */
+
+        // 訂單編號
+        $orderId = IdProducer('O');
+
         $addorder = "INSERT into `washing_order`(mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back)
          values ('$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way')"; //向資料庫插入表單傳來的值的sql
         $reslut = mysqli_query($conn, $addorder); //執行sql
