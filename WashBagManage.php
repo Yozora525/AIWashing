@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require_once('connectcopy.php');
+require_once('connect.php');
 session_start();
 $member_memid = $_SESSION['login'];
 $member_sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$member_memid}'";

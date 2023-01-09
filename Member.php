@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require_once('connectcopy.php');
+<?php
+require_once('connect.php');
 session_start();
 if (isset($_SESSION['login']) == false) {
     header('location:login.php');
@@ -39,7 +40,6 @@ mysqli_close($conn);
         }
     </style>
 </head>
-
 
 <body>
     <header>
@@ -94,7 +94,7 @@ mysqli_close($conn);
                                         <div class="card-body">
                                             <h5 class="card-title"><?php echo $name ?></h5>
                                             <p class="card-text">累積碳點: 85</p>
-                                            <p class="card-text"><small class="text-muted">會員編號<?php echo $mem_id; ?></small></p>
+                                            <p class="card-text"><small class="text-muted">會員編號<?php echo $mem_id ?></small></p>
                                         </div>
                                     </div>
                                 </div>

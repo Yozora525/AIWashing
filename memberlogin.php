@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once('connectcopy.php');
+require_once('connect.php');
 // Define variables and initialize with empty values 
 $account = $_POST["account"];
 $password = $_POST["password"];

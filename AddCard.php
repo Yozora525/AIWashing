@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require_once('connectcopy.php');
+require_once('connect.php');
 session_start();
 ?>
 
@@ -79,7 +79,7 @@ session_start();
                 <div class="form-group">
                     <label>安全碼：</label>
                     <input type="text" class="form-control" placeholder="請輸入安全碼" name="security_code">
-                    <div class="d-md-flex justify-content-md-end" style="margin-top: 1rem;">
+                    <div class="d-md-flex" style="margin-top: 1rem;">
                         <input type="button" class="btn btn-outline-success " onclick="window.alert('此功能尚未開放!');" value="簡訊驗證碼" />
                     </div>
                 </div>

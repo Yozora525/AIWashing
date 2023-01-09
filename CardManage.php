@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require_once('connectcopy.php');
+require_once('connect.php');
 session_start();
 $member_memid = $_SESSION['login'];
 $member_sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$member_memid}'";
@@ -62,7 +62,7 @@ $member_mem_id = $member_row['mem_id'];
         <div class="container">
             <form method="post" action="">
                 <br>
-                <h4>顯示現有的付款卡<button class="btn btn-success" type="button" onclick="location.href='addCard.php'" value="">新增</button></h4>
+                <h4>顯示現有的付款卡<button class="btn btn-success" type="button" onclick="location.href='AddCard.php'" value="">新增</button></h4>
                 <?php
                 $payment_sql = "SELECT * FROM `payment`";
                 $payment_result = mysqli_query($conn, $payment_sql);

@@ -1,5 +1,5 @@
 <?php
-require_once('connectcopy.php');
+require_once('connect.php');
 session_start();
 $memid = $_SESSION['login'];
 $sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$memid}'";
@@ -8,11 +8,12 @@ $row = mysqli_fetch_assoc($getmemid);
 $mem_id = $row['mem_id'];
 
 // IdProducer 製造Id的 function, 給Id特徵即可生成獨一無二的Id
-function IdProducer(string $Feature){
+function IdProducer(string $Feature)
+{
     // get current timestamp
     $timestamp =  microtime(true);
     $timestamp = (string) $timestamp * 1000;
-    $id = $Feature.$timestamp;
+    $id = $Feature . $timestamp;
     $id = explode('.', $id)[0];
     return $id;
 }
@@ -39,44 +40,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $creditcard = $_POST['creditcard']; //信用卡
 
-    /*註冊*/
+
     if (!isset($_POST['submit'])) {
         exit("錯誤執行");
     } elseif ($WashMode == "" || $DehydrationMode == "" || $DryMode == "" || $FoldMode_Way == "" || $Aibag == "" || $SendTo_Way == "" || $SendBack_Way == "" || $creditcard == "") {
         echo "<script>alert('資訊不能為空！重新填寫');window.location.href='ChooseWashMode.php'</script>";
     } else {
         /* 計算碳點、碳排、碳稅 */
-        $ListMode = [$WashMode,$DehydrationMode,$DryMode,$FoldMode_Way];
+        $ListMode = [$WashMode, $DehydrationMode, $DryMode, $FoldMode_Way];
         $weight = 3; // 重量統一用3kg來算
         $point = 0; // 碳點
         $emission = 0; // 碳排(單位：公斤)
 
         //! 撈出該模式下所需的碳排、點、稅，並加起來    -> 尚未測試(沒資料及table可能還會更改)
-        for ($i=0; $i < count($ListMode); $i++) {
+        for ($i = 0; $i < count($ListMode); $i++) {
             $sql = "select * from wash_mode where mode_id = {$ListMode[$i]}";
 
             // 找出每公斤的碳點、碳排
             $res = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($res) > 0) {
-                
-                while($row = mysqli_fetch_assoc($res)) {
+
+                while ($row = mysqli_fetch_assoc($res)) {
                     $point += $weight * $row["mode_point"];
                     $emission += $weight * $row["carbonEmissions"];
                 }
             }
-            
         }
 
         $tax = $emission / 1000 * 3000; // 碳稅(每公噸3000)
         /* 計算碳點、碳排、碳稅 */
 
         // 訂單編號
-        $orderId = IdProducer('O');
+        $_SESSION['orderId']= $orderId = IdProducer('O');
 
-        $addorder = "INSERT into `washing_order`(mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back)
-         values ('$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way')"; //向資料庫插入表單傳來的值的sql
+        /*註冊*/
+        $addorder = "INSERT into `washing_order`(order_id,mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back,sentTo_address,sentBack_address)
+         values ('$orderId','$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way','$sendto','$sendBack')"; //向資料庫插入表單傳來的值的sql
         $reslut = mysqli_query($conn, $addorder); //執行sql
+        
+        $num = mysqli_num_rows($result); // 函式返回結果集中行的數量
+        if ($num) {
+            $row = mysqli_fetch_assoc($result);
+            $_SESSION['orderId'] =$row[$orderId] ;}
     }
 
     if (!$reslut) {
@@ -86,5 +92,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 mysqli_close($conn);
-
-?>

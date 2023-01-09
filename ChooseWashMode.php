@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require_once('connectcopy.php');
+require_once('connect.php');
 session_start();
 $member_memid = $_SESSION['login'];
 $member_sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$member_memid}'";
@@ -73,7 +73,7 @@ $member_mem_id = $member_row['mem_id'];
                     $i++;
                 }
                 ?>
-                <form method="post" action="SendToWash.php">
+                <form method="post" action="orderadd.php">
                     <!-- 洗衣模式:洗滌 -->
                     <p>洗滌模式：
                         <select class="form-select form-select-sm mt-3" name="WashMode_" data-select="washMode">
@@ -195,16 +195,28 @@ $member_mem_id = $member_row['mem_id'];
                         <input type="text" name="SendTo_Panda" class="form-control" value="" placeholder="請輸入外送地址" maxlength="50" size="30">
                     </div>
 
-
+                    <?php
+                    $sql = "SELECT * FROM `server_store`";
+                    $getserverstore = mysqli_query($conn, $sql);
+                    $server_store = array();
+                    $i = 0;
+                    while ($server_store[$i] = $getserverstore->fetch_assoc()) {
+                        $i++;
+                    }
+                    ?>
                     <div id="SentToCabinet" style="display:none">
                         <p>集中櫃門市：
                             <select max-length="10" name="SendTo_Cabinet">
                                 <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市 </option>
-                                <option value="">桃園門市</option>
-                                <option value="">光壢門市</option>
-                                <option value="">大中原門市</option>
-                                <option value="">統上門市</option>
-                                <option value="">北原門市</option>
+                                <?php
+                                for ($i = 0; $i < count($server_store); $i++) {
+                                    if ($server_store[$i]['store_type'] == 2) {
+                                ?>
+                                        <option value="<?php echo $server_store[$i]['store_name']; ?>"><?php echo $server_store[$i]['store_name']; ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
                             </select>
                         </p>
                     </div>
@@ -213,11 +225,15 @@ $member_mem_id = $member_row['mem_id'];
                         <p>自送門市：
                             <select max-length="10" name="SendTo_Self">
                                 <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市 </option>
-                                <option value="">桃園門市</option>
-                                <option value="">光壢門市</option>
-                                <option value="">大中原門市</option>
-                                <option value="">統上門市</option>
-                                <option value="">北原門市</option>
+                                <?php
+                                for ($i = 0; $i < count($server_store); $i++) {
+                                    if ($server_store[$i]['store_type'] == 1) {
+                                ?>
+                                        <option value="<?php echo $server_store[$i]['store_name']; ?>"><?php echo $server_store[$i]['store_name']; ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
                             </select>
                         </p>
                     </div>
@@ -249,13 +265,16 @@ $member_mem_id = $member_row['mem_id'];
                     <div id="SelfBackCabinet" style="display:none">
                         <p>集中櫃門市：
                             <select name="SendBack_Cabinet" max-length="10">
-                                <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市
-                                </option>
-                                <option value="">桃園門市</option>
-                                <option value="">光壢門市</option>
-                                <option value="">大中原門市</option>
-                                <option value="">統上門市</option>
-                                <option value="">北原門市</option>
+                                <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市 </option>
+                                <?php
+                                for ($i = 0; $i < count($server_store); $i++) {
+                                    if ($server_store[$i]['store_type'] == 2) {
+                                ?>
+                                        <option value="<?php echo $server_store[$i]['store_name']; ?>"><?php echo $server_store[$i]['store_name']; ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
                             </select>
                         </p>
                     </div>
@@ -263,12 +282,16 @@ $member_mem_id = $member_row['mem_id'];
                     <div style="display:none" id="SelfBackSelf">
                         <p>自取門市：
                             <select max-length="10" name="SendBack_Self">
-                                <option value="" disabled>請選擇門市</option>
-                                <option value="">桃園門市</option>
-                                <option value="">光壢門市</option>
-                                <option value="">大中原門市</option>
-                                <option value="">統上門市</option>
-                                <option value="">北原門市</option>
+                                <option selected="selected" disabled="disabled" style="display:none" value="">請選擇門市 </option>
+                                <?php
+                                for ($i = 0; $i < count($server_store); $i++) {
+                                    if ($server_store[$i]['store_type'] == 1) {
+                                ?>
+                                        <option value="<?php echo $server_store[$i]['store_name']; ?>"><?php echo $server_store[$i]['store_name']; ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
                             </select>
                         </p>
                     </div>
