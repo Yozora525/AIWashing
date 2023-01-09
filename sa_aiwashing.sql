@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1:3307
--- 產生時間： 2023-01-09 13:22:10
+-- 產生時間： 2023-01-09 16:15:52
 -- 伺服器版本： 10.4.14-MariaDB
 -- PHP 版本： 7.2.34
 
@@ -129,9 +129,10 @@ INSERT INTO `laundry_bag` (`bag_id`, `bag_addTime`, `bag_status`) VALUES
 --
 
 CREATE TABLE `member` (
-  `mem_id` int(64) NOT NULL COMMENT '會員編號',
+  `mem_id` varchar(64) NOT NULL COMMENT '會員編號',
   `mem_account` varchar(32) NOT NULL COMMENT '會員帳號(身分證字號)',
   `mem_pwd` varchar(16) NOT NULL COMMENT '會員密碼',
+  `pwd_confirm` varchar(16) NOT NULL COMMENT '確認密碼',
   `mem_name` varchar(16) NOT NULL COMMENT '會員名稱',
   `mem_phone` varchar(16) NOT NULL COMMENT '會員手機號碼',
   `mem_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)',
@@ -191,9 +192,9 @@ CREATE TABLE `serve_store` (
 --
 
 CREATE TABLE `washing_order` (
-  `order_id` int(11) NOT NULL COMMENT '訂單編號',
-  `mem_id` int(11) NOT NULL COMMENT '會員編號',
-  `bag_id` int(11) NOT NULL COMMENT '洗衣袋編號',
+  `order_id` varchar(64) NOT NULL COMMENT '訂單編號',
+  `mem_id` varchar(64) NOT NULL COMMENT '會員編號',
+  `bag_id` varchar(64) NOT NULL COMMENT '洗衣袋編號',
   `weight` int(11) NOT NULL COMMENT '衣服重量',
   `wash_mode` varchar(11) NOT NULL COMMENT '洗衣模式',
   `dryout_mode` varchar(11) NOT NULL COMMENT '脫水模式',
@@ -205,6 +206,7 @@ CREATE TABLE `washing_order` (
   `sentBack_address` varchar(128) DEFAULT NULL COMMENT '取衣門市或地址',
   `order_time` datetime NOT NULL COMMENT '訂單成立時間',
   `carbon_emission` int(11) NOT NULL COMMENT '碳排量',
+  `carbon_tax` int(11) NOT NULL COMMENT '碳稅',
   `carbon_point` int(11) NOT NULL COMMENT '碳點數',
   `order_status` int(11) NOT NULL DEFAULT 1 COMMENT '訂單狀態(1:處理中, 2:完成, 3:取消)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='訂單紀錄表';
@@ -307,22 +309,6 @@ ALTER TABLE `washing_order`
 --
 ALTER TABLE `wash_mode`
   ADD PRIMARY KEY (`mode_id`);
-
---
--- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
---
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `member`
---
-ALTER TABLE `member`
-  MODIFY `mem_id` int(64) NOT NULL AUTO_INCREMENT COMMENT '會員編號';
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `washing_order`
---
-ALTER TABLE `washing_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '訂單編號';
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
