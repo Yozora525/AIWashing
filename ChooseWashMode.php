@@ -2,11 +2,16 @@
 <?php
 require_once('connect.php');
 session_start();
-$member_memid = $_SESSION['login'];
-$member_sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$member_memid}'";
-$member_result = mysqli_query($conn, $member_sql);
-$member_row = mysqli_fetch_assoc($member_result);
-$member_mem_id = $member_row['mem_id'];
+if (isset($_SESSION['login']) == false) {
+    header('location:login.php');
+    exit; //記得要跳出來，不然會重複轉址過多次
+}
+$memid = $_SESSION['login'];
+$sql = "SELECT `mem_name`,`mem_id` FROM `member` WHERE `mem_id`='{$memid}'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$mem_id = $row['mem_id'];
+
 
 
 ?>
@@ -152,7 +157,7 @@ $member_mem_id = $member_row['mem_id'];
                             $laundry_bag_result = mysqli_query($conn, $sql);
                             if ($laundry_bag_result->num_rows > 0) {
                                 while ($laundry_bag_row = $laundry_bag_result->fetch_assoc()) {
-                                    if ($member_mem_id == $laundry_bag_row['mem_id']) {
+                                    if ($mem_id == $laundry_bag_row['mem_id']) {
                             ?>
                                         <option value="<?php echo $laundry_bag_row['bag_id'] ?>"><?php echo $laundry_bag_row['bag_id'] ?></option>
                             <?php }
@@ -196,7 +201,7 @@ $member_mem_id = $member_row['mem_id'];
                     </div>
 
                     <?php
-                    $sql = "SELECT * FROM `server_store`";
+                    $sql = "SELECT * FROM `serve_store`";
                     $getserverstore = mysqli_query($conn, $sql);
                     $server_store = array();
                     $i = 0;
@@ -306,7 +311,7 @@ $member_mem_id = $member_row['mem_id'];
                             $payment_result = mysqli_query($conn, $sql);
                             if ($payment_result->num_rows > 0) {
                                 while ($payment_row = $payment_result->fetch_assoc()) {
-                                    if ($member_mem_id == $payment_row['mem_id']) {
+                                    if ($mem_id == $payment_row['mem_id']) {
                             ?>
                                         <option value="<?php echo $payment_row['card_name'] ?>"><?php echo $payment_row['card_name'] ?>&nbsp;<?php echo $payment_row['card_num'] ?></option>
                             <?php }

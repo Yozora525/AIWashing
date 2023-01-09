@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password']; //post獲取表單裡的password
     $confirm = $_POST['passwordconfirm']; //post獲取表單裡的passwordconfirm
     $phone = $_POST['phone']; //post獲取表單裡的phone 
-    $memId = IdProducer('O');
+    $memId = IdProducer('M');
     /*註冊*/
     if (!isset($_POST['submit'])) {
         exit("錯誤執行");
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($password != $confirm) {
         echo "<script>alert('兩次密碼不相同！重新填寫');window.location.href='signup.php'</script>";
     } else {
-        $singup = "INSERT into `member`(mem_id,mem_account,mem_name,mem_pwd,mem_pwdconfirm,mem_phone) values ('$memId','$account','$username','$password','$confirm','$phone')"; //向資料庫插入表單傳來的值的sql
+        $singup = "INSERT into `member`(mem_id,mem_account,mem_name,mem_pwd,pwd_confirm,mem_phone) values ('$memId','$account','$username','$password','$confirm','$phone')"; //向資料庫插入表單傳來的值的sql
         $reslut = mysqli_query($conn, $singup); //執行sql
     }
 

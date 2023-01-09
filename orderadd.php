@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /* 計算碳點、碳排、碳稅 */
 
         // 訂單編號
-        $_SESSION['orderId']= $orderId = IdProducer('O');
+        $orderId = IdProducer('O');
 
         /*註冊*/
         $addorder = "INSERT into `washing_order`(order_id,mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back,sentTo_address,sentBack_address)
