@@ -78,18 +78,18 @@ $member_mem_id = $member_row['mem_id'];
                                 <div class="card-body">
                                     <span class="fs-6">碳點: <?php echo $order_row['carbon_point'] ?><br></span>
                                     <span class="fs-6">碳排放: <?php echo $order_row['carbon_emission'] ?><br></span>
-                                    <a href="#" class="card-link" data-seemore="">查看詳情<br></a>
-                                    <span class="fs-6 dis_none" data-detail="">洗衣門市: 中原門市<br></span>
-                                    <span class="fs-6 dis_none" data-detail="">洗滌模式: 冷<br></span>
-                                    <span class="fs-6 dis_none" data-detail="">脫水模式: 弱脫水<br></span>
-                                    <span class="fs-6 dis_none" data-detail="">乾燥模式: 電熱烘乾<br></span>
-                                    <span class="fs-6 dis_none" data-detail="">折衣模式: 機器人<br></span>
-                                    <span class="fs-6 dis_none" data-detail="">送洗方式: 集中櫃<br></span>
-                                    <span class="fs-6 dis_none" data-detail="">領取方式: 外送<br></span>
-                                    <span class="fs-6 dis_none" data-detail="">衣物重量: 0.8kg<br></span>
-                                    <span class="fs-6 dis_none" data-detail="">洗衣總額: NT$664<br></span>
-                                    <span class="fs-6 dis_none" data-detail="">運費: NT$ 20<br></span>
-                                    <span class="fs-6 dis_none" data-detail="">總額: NT$ 1974<br></span>
+                                    <a class="card-link" data-seemore="<?php echo $order_row['order_id'] ?>" onclick="ShowDetailData('<?php echo $order_row['order_id'] ?>')">查看詳情<br></a>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗衣門市: 中原門市<br></span>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗滌模式: 冷<br></span>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">脫水模式: 弱脫水<br></span>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">乾燥模式: 電熱烘乾<br></span>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">折衣模式: 機器人<br></span>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">送洗方式: 集中櫃<br></span>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">領取方式: 外送<br></span>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">衣物重量: 0.8kg<br></span>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗衣總額: NT$664<br></span>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">運費: NT$ 20<br></span>
+                                    <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">總額: NT$ 1974<br></span>
                                     <p>
                                         <?php if ($order_row['order_status'] == '1') {
                                             $_SESSION['payid'] = $order_row['order_id'] ?>
