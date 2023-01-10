@@ -47,8 +47,8 @@ mysqli_close($conn);
                         <p class="text-center">發票</p>
                         <span class="fs-6">訂單編號：<?php echo $row['order_id'] ?><br></span>
                         <input type="hidden" name="payid[]" value="<?php echo $row['order_id'] ?>" readonly />
-                        <span class="fs-6">下單時間：<?php echo $row['order_time'] ?></span><br>
-                        <span class="fs-6">隨機碼：0000</span>&nbsp;
+                        <span class="fs-6">開立時間：<?php echo $row['order_time'] ?></span><br>
+                        <span class="fs-6">隨機碼：9999</span>&nbsp;
                         <span class="fs-6">公司名：AI智慧喜</span><br><br>
                         <span class="fs-6">洗滌模式：<?php echo $row['wash_mode'] ?></span><br>
                         <span class="fs-6">脫水模式：<?php echo $row['dryout_mode'] ?></span><br>

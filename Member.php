@@ -5,7 +5,7 @@ require_once('connect.php');
 session_start();
 if (isset($_SESSION['login']) == false) {
     header('location:login.php');
-    exit; //記得要跳出來，不然會重複轉址過多次
+    exit; 
 }
 $memid = $_SESSION['login'];
 $sql = "SELECT `mem_name`,`mem_id` FROM `member` WHERE `mem_id`='{$memid}'";
