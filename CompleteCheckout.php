@@ -2,8 +2,8 @@
 <?php
 require_once('connect.php');
 session_start();
-$payId=$_SESSION['payid'];
-echo $payId;
+$payId=$_GET['payid'];
+
 $sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$payId}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
