@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-<?php
-include('templates/frame/head.html');
-?>
+    <?php
+    include('templates/frame/head.html');
+    ?>
 </head>
 
 <body>
     <?php
-    include('templates/frame/header.html');
+    include('templates/frame/header.php');
     ?>
 
     <?php

@@ -29,38 +29,9 @@ mysqli_close($conn);
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-default bg-amos" role="navigation">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="">
-                    <img src="static/img/washing-machine.png" width="50" alt="AI智慧喜" class="d-inline-block align-text-top" id="logo-img"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" data-target-sidebar=".side-collapse-right">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!--頁面選單-->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-                        <li class="nav-item">
-                            <a class="nav-link" href="Index.php">首頁</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="ChooseWashMode.php">智慧洗</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Member.php">會員管理</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- To後端:登入/登出按紐 -->
-                <!-- 用if 判斷session 是否有資料 決定要秀登入or 登出 -->
-                <?php if (isset($_SESSION['login']) == true) { ?>
-                    <a href="logout.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登出"></a>
-                <?php } else { ?>
-                    <a href="Login.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登入"></a>
-                <?php } ?>
-            </div>
-        </nav>
-    </header>
+    <?php
+    include('templates/frame/header.php');
+    ?>
 
     <main>
         <div class="container">
@@ -85,8 +56,8 @@ mysqli_close($conn);
                 <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>
 
                 <span class="fs-6">衣物重量：<?php echo $row['weight'] ?>kg</span><br>
-                <span class="fs-6">洗衣總額：<?php echo $row['washing_price'] ?></span><br>
-                <span class="fs-6">運費：NT$ <?php echo $row['sendprice']?></span><br>
+                <span class="fs-6">洗衣總額：NT$ <?php echo $row['washing_price'] ?></span><br>
+                <span class="fs-6">運費：NT$ <?php echo $row['sendprice'] ?></span><br>
                 <span class="fs-6">碳點：<?php echo $row['carbon_point'] ?></span><br>
                 <p class="fs-5"><b>總額：NT$ <?php echo $row['total_price'] ?></b></p>
                 <p><input type="submit" value="前往付款" class="btn btn-success" onclick="" /></p>

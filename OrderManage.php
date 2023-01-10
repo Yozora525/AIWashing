@@ -25,38 +25,9 @@ $member_mem_id = $member_row['mem_id'];
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-default bg-amos" role="navigation">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="">
-                    <img src="static/img/washing-machine.png" width="50" alt="AI智慧喜" class="d-inline-block align-text-top" id="logo-img"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" data-target-sidebar=".side-collapse-right">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!--頁面選單-->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-                        <li class="nav-item">
-                            <a class="nav-link" href="Index.php">首頁</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="ChooseWashMode.php">智慧洗</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Member.php">會員管理</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- To後端:登入/登出按紐 -->
-                <!-- 用if 判斷session 是否有資料 決定要秀登入or 登出 -->
-                <?php if (isset($_SESSION['login']) == true) { ?>
-                    <a href="logout.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登出"></a>
-                <?php } else { ?>
-                    <a href="Login.php"><input class="btn btn-outline-light" type="submit" onclick="" value="登入"></a>
-                <?php } ?>
-            </div>
-        </nav>
-    </header>
+    <?php
+    include('templates/frame/header.php');
+    ?>
 
     <main>
         <div class="container">
@@ -79,24 +50,20 @@ $member_mem_id = $member_row['mem_id'];
                                 <span class="fs-6">碳點: <?php echo $order_row['carbon_point'] ?><br></span>
                                 <span class="fs-6">碳排放: <?php echo $order_row['carbon_emission'] ?><br></span>
                                 <a class="card-link" data-seemore="<?php echo $order_row['order_id'] ?>" onclick="ShowDetailData('<?php echo $order_row['order_id'] ?>')">查看詳情<br></a>
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗滌模式: <?php echo $order_row['wash_mode'] ?><br></span>
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">脫水模式: <?php echo $order_row['dryout_mode'] ?><br></span>
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">乾燥模式: <?php echo $order_row['drying_mode'] ?><br></span>
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">折衣模式: <?php echo $order_row['folding_mode'] ?><br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗滌模式： <?php echo $order_row['wash_mode'] ?><br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">脫水模式： <?php echo $order_row['dryout_mode'] ?><br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">乾燥模式： <?php echo $order_row['drying_mode'] ?><br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">折衣模式： <?php echo $order_row['folding_mode'] ?><br></span>
 
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">送洗方式: <?php echo $order_row['sent_to'] ?><br></span>
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗衣門市/地址: <?php echo $order_row['sentTo_address'] ?><br></span>
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">送洗方式: <?php echo $order_row['sent_back'] ?><br></span>
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">取衣門市/地址: <?php echo $order_row['sentBack_address'] ?><br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">送洗方式： <?php echo $order_row['sent_to'] ?><br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗衣門市/地址： <?php echo $order_row['sentTo_address'] ?><br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">送洗方式： <?php echo $order_row['sent_back'] ?><br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">取衣門市/地址： <?php echo $order_row['sentBack_address'] ?><br></span>
 
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">衣物重量:<?php //echo $order_row['weight'] 
-                                                                                                                    ?> kg<br></span>
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗衣總額: NT$<?php //echo $order_row['sent_to'] 
-                                                                                                                        ?><br></span>
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">運費: NT$ <?php //echo $order_row['sent_to'] 
-                                                                                                                        ?><br></span>
-                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">總額: NT$ <?php //echo $order_row['sent_to'] 
-                                                                                                                        ?><br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">衣物重量：<?php echo $order_row['weight'] ?> kg<br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗衣總額： NT$ <?php echo $order_row['washing_price'] ?></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">運費： NT$ <?php echo $order_row['sendprice'] ?><br></span>
+                                <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">總額： NT$ <?php echo $order_row['total_price'] ?><br></span>
                                 <p>
                                     <?php if ($order_row['order_status'] == '1') {
                                         $_SESSION['payid'] = $order_row['order_id'];
