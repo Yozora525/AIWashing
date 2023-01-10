@@ -72,17 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /* 計算碳點、碳排、碳稅 */
 
         // 訂單編號
-        $orderId = IdProducer('O');
+        $_SESSION['orderId'] = $orderId = IdProducer('O');
 
         /*註冊*/
         $addorder = "INSERT into `washing_order`(order_id,mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back,sentTo_address,sentBack_address)
          values ('$orderId','$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way','$sendto','$sendBack')"; //向資料庫插入表單傳來的值的sql
-        $reslut = mysqli_query($conn, $addorder); //執行sql
-        
-        $num = mysqli_num_rows($result); // 函式返回結果集中行的數量
-        if ($num) {
-            $row = mysqli_fetch_assoc($result);
-            $_SESSION['orderId'] =$row[$orderId] ;}
+        $reslut = mysqli_query($conn, $addorder); //執行sql        
     }
 
     if (!$reslut) {
