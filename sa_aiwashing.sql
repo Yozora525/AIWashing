@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1:3307
--- 產生時間： 2023-01-09 16:15:52
+-- 產生時間： 2023-01-10 03:14:01
 -- 伺服器版本： 10.4.14-MariaDB
 -- PHP 版本： 7.2.34
 
@@ -111,16 +111,17 @@ INSERT INTO `delivery_method` (`delivery_id`, `delivery_name`, `delivery_type`, 
 CREATE TABLE `laundry_bag` (
   `bag_id` varchar(128) NOT NULL COMMENT '洗衣袋編號',
   `bag_addTime` datetime DEFAULT current_timestamp() COMMENT '洗衣袋加入時間',
-  `bag_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)'
+  `bag_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)',
+  `mem_id` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='洗衣袋晶片表';
 
 --
 -- 傾印資料表的資料 `laundry_bag`
 --
 
-INSERT INTO `laundry_bag` (`bag_id`, `bag_addTime`, `bag_status`) VALUES
-('B01', '2022-12-31 12:12:58', 1),
-('B02', '2022-12-31 12:15:58', 1);
+INSERT INTO `laundry_bag` (`bag_id`, `bag_addTime`, `bag_status`, `mem_id`) VALUES
+('B01', '2022-12-31 12:12:58', 1, 'M1673277903215'),
+('B02', '2022-12-31 12:15:58', 1, '');
 
 -- --------------------------------------------------------
 
@@ -138,6 +139,13 @@ CREATE TABLE `member` (
   `mem_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)',
   `mem_points` int(64) DEFAULT NULL COMMENT '會員擁有點數'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='會員表';
+
+--
+-- 傾印資料表的資料 `member`
+--
+
+INSERT INTO `member` (`mem_id`, `mem_account`, `mem_pwd`, `pwd_confirm`, `mem_name`, `mem_phone`, `mem_status`, `mem_points`) VALUES
+('M1673277903215', '1', '1', '1', '1', '1', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -171,6 +179,13 @@ CREATE TABLE `payment` (
   `card_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='付款卡表';
 
+--
+-- 傾印資料表的資料 `payment`
+--
+
+INSERT INTO `payment` (`card_id`, `mem_id`, `card_num`, `card_name`, `owner_name`, `expired_month`, `expired_year`, `security_code`, `card_time`, `card_status`) VALUES
+('C1673277919954', 'M1673277903215', '8745854774588965', '中國信託', '黃大千', 12, 300, '456', '2023-01-09 23:25:19', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -184,6 +199,16 @@ CREATE TABLE `serve_store` (
   `address` int(11) NOT NULL COMMENT '地址',
   `store_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常, 0:停用)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='自取櫃和集中櫃服務門市';
+
+--
+-- 傾印資料表的資料 `serve_store`
+--
+
+INSERT INTO `serve_store` (`store_id`, `store_name`, `store_type`, `address`, `store_status`) VALUES
+('S001', '桃園門市', 1, 0, 0),
+('S002', '新竹門市', 2, 0, 0),
+('S003', '中壢門市', 2, 0, 0),
+('S004', '竹北門市', 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -210,6 +235,16 @@ CREATE TABLE `washing_order` (
   `carbon_point` int(11) NOT NULL COMMENT '碳點數',
   `order_status` int(11) NOT NULL DEFAULT 1 COMMENT '訂單狀態(1:處理中, 2:完成, 3:取消)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='訂單紀錄表';
+
+--
+-- 傾印資料表的資料 `washing_order`
+--
+
+INSERT INTO `washing_order` (`order_id`, `mem_id`, `bag_id`, `weight`, `wash_mode`, `dryout_mode`, `drying_mode`, `folding_mode`, `sent_to`, `sentTo_address`, `sent_back`, `sentBack_address`, `order_time`, `carbon_emission`, `carbon_tax`, `carbon_point`, `order_status`) VALUES
+('O1673278058443', 'M1673277903215', 'B01', 0, '熱水', '弱脫水', '日曬', '機器人', '到店送洗', '桃園門市', '到店取衣', '竹北門市', '0000-00-00 00:00:00', 0, 0, 0, 1),
+('O1673280544722', 'M1673277903215', 'B01', 0, '強力', '強脫水', '日曬', '手工', '集中櫃送洗', '新竹門市', '到店取衣', '桃園門市', '0000-00-00 00:00:00', 0, 0, 0, 1),
+('O1673280984823', 'M1673277903215', 'B01', 0, '熱水', '弱脫水', '日曬', '不折', '集中櫃送洗', '新竹門市', '集中櫃取衣', '新竹門市', '0000-00-00 00:00:00', 0, 0, 0, 1),
+('O1673284947296', 'M1673277903215', 'B01', 0, '熱水', '弱脫水', '電熱烘乾', '手工', '到店送洗', '桃園門市', '到店取衣', '竹北門市', '0000-00-00 00:00:00', 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -297,6 +332,12 @@ ALTER TABLE `member_avatar_frame`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`card_id`);
+
+--
+-- 資料表索引 `serve_store`
+--
+ALTER TABLE `serve_store`
+  ADD PRIMARY KEY (`store_id`);
 
 --
 -- 資料表索引 `washing_order`
