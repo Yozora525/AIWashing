@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         //! 撈出該模式下所需的碳排、點、稅，並加起來    -> 尚未測試(沒資料及table可能還會更改)
         for ($i = 0; $i < count($ListMode); $i++) {
-            $sql = "select * from wash_mode where mode_id = {$ListMode[$i]}";
+            $sql = "select * from wash_mode where mode_name = {$ListMode[$i]}";
 
             // 找出每公斤的碳點、碳排
             $res = mysqli_query($conn, $sql);

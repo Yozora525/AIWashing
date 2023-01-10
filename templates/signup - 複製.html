@@ -15,10 +15,17 @@
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
     <script src="../static/js/bootstrap.bundle.min.js"></script>
     <script src="../static/lib/Frontend_lib/jquery/jquery-3.1.0.js"></script>
-    <script src="../static/js/OrderManage.js"></script>
-    <title>AI洗衣袋管理</title>
+    <title>使用者登入頁面</title>
 </head>
-
+<style>
+    .container{
+        border-radius: 1em;
+        background-color: #d1ded2;
+        border: 1em #6ec071;
+        padding: 2rem;
+        margin: 2rem auto;
+    }
+</style>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-default bg-amos" role="navigation">
@@ -59,40 +66,41 @@
 
     <main>
         <div class="container">
-            <form method="post" action="">
-                <br>
-                <h4>顯示現有的AI洗衣袋</h4>
-
-                <div class="card">
-                    <div class="card-header">
-                        AI洗衣袋編號: O202212110875
-                    </div>
-                    <div class="card-body" data-detail="">
-                        2022-12-31 10:00:01
+            <br><br><br>
+            <form method="post" action="Member.html">
+                <div class="form-group">
+                    <label>帳 號：</label>
+                    <input type="text" class="form-control" aria-describedby="CertifiedHelp" placeholder="請輸入身份證字號"
+                        name="account">
+                    <small id="CertifiedHelp" class="form-text text-muted">We'll never share personal information
+                        with
+                        anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label>使用者名稱：</label>
+                    <input type="password" class="form-control" placeholder="請輸入使用者名稱" name="password">
+                </div>
+                <div class="form-group">
+                    <label>密 碼：</label>
+                    <input type="password" class="form-control" placeholder="請輸入密碼" name="password">
+                </div>
+                <div class="form-group">
+                    <label>重複密碼：</label>
+                    <input type="password" class="form-control" placeholder="請再輸入密碼一次" name="passwordconfirm">
+                </div>
+                <div class="form-group">
+                    <label>電 話：</label>
+                    <input type="password" class="form-control" placeholder="請輸入電話" name="phone">
+                    <div class="d-md-flex" style="margin-top: 1rem;">
+                        <input type="button" class="btn btn-outline-success " onclick="window.alert('此功能尚未開放!');"
+                            value="手機驗證碼" />
                     </div>
                 </div>
                 <br>
-
-                <div class="card">
-                    <div class="card-header">
-                        AI洗衣袋編號: O202212110875
-                    </div>
-                    <div class="card-body" data-detail="">
-                        2022-12-31 10:00:01
-                    </div>
+                <div class="d-grid gap-2">
+                    <input class="btn btn-success" name="submit" type="submit" onclick="" value="註冊">
                 </div>
-                <br>
-
-                <div class="card">
-                    <div class="card-header">
-                        AI洗衣袋編號: O202212110875
-                    </div>
-                    <div class="card-body" data-detail="">
-                        2022-12-31 10:00:01
-                    </div>
-                </div>
-                <br>
-
+                <br><br>
             </form>
         </div>
     </main>
