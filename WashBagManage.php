@@ -35,7 +35,7 @@ $member_mem_id = $member_row['mem_id'];
                 <br>
                 <h4>顯示現有的AI洗衣袋</h4>
                 <?php
-                $laundry_bag_sql = "SELECT * FROM laundry_bag";
+                $laundry_bag_sql = "SELECT * FROM bag_borrow_record";
                 $laundry_bag_result = mysqli_query($conn, $laundry_bag_sql);
                 if ($laundry_bag_result->num_rows > 0) {
                     while ($laundry_bag_row = $laundry_bag_result->fetch_assoc()) {
@@ -43,11 +43,10 @@ $member_mem_id = $member_row['mem_id'];
                 ?>
                             <div class="card">
                                 <div class="card-header">
-                                    AI洗衣袋編號: <?php echo $laundry_bag_row['bag_id'] ?>
+                                    AI洗衣袋編號： <?php echo $laundry_bag_row['bag_id'] ?>
                                 </div>
                                 <div class="card-body" data-detail="">
                                         <?php echo $laundry_bag_row['bag_addTime'] ?>
-                                </div>
                             </div>
                             <br>
                 <?php }

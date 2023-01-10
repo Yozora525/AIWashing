@@ -42,13 +42,13 @@ $member_mem_id = $member_row['mem_id'];
             ?>
                         <div class="card">
                             <div class="card-header">
-                                訂單編號:<?php echo $order_row['order_id'] ?>
+                                訂單編號：<?php echo $order_row['order_id'] ?>
                                 <input type="hidden" name="payid[]" value="<?php echo $order_row['order_id'] ?>" readonly />
                             </div>
                             <!-- data-seemore 及 data-detail 值要給訂單編號 -->
                             <div class="card-body">
-                                <span class="fs-6">碳點: <?php echo $order_row['carbon_point'] ?><br></span>
-                                <span class="fs-6">碳排放: <?php echo $order_row['carbon_emission'] ?><br></span>
+                                <span class="fs-6">碳點： <?php echo $order_row['carbon_point'] ?><br></span>
+                                <span class="fs-6">碳排放： <?php echo $order_row['carbon_emission'] ?><br></span>
                                 <a class="card-link" data-seemore="<?php echo $order_row['order_id'] ?>" onclick="ShowDetailData('<?php echo $order_row['order_id'] ?>')">查看詳情<br></a>
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗滌模式： <?php echo $order_row['wash_mode'] ?><br></span>
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">脫水模式： <?php echo $order_row['dryout_mode'] ?><br></span>
@@ -64,7 +64,7 @@ $member_mem_id = $member_row['mem_id'];
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗衣總額： NT$ <?php echo $order_row['washing_price'] ?></span>
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">運費： NT$ <?php echo $order_row['sendprice'] ?><br></span>
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">總額： NT$ <?php echo $order_row['total_price'] ?><br></span>
-                                <p>
+                                <p><br>
                                     <?php if ($order_row['order_status'] == '1') {
                                         $_SESSION['payid'] = $order_row['order_id'];
                                         echo "<a href='CompleteCheckout.php?payid=" . $order_row['order_id'] . "' class='btn btn-success'>確認付款</a>"; ?>

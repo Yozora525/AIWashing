@@ -31,12 +31,12 @@ mysqli_close($conn);
         <div class="container">
             <form method="post" action="ShowOrder.php">
                 <br>
-                <p>預計完成的時間:</p>
+                <p>預計完成的時間：</p>
                 <!-- 剩下的時間 -->
                 <p class="h1 text-success"><b>2022-12-28 12:28</b></p>
                 <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
 
-                <label for="start">約定取件時間:</label>
+                <label for="start">約定取件時間：</label>
                 <input type="datetime-local" id="birthdaytime" name="add_sendback_time">
                 <br><br>
                 <p class="fs-5"><b>訂單詳情</b></p>

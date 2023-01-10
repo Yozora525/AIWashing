@@ -124,7 +124,7 @@ $mem_id = $row['mem_id'];
                             <option selected="selected" disabled="disabled" style="display:none" value="">請選擇AI洗衣袋
                             </option>
                             <?php
-                            $sql = "SELECT * FROM `laundry_bag`";
+                            $sql = "SELECT * FROM `bag_borrow_record`";
                             $laundry_bag_result = mysqli_query($conn, $sql);
                             if ($laundry_bag_result->num_rows > 0) {
                                 while ($laundry_bag_row = $laundry_bag_result->fetch_assoc()) {

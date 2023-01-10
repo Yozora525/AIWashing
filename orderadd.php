@@ -46,6 +46,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($WashMode == "" || $DehydrationMode == "" || $DryMode == "" || $FoldMode_Way == "" || $Aibag == "" || $SendTo_Way == "" || $SendBack_Way == "" || $creditcard == "") {
         echo "<script>alert('資訊不能為空！重新填寫');window.location.href='ChooseWashMode.php'</script>";
     } else {
+
+        $sql = "SELECT * FROM `laundry_bag`";
+        $laundry_bag_result = mysqli_query($conn, $sql);
+        $laundry_bag = array();
+        $i = 0;
+        while ($laundry_bag[$i] = $laundry_bag_result->fetch_assoc()) {
+            $i++;
+        }
+        for ($i = 0; $i < count($laundry_bag); $i++) {
+            if ($laundry_bag[$i]['bag_status'] == 1) {
+                $aibag = $laundry_bag[$i]['bag_id'];
+                break;
+            }
+        }
+
+
         /* 計算碳點、碳排、碳稅 */
         $ListMode = [$WashMode, $DehydrationMode, $DryMode, $FoldMode_Way];
         $weight = 3; // 重量統一用3kg來算
@@ -87,9 +103,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sent_to_price = $sent_to_row['delivery_price'];
         $sent_back_price = $sent_back_row['delivery_price'];
         $sendprice = $sent_to_price + $sent_back_price;
-        
+
         /* 計算總額 $washing_price是洗衣總額 */
-        $total = /* $washing_price + */ $sendprice; 
+        $total = /* $washing_price + */ $sendprice;
 
 
 
