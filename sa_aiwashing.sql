@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1:3307
--- 產生時間： 2023-01-10 03:14:01
+-- 產生時間： 2023-01-10 09:19:53
 -- 伺服器版本： 10.4.14-MariaDB
 -- PHP 版本： 7.2.34
 
@@ -43,8 +43,8 @@ CREATE TABLE `avatar_frame` (
 --
 
 INSERT INTO `avatar_frame` (`frame_id`, `frame_color`, `frame_levelName`, `frame_points`, `frame_recordTime`, `frame_status`) VALUES
-('F0001', '#7D7DFF', '等級一', 30, '2022-12-31 12:20:47', 1),
-('F0002', '#00AEAE', '等級二', 50, '2022-12-31 12:22:47', 1);
+('F1673338241919', '#7D7DFF', '等級一', 30, '2022-12-31 12:20:47', 1),
+('F1673338255333', '#00AEAE', '等級二', 50, '2022-12-31 12:22:47', 1);
 
 -- --------------------------------------------------------
 
@@ -86,7 +86,7 @@ CREATE TABLE `delivery_method` (
   `delivery_name` varchar(64) NOT NULL COMMENT '運送名稱',
   `delivery_type` int(11) NOT NULL COMMENT '型態(1:送洗,2:領回)',
   `delivery_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)',
-  `delivery_price` int(11) DEFAULT NULL COMMENT '運送基本定價',
+  `delivery_price` int(11) DEFAULT NULL COMMENT '運送基本定價(每公里)',
   `delivery_recodeTime` datetime NOT NULL DEFAULT current_timestamp() COMMENT '運送方式加入時間'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='運送方式表';
 
@@ -95,12 +95,12 @@ CREATE TABLE `delivery_method` (
 --
 
 INSERT INTO `delivery_method` (`delivery_id`, `delivery_name`, `delivery_type`, `delivery_status`, `delivery_price`, `delivery_recodeTime`) VALUES
-('D1673178468095', '到店送洗', 1, 1, NULL, '2022-12-31 13:19:12'),
-('D1673178468096', '到店取衣', 2, 1, NULL, '2022-12-31 13:22:17'),
-('D1673178468097', '外送洗衣', 1, 1, NULL, '2022-12-31 13:22:50'),
-('D1673178468098', '外送取衣', 2, 1, NULL, '2022-12-31 13:23:53'),
-('D1673178468099', '集中櫃送洗', 1, 1, NULL, '2023-01-08 15:45:18'),
-('D1673178468100', '集中櫃取衣', 2, 1, NULL, '2023-01-08 15:47:18');
+('D1673178468095', '到店送洗', 1, 1, 0, '2022-12-31 13:19:12'),
+('D1673178468096', '到店取衣', 2, 1, 0, '2022-12-31 13:22:17'),
+('D1673178468097', '外送洗衣', 1, 1, 20, '2022-12-31 13:22:50'),
+('D1673178468098', '外送取衣', 2, 1, 20, '2022-12-31 13:23:53'),
+('D1673178468099', '集中櫃送洗', 1, 1, 10, '2023-01-08 15:45:18'),
+('D1673178468100', '集中櫃取衣', 2, 1, 10, '2023-01-08 15:47:18');
 
 -- --------------------------------------------------------
 
@@ -111,17 +111,16 @@ INSERT INTO `delivery_method` (`delivery_id`, `delivery_name`, `delivery_type`, 
 CREATE TABLE `laundry_bag` (
   `bag_id` varchar(128) NOT NULL COMMENT '洗衣袋編號',
   `bag_addTime` datetime DEFAULT current_timestamp() COMMENT '洗衣袋加入時間',
-  `bag_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)',
-  `mem_id` varchar(32) NOT NULL
+  `bag_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='洗衣袋晶片表';
 
 --
 -- 傾印資料表的資料 `laundry_bag`
 --
 
-INSERT INTO `laundry_bag` (`bag_id`, `bag_addTime`, `bag_status`, `mem_id`) VALUES
-('B01', '2022-12-31 12:12:58', 1, 'M1673277903215'),
-('B02', '2022-12-31 12:15:58', 1, '');
+INSERT INTO `laundry_bag` (`bag_id`, `bag_addTime`, `bag_status`) VALUES
+('B1673338278326', '2022-12-31 12:12:58', 1),
+('B1673338278327', '2022-12-31 12:15:58', 1);
 
 -- --------------------------------------------------------
 
@@ -139,13 +138,6 @@ CREATE TABLE `member` (
   `mem_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)',
   `mem_points` int(64) DEFAULT NULL COMMENT '會員擁有點數'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='會員表';
-
---
--- 傾印資料表的資料 `member`
---
-
-INSERT INTO `member` (`mem_id`, `mem_account`, `mem_pwd`, `pwd_confirm`, `mem_name`, `mem_phone`, `mem_status`, `mem_points`) VALUES
-('M1673277903215', '1', '1', '1', '1', '1', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -179,13 +171,6 @@ CREATE TABLE `payment` (
   `card_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='付款卡表';
 
---
--- 傾印資料表的資料 `payment`
---
-
-INSERT INTO `payment` (`card_id`, `mem_id`, `card_num`, `card_name`, `owner_name`, `expired_month`, `expired_year`, `security_code`, `card_time`, `card_status`) VALUES
-('C1673277919954', 'M1673277903215', '8745854774588965', '中國信託', '黃大千', 12, 300, '456', '2023-01-09 23:25:19', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -196,7 +181,8 @@ CREATE TABLE `serve_store` (
   `store_id` varchar(64) NOT NULL COMMENT 'AI櫃門市編號',
   `store_name` varchar(64) NOT NULL COMMENT '門市名稱',
   `store_type` int(11) NOT NULL COMMENT '類別(1:店內櫃, 2:集中櫃)',
-  `address` int(11) NOT NULL COMMENT '地址',
+  `address` varchar(128) NOT NULL COMMENT '地址',
+  `store_addTime` datetime NOT NULL DEFAULT current_timestamp() COMMENT '加入時間',
   `store_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常, 0:停用)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='自取櫃和集中櫃服務門市';
 
@@ -204,11 +190,17 @@ CREATE TABLE `serve_store` (
 -- 傾印資料表的資料 `serve_store`
 --
 
-INSERT INTO `serve_store` (`store_id`, `store_name`, `store_type`, `address`, `store_status`) VALUES
-('S001', '桃園門市', 1, 0, 0),
-('S002', '新竹門市', 2, 0, 0),
-('S003', '中壢門市', 2, 0, 0),
-('S004', '竹北門市', 1, 0, 0);
+INSERT INTO `serve_store` (`store_id`, `store_name`, `store_type`, `address`, `store_addTime`, `store_status`) VALUES
+('S1673336326249', '中壢新中原門市', 1, '桃園市中壢區新中北路243號1樓', '2023-01-10 15:51:48', 1),
+('S1673336326250', '中壢站前門市', 1, '桃園市中壢區健行路2號', '2023-01-10 15:51:48', 1),
+('S1673336326251', '中壢sogo門市', 1, '桃園市中壢區元化路二段33號', '2023-01-10 15:51:48', 1),
+('S1673336326252', '內壢站前門市', 1, '桃園市中壢區中華路一段288號', '2023-01-10 15:51:48', 1),
+('S1673336326253', '中壢龍岡門市', 1, '桃園市中壢區龍岡路二段115號', '2023-01-10 15:51:48', 1),
+('S1673337242970', '中壢夜市櫃', 2, '桃園市中壢區中央西路二段125號', '2023-01-10 16:04:43', 1),
+('S1673337242971', '中壢大江櫃', 2, '桃園市中壢區中園路二段501號', '2023-01-10 16:04:43', 1),
+('S1673337242972', '青埔高鐵櫃', 2, '桃園市中壢區高鐵站前東路一段1號', '2023-01-10 16:04:43', 1),
+('S1673337242973', '平鎮大潤發櫃', 2, '桃園市平鎮區南東路57-1號', '2023-01-10 16:04:43', 1),
+('S1673337242974', '八德國小櫃', 2, '桃園市八德區興豐路222號', '2023-01-10 16:04:43', 1);
 
 -- --------------------------------------------------------
 
@@ -225,26 +217,20 @@ CREATE TABLE `washing_order` (
   `dryout_mode` varchar(11) NOT NULL COMMENT '脫水模式',
   `drying_mode` varchar(11) NOT NULL COMMENT '乾衣模式',
   `folding_mode` varchar(11) NOT NULL COMMENT '摺衣模式',
+  `washing_time` int(11) NOT NULL COMMENT '預計洗衣時長',
+  `washing_price` int(11) NOT NULL COMMENT '洗衣總額(洗脫乾摺)',
   `sent_to` varchar(11) NOT NULL COMMENT '送洗方式',
   `sentTo_address` varchar(128) DEFAULT NULL COMMENT '送洗門市或地址',
   `sent_back` varchar(11) NOT NULL COMMENT '取回方式',
   `sentBack_address` varchar(128) DEFAULT NULL COMMENT '取衣門市或地址',
-  `order_time` datetime NOT NULL COMMENT '訂單成立時間',
+  `sentBack_time` datetime NOT NULL COMMENT '取回時間',
+  `order_time` datetime NOT NULL DEFAULT current_timestamp() COMMENT '訂單成立時間',
   `carbon_emission` int(11) NOT NULL COMMENT '碳排量',
   `carbon_tax` int(11) NOT NULL COMMENT '碳稅',
   `carbon_point` int(11) NOT NULL COMMENT '碳點數',
+  `total_price` int(11) NOT NULL COMMENT '整筆訂單總額',
   `order_status` int(11) NOT NULL DEFAULT 1 COMMENT '訂單狀態(1:處理中, 2:完成, 3:取消)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='訂單紀錄表';
-
---
--- 傾印資料表的資料 `washing_order`
---
-
-INSERT INTO `washing_order` (`order_id`, `mem_id`, `bag_id`, `weight`, `wash_mode`, `dryout_mode`, `drying_mode`, `folding_mode`, `sent_to`, `sentTo_address`, `sent_back`, `sentBack_address`, `order_time`, `carbon_emission`, `carbon_tax`, `carbon_point`, `order_status`) VALUES
-('O1673278058443', 'M1673277903215', 'B01', 0, '熱水', '弱脫水', '日曬', '機器人', '到店送洗', '桃園門市', '到店取衣', '竹北門市', '0000-00-00 00:00:00', 0, 0, 0, 1),
-('O1673280544722', 'M1673277903215', 'B01', 0, '強力', '強脫水', '日曬', '手工', '集中櫃送洗', '新竹門市', '到店取衣', '桃園門市', '0000-00-00 00:00:00', 0, 0, 0, 1),
-('O1673280984823', 'M1673277903215', 'B01', 0, '熱水', '弱脫水', '日曬', '不折', '集中櫃送洗', '新竹門市', '集中櫃取衣', '新竹門市', '0000-00-00 00:00:00', 0, 0, 0, 1),
-('O1673284947296', 'M1673277903215', 'B01', 0, '熱水', '弱脫水', '電熱烘乾', '手工', '到店送洗', '桃園門市', '到店取衣', '竹北門市', '0000-00-00 00:00:00', 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -332,12 +318,6 @@ ALTER TABLE `member_avatar_frame`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`card_id`);
-
---
--- 資料表索引 `serve_store`
---
-ALTER TABLE `serve_store`
-  ADD PRIMARY KEY (`store_id`);
 
 --
 -- 資料表索引 `washing_order`
