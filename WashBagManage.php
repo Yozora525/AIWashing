@@ -45,10 +45,8 @@ $member_mem_id = $member_row['mem_id'];
                                 <div class="card-header">
                                     AI洗衣袋編號: <?php echo $laundry_bag_row['bag_id'] ?>
                                 </div>
-                                <div class="card-body">
-                                    <blockquote class="blockquote mb-0  dis-none" data-detail="">
-                                        <footer class="blockquote-footer"><?php echo $laundry_bag_row['bag_addTime'] ?> </footer>
-                                    </blockquote>
+                                <div class="card-body" data-detail="">
+                                        <?php echo $laundry_bag_row['bag_addTime'] ?>
                                 </div>
                             </div>
                             <br>
