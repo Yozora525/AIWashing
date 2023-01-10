@@ -46,20 +46,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($WashMode == "" || $DehydrationMode == "" || $DryMode == "" || $FoldMode_Way == "" || $Aibag == "" || $SendTo_Way == "" || $SendBack_Way == "" || $creditcard == "") {
         echo "<script>alert('資訊不能為空！重新填寫');window.location.href='ChooseWashMode.php'</script>";
     } else {
+        /* 新增門市資料到櫃子表 */
+        $serve_store_sql = "SELECT * FROM `serve_store`";
+        $serve_store_result = mysqli_query($conn, $serve_store_sql);
+        $serve_store_row = mysqli_fetch_assoc($serve_store_result);
+        if ($serve_store_row['store_name'] = $sendto) {
+            $serve_id = $serve_store_row['store_id'];
+        }
 
-        $sql = "SELECT * FROM `laundry_bag`";
-        $laundry_bag_result = mysqli_query($conn, $sql);
-        $laundry_bag = array();
+        $addserve = "INSERT into `cabinet_record`(cabinet_id) values ('$serve_id')"; //門市id
+
+        $grid_sql = "SELECT * FROM `grid`";
+        $grid_result = mysqli_query($conn, $grid_sql);
+        $grid_row = mysqli_fetch_assoc($grid_result);
+        $grid_id = $grid_row['grid_id'];
+
+        $sql = "SELECT * FROM `grid`";
+        $grid_result = mysqli_query($conn, $sql);
+        $grid = array();
         $i = 0;
-        while ($laundry_bag[$i] = $laundry_bag_result->fetch_assoc()) {
+        while ($grid[$i] = $grid_result->fetch_assoc()) {
             $i++;
         }
-        for ($i = 0; $i < count($laundry_bag); $i++) {
-            if ($laundry_bag[$i]['bag_status'] == 1) {
-                $aibag = $laundry_bag[$i]['bag_id'];
+        for ($i = 0; $i < count($grid); $i++) {
+            if ($grid[$i]['bag_status'] == 1) {
+                $aibag = $grid[$i]['bag_id'];
                 break;
             }
         }
+        $sql = "SELECT * FROM `cabinet_record`";
+        $cabinet_record_result = mysqli_query($conn, $sql);
+        $cabinet_record = array();
+        $i = 0;
+        while ($cabinet_record[$i] = $cabinet_record_result->fetch_assoc()) {
+            $i++;
+        }
+        for ($i = 0; $i < count($cabinet_record); $i++) {
+            if ($cabinet_record[$i]['bag_status'] == true) {
+                if ($serve_id == true) {
+                    if ($cabinet_record_row['fettle'] != 1) {
+                        $cabinet_record_num = $cabinet_record[$i]['fettle'];
+                        break;
+                    }
+                }
+            }
+        }
+        echo $cabinet_record_num;
 
 
         /* 計算碳點、碳排、碳稅 */
@@ -84,8 +116,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        $tax = $emission / 1000 * 3000; // 碳稅(每公噸3000)
         /* 計算碳點、碳排、碳稅 */
+        $tax = $emission / 1000 * 3000; // 碳稅(每公噸3000)
+
 
         // 訂單編號
         $_SESSION['orderId'] = $orderId = IdProducer('O');
@@ -108,23 +141,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $total = /* $washing_price + */ $sendprice;
 
 
-
-
-
-
-
-
-
         /*新增訂單資料*/
         $addorder = "INSERT into `washing_order`(order_id,mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back,sentTo_address,sentBack_address,carbon_point,carbon_emission,carbon_tax,`weight`,total_price,sendprice)
          values ('$orderId','$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way','$sendto','$sendBack','$point','$emission','$tax','$weight','$total','$sendprice')"; //向資料庫插入表單傳來的值的sql
         $reslut = mysqli_query($conn, $addorder); //執行sql        
+
+
+
+
+
     }
 
     if (!$reslut) {
         die('Error: ' . mysqli_error($conn)); //如果sql執行失敗輸出錯誤
     } else {
-        echo "<script>alert('訂單輸入成功');window.location.href='SendToWash.php'</script>"; //成功輸出註冊成功
+        //echo "<script>alert('訂單輸入成功');window.location.href='SendToWash.php'</script>"; //成功輸出註冊成功
     }
 }
 mysqli_close($conn);

@@ -41,8 +41,6 @@ mysqli_close($conn);
                 <br><br>
                 <p class="fs-5"><b>訂單詳情</b></p>
                 <span class="fs-6">訂單編號：<?php echo $row['order_id'] ?></span><br>
-                <span class="fs-6">集中櫃編號：<?php  ?></span><br>
-
                 <span class="fs-6">洗滌模式：<?php echo $row['wash_mode'] ?></span><br>
                 <span class="fs-6">脫水模式：<?php echo $row['dryout_mode'] ?></span><br>
                 <span class="fs-6">乾燥模式：<?php echo $row['drying_mode'] ?></span><br>

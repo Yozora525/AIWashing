@@ -11,9 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $backtime = date("Y-m-d H:i:s", $sendbacktime);
     $addtime = "UPDATE `washing_order` SET `sentBack_time` ='$backtime' Where `order_id`='$orderId'";
     $addtimereslut = mysqli_query($conn, $addtime);
-
-
-    
 }
 mysqli_close($conn);
 ?>
