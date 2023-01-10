@@ -49,8 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /* 計算碳點、碳排、碳稅 */
         $ListMode = [$WashMode, $DehydrationMode, $DryMode, $FoldMode_Way];
         $weight = 3; // 重量統一用3kg來算
-        $point = 0; // 碳點
-        $emission = 0; // 碳排(單位：公斤)
+        $point = 0; // 碳點carbon_point
+        $emission = 0; // 碳排(單位：公斤)carbon_emission
 
         //! 撈出該模式下所需的碳排、點、稅，並加起來    -> 尚未測試(沒資料及table可能還會更改)
         for ($i = 0; $i < count($ListMode); $i++) {
@@ -74,9 +74,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // 訂單編號
         $_SESSION['orderId'] = $orderId = IdProducer('O');
 
-        /*註冊*/
-        $addorder = "INSERT into `washing_order`(order_id,mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back,sentTo_address,sentBack_address)
-         values ('$orderId','$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way','$sendto','$sendBack')"; //向資料庫插入表單傳來的值的sql
+
+
+
+        /* 計算運費 */
+        $sent_to_sql = "SELECT `delivery_price` FROM `delivery_method` where `delivery_name`='{$SendTo_Way}'";
+        $sent_to_result = mysqli_query($conn, $sent_to_sql);
+        $sent_to_row = mysqli_fetch_assoc($sent_to_result);
+        $sent_back_sql = "SELECT `delivery_price` FROM `delivery_method` where `delivery_name`='{$SendBack_Way}'";
+        $sent_back_result = mysqli_query($conn, $sent_back_sql);
+        $sent_back_row = mysqli_fetch_assoc($sent_back_result);
+        $sent_to_price = $sent_to_row['delivery_price'];
+        $sent_back_price = $sent_back_row['delivery_price'];
+        $sendprice = $sent_to_price + $sent_back_price;
+        
+        /* 計算總額 $washing_price是洗衣總額 */
+        $total = /* $washing_price + */ $sendprice; 
+
+
+
+
+
+
+
+
+
+        /*新增訂單資料*/
+        $addorder = "INSERT into `washing_order`(order_id,mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back,sentTo_address,sentBack_address,carbon_point,carbon_emission,carbon_tax,`weight`,total_price,sendprice)
+         values ('$orderId','$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way','$sendto','$sendBack','$point','$emission','$tax','$weight','$total','$sendprice')"; //向資料庫插入表單傳來的值的sql
         $reslut = mysqli_query($conn, $addorder); //執行sql        
     }
 

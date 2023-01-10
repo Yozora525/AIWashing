@@ -2,23 +2,11 @@
 <?php
 require_once('connect.php');
 session_start();
-$payId=$_GET['payid'];
+$payId = $_GET['payid'];
 
 $sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$payId}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
-
-$WashMode = $row['wash_mode']; //洗滌
-$id = $row['order_id'];
-$DehydrationMode = $row['dryout_mode']; //脫水
-$DryMode = $row['drying_mode']; //乾燥
-$FoldMode_Way = $row['folding_mode']; //折衣
-
-$SendTo_Way = $row['sent_to']; //送洗方式
-$SendTo_address = $row['sentTo_address']; //送洗
-
-$SendBack_Way = $row['sent_back']; //取回方式
-$SendBack_address = $row['sentBack_address']; //取回
 mysqli_close($conn);
 ?>
 
@@ -83,30 +71,31 @@ mysqli_close($conn);
                 <div class="card">
                     <div class="card-header">
                         <p class="text-center">發票</p>
-                        <span class="fs-6">訂單編號：<?php echo $id ?><br></span>
+                        <span class="fs-6">訂單編號：<?php echo $row['order_id'] ?><br></span>
+                        <span class="fs-6">下單時間：<?php echo $row['order_time'] ?></span><br>
+                        <span class="fs-6">隨機碼：0000</span>&nbsp;
+                        <span class="fs-6">公司名：AI智慧喜</span><br><br>
+                        <span class="fs-6">洗滌模式：<?php echo $row['wash_mode'] ?></span><br>
+                        <span class="fs-6">脫水模式：<?php echo $row['dryout_mode'] ?></span><br>
+                        <span class="fs-6">乾燥模式：<?php echo $row['drying_mode'] ?></span><br>
+                        <span class="fs-6">折衣模式：<?php echo $row['folding_mode'] ?></span><br>
+
+                        <span class="fs-6">送洗方式：<?php echo $row['sent_to'] ?></span><br>
+                        <span class="fs-6">洗衣門市/地址：<?php echo $row['sentTo_address'] ?></span><br>
+
+                        <span class="fs-6">領取方式：<?php echo $row['sent_back'] ?></span><br>
+                        <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>
+
+                        <span class="fs-6">衣物重量：<?php echo $row['weight'] ?>kg</span><br>
+                        <span class="fs-6">洗衣總額：NT$ <?php echo $row['washing_price']   ?></span><br>
+                        <span class="fs-6">運費：NT$ <?php echo $row['sendprice'] ?></span><br>
+                        <span class="fs-6">碳排放：<?php echo $row['carbon_emission'] ?>g</span><br>
+                        <span class="fs-6">碳點：<?php echo $row['carbon_point'] ?></span><br>
+
+                        <span id="tax" style="display:none">碳稅：<?php echo $row['carbon_tax'] ?></span><br>
 
 
-                        <span class="fs-6">洗滌模式：<?php echo $WashMode ?></span><br>
-                        <span class="fs-6">脫水模式：<?php echo $DehydrationMode ?></span><br>
-                        <span class="fs-6">乾燥模式：<?php echo $DryMode ?></span><br>
-                        <span class="fs-6">折衣模式：<?php echo $FoldMode_Way ?></span><br>
-
-                        <span class="fs-6">送洗方式：<?php echo $SendTo_Way ?></span><br>
-                        <span class="fs-6">洗衣門市/地址：<?php echo $SendTo_address ?></span><br>
-
-                        <span class="fs-6">領取方式：<?php echo $SendBack_Way ?></span><br>
-                        <span class="fs-6">取衣門市/地址：<?php echo $SendBack_address ?></span><br>
-
-                        <span class="fs-6">衣物重量：0.8kg</span><br>
-                        <span class="fs-6">洗衣總額：NT$664</span><br>
-                        <span class="fs-6">運費：NT$ 0</span><br>
-                        <span class="fs-6">碳排放：55g</span><br>
-                        <span class="fs-6">碳點：80</span><br>
-                        <span id="tax" style="display:none">碳稅：80</span>
-                        <span class="fs-6">隨機碼：0000</span><br>
-                        <span class="fs-6">公司名：AI智慧喜</span><br>
-                        <span class="fs-6">下單時間：2022-12-30 00:00:01</span><br>
-                        <p class="fs-6">總額：NT$ <b style="color:red">974</b></p>
+                        <p class="fs-6">總額：NT$ <b style="color:red"><?php echo $row['total_price'] ?></b></p>
                     </div>
                 </div>
                 <!-- 等待時間00:00時 自動出現下一步按紐 --><br>

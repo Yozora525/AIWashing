@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <?php
 require_once('connect.php');
+session_start();
+$orderId = $_SESSION['orderId'];
+$sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$orderId}'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $sendbacktime = strtotime($_POST['add_sendback_time']);
+    $backtime = date("Y-m-d H:i:s", $sendbacktime);
+    $addtime = "UPDATE `washing_order` SET `sentBack_time` ='$backtime' Where `order_id`='$orderId'";
+    $addtimereslut = mysqli_query($conn, $addtime);
+}
+mysqli_close($conn);
 ?>
-
 <html lang="en">
 
 <head>
@@ -53,27 +64,31 @@ require_once('connect.php');
 
     <main>
         <div class="container">
-            <form method="post" action="OrderManage.html">
+            <form method="post" action="OrderManage.php">
                 <!-- 訂單成立 -->
                 <br><br>
                 <p class="h1 text-success"><b>訂單成立!</b></p>
                 <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
                 <p class="fs-5"><b>訂單詳情</b></p>
-                <span class="fs-6">訂單編號：O202212110874</span><br>
-                <span class="fs-6">洗滌模式：冷</span><br>
-                <span class="fs-6">脫水模式：弱脫水</span><br>
-                <span class="fs-6">乾燥模式：電熱烘乾</span><br>
-                <span class="fs-6">折衣模式：機器人</span><br>
-                <span class="fs-6">送洗方式：集中櫃</span><br>
-                <span class="fs-6">送洗門市：中原門市</span><br>
-                <span class="fs-6">領取方式：外送</span><br>
-                <span class="fs-6">領取門市：中原門市</span><br>
-                <span class="fs-6">衣物重量：0.8kg</span><br>
-                <span class="fs-6">洗衣總額：NT$664</span><br>
-                <span class="fs-6">運費：NT$ 0</span><br>
-                <span class="fs-6">碳點：30</span><br>
-                <p class="fs-5"><b>總額：NT$ 974</b></p>
+                <span class="fs-6">訂單編號：<?php echo $row['order_id'] ?></span><br>
+                <span class="fs-6">集中櫃編號：<?php  ?></span><br>
 
+                <span class="fs-6">洗滌模式：<?php echo $row['wash_mode'] ?></span><br>
+                <span class="fs-6">脫水模式：<?php echo $row['dryout_mode'] ?></span><br>
+                <span class="fs-6">乾燥模式：<?php echo $row['drying_mode'] ?></span><br>
+                <span class="fs-6">折衣模式：<?php echo $row['folding_mode'] ?></span><br>
+
+                <span class="fs-6">送洗方式：<?php echo $row['sent_to'] ?></span><br>
+                <span class="fs-6">洗衣門市/地址：<?php echo $row['sentTo_address'] ?></span><br>
+
+                <span class="fs-6">領取方式：<?php echo $row['sent_back'] ?></span><br>
+                <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>
+
+                <span class="fs-6">衣物重量：<?php echo $row['weight'] ?>kg</span><br>
+                <span class="fs-6">洗衣總額：<?php echo $row['washing_price'] ?></span><br>
+                <span class="fs-6">運費：NT$ <?php echo $row['sendprice']?></span><br>
+                <span class="fs-6">碳點：<?php echo $row['carbon_point'] ?></span><br>
+                <p class="fs-5"><b>總額：NT$ <?php echo $row['total_price'] ?></b></p>
                 <p><input type="submit" value="前往付款" class="btn btn-success" onclick="" /></p>
             </form>
         </div>
