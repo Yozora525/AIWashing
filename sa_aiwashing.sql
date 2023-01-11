@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1:3307
--- 產生時間： 2023-01-10 09:19:53
+-- 產生時間： 2023-01-11 17:47:27
 -- 伺服器版本： 10.4.14-MariaDB
 -- PHP 版本： 7.2.34
 
@@ -53,7 +53,7 @@ INSERT INTO `avatar_frame` (`frame_id`, `frame_color`, `frame_levelName`, `frame
 --
 
 CREATE TABLE `bag_borrow_record` (
-  `bad_id` varchar(128) NOT NULL COMMENT '洗衣袋編號',
+  `bag_id` varchar(128) NOT NULL COMMENT '洗衣袋編號',
   `mem_id` varchar(64) NOT NULL COMMENT '會員編號',
   `borrow_time` datetime NOT NULL DEFAULT current_timestamp() COMMENT '租借時間',
   `return_time` datetime DEFAULT current_timestamp() COMMENT '歸還時間'
@@ -62,18 +62,94 @@ CREATE TABLE `bag_borrow_record` (
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `cabinet_grid`
+--
+
+CREATE TABLE `cabinet_grid` (
+  `grid_id` varchar(64) NOT NULL COMMENT '格子編號',
+  `store_id` varchar(64) NOT NULL COMMENT 'AI櫃門市編號',
+  `grid_status` int(11) NOT NULL DEFAULT 1 COMMENT '	格子狀態(1:可使用,2:借出,0:停用)	'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='AI櫃格子表';
+
+--
+-- 傾印資料表的資料 `cabinet_grid`
+--
+
+INSERT INTO `cabinet_grid` (`grid_id`, `store_id`, `grid_status`) VALUES
+('G00000001', 'S1673336326249', 1),
+('G00000002', 'S1673336326249', 1),
+('G00000003', 'S1673336326249', 1),
+('G00000004', 'S1673336326249', 1),
+('G00000005', 'S1673336326249', 1),
+('G00000006', 'S1673336326249', 1),
+('G00000007', 'S1673336326250', 1),
+('G00000008', 'S1673336326250', 1),
+('G00000009', 'S1673336326250', 1),
+('G00000010', 'S1673336326250', 1),
+('G00000011', 'S1673336326250', 1),
+('G00000012', 'S1673336326250', 1),
+('G00000013', 'S1673336326251', 1),
+('G00000014', 'S1673336326251', 1),
+('G00000015', 'S1673336326251', 1),
+('G00000016', 'S1673336326251', 1),
+('G00000017', 'S1673336326251', 1),
+('G00000018', 'S1673336326251', 1),
+('G00000019', 'S1673336326252', 1),
+('G00000020', 'S1673336326252', 1),
+('G00000021', 'S1673336326252', 1),
+('G00000022', 'S1673336326252', 1),
+('G00000023', 'S1673336326252', 1),
+('G00000024', 'S1673336326252', 1),
+('G00000025', 'S1673336326253', 1),
+('G00000026', 'S1673336326253', 1),
+('G00000027', 'S1673336326253', 1),
+('G00000028', 'S1673336326253', 1),
+('G00000029', 'S1673336326253', 1),
+('G00000030', 'S1673336326253', 1),
+('G00000031', 'S1673337242970', 1),
+('G00000032', 'S1673337242970', 1),
+('G00000033', 'S1673337242970', 1),
+('G00000034', 'S1673337242970', 1),
+('G00000035', 'S1673337242970', 1),
+('G00000036', 'S1673337242970', 1),
+('G00000037', 'S1673337242971', 1),
+('G00000038', 'S1673337242971', 1),
+('G00000039', 'S1673337242971', 1),
+('G00000040', 'S1673337242971', 1),
+('G00000041', 'S1673337242971', 1),
+('G00000042', 'S1673337242971', 1),
+('G00000043', 'S1673337242972', 1),
+('G00000044', 'S1673337242972', 1),
+('G00000045', 'S1673337242972', 1),
+('G00000046', 'S1673337242972', 1),
+('G00000047', 'S1673337242972', 1),
+('G00000048', 'S1673337242972', 1),
+('G00000049', 'S1673337242973', 1),
+('G00000050', 'S1673337242973', 1),
+('G00000051', 'S1673337242973', 1),
+('G00000052', 'S1673337242973', 1),
+('G00000053', 'S1673337242973', 1),
+('G00000054', 'S1673337242973', 1),
+('G00000055', 'S1673337242974', 1),
+('G00000056', 'S1673337242974', 1),
+('G00000057', 'S1673337242974', 1),
+('G00000058', 'S1673337242974', 1),
+('G00000059', 'S1673337242974', 1),
+('G00000060', 'S1673337242974', 1);
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `cabinet_record`
 --
 
 CREATE TABLE `cabinet_record` (
-  `cabinet_id` int(11) NOT NULL COMMENT '集中櫃編號',
-  `order_id` int(11) NOT NULL COMMENT '訂單編號',
-  `grid_num` int(11) NOT NULL COMMENT '格子號碼',
-  `fettle` varchar(11) NOT NULL COMMENT '狀態(使用中/可使用)',
-  `in_time` datetime NOT NULL COMMENT '放入時間',
-  `out_time` datetime NOT NULL COMMENT '取出時間',
+  `order_id` varchar(64) NOT NULL COMMENT '訂單編號',
+  `cabinet_id` varchar(64) NOT NULL COMMENT 'AI櫃門市編號(store_id)',
+  `sendto_grid_num` varchar(64) DEFAULT NULL COMMENT '送洗格子編號(grid_id)',
+  `sendbuck_grid_num` varchar(64) DEFAULT NULL COMMENT '取衣格子編號(grid_id)',
   `pick_code` varchar(24) NOT NULL COMMENT '取貨碼'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='集中櫃紀錄表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='AI櫃紀錄表';
 
 -- --------------------------------------------------------
 
@@ -105,13 +181,26 @@ INSERT INTO `delivery_method` (`delivery_id`, `delivery_name`, `delivery_type`, 
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `invoice_id` varchar(64) NOT NULL COMMENT '發票號',
+  `order_id` varchar(64) NOT NULL COMMENT '訂單編號',
+  `invoice_addTime` datetime NOT NULL DEFAULT current_timestamp() COMMENT '發票生成時間(整筆訂單付款完成時間)',
+  `random_code` varchar(4) NOT NULL COMMENT '隨機碼'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='發票表';
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `laundry_bag`
 --
 
 CREATE TABLE `laundry_bag` (
   `bag_id` varchar(128) NOT NULL COMMENT '洗衣袋編號',
   `bag_addTime` datetime DEFAULT current_timestamp() COMMENT '洗衣袋加入時間',
-  `bag_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)'
+  `bag_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:可使用,2:租借中,0:停用)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='洗衣袋晶片表';
 
 --
@@ -120,7 +209,20 @@ CREATE TABLE `laundry_bag` (
 
 INSERT INTO `laundry_bag` (`bag_id`, `bag_addTime`, `bag_status`) VALUES
 ('B1673338278326', '2022-12-31 12:12:58', 1),
-('B1673338278327', '2022-12-31 12:15:58', 1);
+('B1673338278327', '2022-12-31 12:15:58', 1),
+('B1673338278328', '2023-01-12 00:31:38', 1),
+('B1673338278329', '2023-01-12 00:31:38', 1),
+('B1673338278330', '2023-01-12 00:31:38', 1),
+('B1673338278331', '2023-01-12 00:31:38', 1),
+('B1673338278332', '2023-01-12 00:31:38', 1),
+('B1673338278333', '2023-01-12 00:31:38', 1),
+('B1673338278334', '2023-01-12 00:31:38', 1),
+('B1673338278335', '2023-01-12 00:31:38', 1),
+('B1673338278336', '2023-01-12 00:31:38', 1),
+('B1673338278337', '2023-01-12 00:31:38', 1),
+('B1673338278338', '2023-01-12 00:31:38', 1),
+('B1673338278339', '2023-01-12 00:31:38', 1),
+('B1673338278340', '2023-01-12 00:31:38', 1);
 
 -- --------------------------------------------------------
 
@@ -164,8 +266,8 @@ CREATE TABLE `payment` (
   `card_num` varchar(20) NOT NULL COMMENT '付款卡號',
   `card_name` varchar(64) NOT NULL COMMENT '卡片名稱',
   `owner_name` varchar(64) NOT NULL COMMENT '持卡人姓名',
-  `expired_month` int(11) NOT NULL COMMENT '到期月',
-  `expired_year` int(11) NOT NULL COMMENT '到期年',
+  `expired_month` varchar(11) NOT NULL COMMENT '到期月',
+  `expired_year` varchar(11) NOT NULL COMMENT '到期年',
   `security_code` varchar(3) NOT NULL COMMENT '安全碼',
   `card_time` datetime NOT NULL DEFAULT current_timestamp() COMMENT '付款卡註冊時間',
   `card_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)'
@@ -223,7 +325,8 @@ CREATE TABLE `washing_order` (
   `sentTo_address` varchar(128) DEFAULT NULL COMMENT '送洗門市或地址',
   `sent_back` varchar(11) NOT NULL COMMENT '取回方式',
   `sentBack_address` varchar(128) DEFAULT NULL COMMENT '取衣門市或地址',
-  `sentBack_time` datetime NOT NULL COMMENT '取回時間',
+  `sentBack_time` datetime NOT NULL COMMENT '預計取回時間',
+  `sentprice` int(11) NOT NULL COMMENT '運費總額',
   `order_time` datetime NOT NULL DEFAULT current_timestamp() COMMENT '訂單成立時間',
   `carbon_emission` int(11) NOT NULL COMMENT '碳排量',
   `carbon_tax` int(11) NOT NULL COMMENT '碳稅',
@@ -281,7 +384,13 @@ ALTER TABLE `avatar_frame`
 -- 資料表索引 `bag_borrow_record`
 --
 ALTER TABLE `bag_borrow_record`
-  ADD PRIMARY KEY (`bad_id`,`mem_id`,`borrow_time`);
+  ADD PRIMARY KEY (`bag_id`,`mem_id`,`borrow_time`);
+
+--
+-- 資料表索引 `cabinet_grid`
+--
+ALTER TABLE `cabinet_grid`
+  ADD PRIMARY KEY (`grid_id`);
 
 --
 -- 資料表索引 `cabinet_record`
@@ -294,6 +403,12 @@ ALTER TABLE `cabinet_record`
 --
 ALTER TABLE `delivery_method`
   ADD PRIMARY KEY (`delivery_id`);
+
+--
+-- 資料表索引 `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`invoice_id`);
 
 --
 -- 資料表索引 `laundry_bag`
@@ -318,6 +433,12 @@ ALTER TABLE `member_avatar_frame`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`card_id`);
+
+--
+-- 資料表索引 `serve_store`
+--
+ALTER TABLE `serve_store`
+  ADD PRIMARY KEY (`store_id`);
 
 --
 -- 資料表索引 `washing_order`
