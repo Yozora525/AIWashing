@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($serve_store_row['store_name'] = $sendto) {
             $serve_id = $serve_store_row['store_id'];
         }
-        /* 格子 */
+        /* 洗衣格子 */
         $sql = "SELECT * FROM `grid`";
         $grid_result = mysqli_query($conn, $sql);
         $grid = array();

@@ -14,13 +14,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $addtime = "UPDATE `washing_order` SET `sentBack_time` ='$backtime' Where `order_id`='$orderId'";
     $addtimereslut = mysqli_query($conn, $addtime);
 }
-
+/* 顯示洗衣格子編號 */
 $sql = "SELECT * FROM `cabinet_record`";
 $recordresult = mysqli_query($conn, $sql);
 $gridrow = mysqli_fetch_assoc($recordresult);
 if ($gridrow['order_id'] == $orderId) {
     $gridnum = $gridrow['grid_num'];
 }
+
+/* 取衣格子 */
+$sql = "SELECT * FROM `grid`";
+$grid_result = mysqli_query($conn, $sql);
+$grid = array();
+$i = 0;
+while ($grid[$i] = $grid_result->fetch_assoc()) {
+    $i++;
+}
+for ($i = 0; $i < count($grid); $i++) {
+    if ($grid[$i]['store_id'] == $row['']) {
+        if ($grid[$i]['grid_status'] == 1)
+            $grid_num = $grid[$i]['grid_id'];
+        if ($grid_num != null)
+            break;
+    }
+}
+
+
+
 mysqli_close($conn);
 ?>
 <html lang="en">
