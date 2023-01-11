@@ -61,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $weight = 3; // 重量統一用3kg來算
         $point = 0; // 碳點carbon_point
         $emission = 0; // 碳排(單位：公斤)carbon_emission
+        $washTime = 0; // 洗衣時間(單位：秒)
 
         //! 撈出該模式下所需的碳排、點、稅，並加起來    -> 尚未測試(沒資料及table可能還會更改)
         for ($i = 0; $i < count($ListMode); $i++) {
@@ -74,6 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 while ($row = mysqli_fetch_assoc($res)) {
                     $point += $weight * $row["mode_point"];
                     $emission += $weight * $row["carbonEmissions"];
+                    $washTime += $row["mode_needTime"];
                 }
             }
         }
