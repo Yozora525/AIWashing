@@ -68,16 +68,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($grid[$i]['store_id'] == $serve_id) {
                 if ($grid[$i]['grid_status'] == 1)
                     $grid_num = $grid[$i]['grid_id'];
-                if ($grid_num != null)
+                if (!empty($grid_num))
                     break;
             }
         }
 
         //新增門市格子紀錄
-        $addserve = "INSERT into `cabinet_record`(cabinet_id,order_id,grid_num) values ('$serve_id','$orderId','$grid_num')";
+        $addserve = "INSERT into `cabinet_record`(cabinet_id,order_id,sendto_grid_num) values ('$serve_id','$orderId','$grid_num')";
         $reslut = mysqli_query($conn, $addserve); //執行sql   
         /* 更新格子使用狀態 */
-        $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where `store_id`='$serve_id'and `grid_id`='$grid_num'";
+        $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where`grid_id`='$grid_num'";
         $reslut = mysqli_query($conn, $update_gridstatus);
 
 

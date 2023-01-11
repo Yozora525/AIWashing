@@ -32,7 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     for ($i = 0; $i < count($laundry_bag); $i++) {
         if ($laundry_bag[$i]['bag_status'] == 1) {
             $aibag = $laundry_bag[$i]['bag_id'];
-            if ($aibag != null) break;
+            if (!empty($aibag))
+                break;
         }
     }
 

@@ -6,12 +6,12 @@ $orderId = $_SESSION['orderId'];
 $sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$orderId}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
-
+/* 找洗衣格子編號 */
 $sql = "SELECT * FROM `cabinet_record`";
 $recordresult = mysqli_query($conn, $sql);
 $gridrow = mysqli_fetch_assoc($recordresult);
 if ($gridrow['order_id'] == $orderId) {
-    $gridnum = $gridrow['grid_num'];
+    $sendto_grid_num = $gridrow['sendto_grid_num'];
 }
 mysqli_close($conn);
 ?>
@@ -54,7 +54,7 @@ mysqli_close($conn);
 
                 <span class="fs-6">送洗方式：<?php echo $row['sent_to'] ?></span><br>
                 <span class="fs-6">洗衣門市/地址：<?php echo $row['sentTo_address'] ?></span><br>
-                <span class="fs-6">洗衣格子編號：<?php echo $gridnum ?></span><br>
+                <span class="fs-6">洗衣格子編號：<?php echo $sendto_grid_num ?></span><br>
 
                 <span class="fs-6">領取方式：<?php echo $row['sent_back'] ?></span><br>
                 <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>

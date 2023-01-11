@@ -19,7 +19,15 @@ $sql = "SELECT * FROM `cabinet_record`";
 $recordresult = mysqli_query($conn, $sql);
 $gridrow = mysqli_fetch_assoc($recordresult);
 if ($gridrow['order_id'] == $orderId) {
-    $gridnum = $gridrow['grid_num'];
+    $sendto_grid = $gridrow['sendto_grid_num'];
+}
+
+/* 門市 */
+$serve_store_sql = "SELECT * FROM `serve_store`";
+$serve_store_result = mysqli_query($conn, $serve_store_sql);
+$serve_store_row = mysqli_fetch_assoc($serve_store_result);
+if ($serve_store_row['store_name'] = $row['sentBack_address']) {
+    $serve_id = $serve_store_row['store_id'];
 }
 
 /* 取衣格子 */
@@ -31,13 +39,26 @@ while ($grid[$i] = $grid_result->fetch_assoc()) {
     $i++;
 }
 for ($i = 0; $i < count($grid); $i++) {
-    if ($grid[$i]['store_id'] == $row['']) {
+    if ($grid[$i]['store_id'] == $serve_id) {
         if ($grid[$i]['grid_status'] == 1)
             $grid_num = $grid[$i]['grid_id'];
-        if ($grid_num != null)
+        if (!empty($grid_num))
             break;
     }
 }
+//新增取衣門市格子紀錄
+$addserve = "UPDATE `cabinet_record` SET `sendbuck_grid_num` ='$grid_num' Where `order_id`='$orderId'";
+$reslut = mysqli_query($conn, $addserve); //執行sql   
+/* 更新取衣格子使用狀態 */
+$update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where `grid_id`='$grid_num'";
+$reslut = mysqli_query($conn, $update_gridstatus);
+
+
+/* 更新洗衣格子使用狀態 */
+$update_sendto_gridstatus = "UPDATE `grid` SET `grid_status` ='1' Where `grid_id`='$sendto_grid'";
+$reslut = mysqli_query($conn, $update_sendto_gridstatus);
+
+
 
 
 
@@ -79,7 +100,7 @@ mysqli_close($conn);
 
                 <span class="fs-6">送洗方式：<?php echo $row['sent_to'] ?></span><br>
                 <span class="fs-6">洗衣門市/地址：<?php echo $row['sentTo_address'] ?></span><br>
-                <span class="fs-6">洗衣格子編號：<?php echo $gridnum ?></span><br>
+                <span class="fs-6">洗衣格子編號：<?php echo $sendto_grid ?></span><br>
 
                 <span class="fs-6">領取方式：<?php echo $row['sent_back'] ?></span><br>
                 <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>
