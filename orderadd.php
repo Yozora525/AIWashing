@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($WashMode == "" || $DehydrationMode == "" || $DryMode == "" || $FoldMode_Way == "" || $Aibag == "" || $SendTo_Way == "" || $SendBack_Way == "" || $creditcard == "") {
         echo "<script>alert('資訊不能為空！重新填寫');window.location.href='ChooseWashMode.php'</script>";
     } else {
-        /* 新增門市資料到櫃子表 */
+        /* 新增門市資料到櫃子紀錄表 */
         $serve_store_sql = "SELECT * FROM `serve_store`";
         $serve_store_result = mysqli_query($conn, $serve_store_sql);
         $serve_store_row = mysqli_fetch_assoc($serve_store_result);
@@ -55,44 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $addserve = "INSERT into `cabinet_record`(cabinet_id) values ('$serve_id')"; //門市id
-
-        $grid_sql = "SELECT * FROM `grid`";
-        $grid_result = mysqli_query($conn, $grid_sql);
-        $grid_row = mysqli_fetch_assoc($grid_result);
-        $grid_id = $grid_row['grid_id'];
-
-        $sql = "SELECT * FROM `grid`";
-        $grid_result = mysqli_query($conn, $sql);
-        $grid = array();
-        $i = 0;
-        while ($grid[$i] = $grid_result->fetch_assoc()) {
-            $i++;
-        }
-        for ($i = 0; $i < count($grid); $i++) {
-            if ($grid[$i]['bag_status'] == 1) {
-                $aibag = $grid[$i]['bag_id'];
-                break;
-            }
-        }
-        $sql = "SELECT * FROM `cabinet_record`";
-        $cabinet_record_result = mysqli_query($conn, $sql);
-        $cabinet_record = array();
-        $i = 0;
-        while ($cabinet_record[$i] = $cabinet_record_result->fetch_assoc()) {
-            $i++;
-        }
-        for ($i = 0; $i < count($cabinet_record); $i++) {
-            if ($cabinet_record[$i]['bag_status'] == true) {
-                if ($serve_id == true) {
-                    if ($cabinet_record_row['fettle'] != 1) {
-                        $cabinet_record_num = $cabinet_record[$i]['fettle'];
-                        break;
-                    }
-                }
-            }
-        }
-        echo $cabinet_record_num;
-
 
         /* 計算碳點、碳排、碳稅 */
         $ListMode = [$WashMode, $DehydrationMode, $DryMode, $FoldMode_Way];
@@ -155,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!$reslut) {
         die('Error: ' . mysqli_error($conn)); //如果sql執行失敗輸出錯誤
     } else {
-        //echo "<script>alert('訂單輸入成功');window.location.href='SendToWash.php'</script>"; //成功輸出註冊成功
+        echo "<script>alert('訂單輸入成功');window.location.href='SendToWash.php'</script>"; //成功輸出註冊成功
     }
 }
 mysqli_close($conn);
