@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     for ($i = 0; $i < count($laundry_bag); $i++) {
         if ($laundry_bag[$i]['bag_status'] == 1) {
             $aibag = $laundry_bag[$i]['bag_id'];
-            break;
+            if ($aibag != null) break;
         }
     }
 
@@ -51,6 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $reslut = mysqli_query($conn, $singup);
         $addaibag = "INSERT into `bag_borrow_record`(bad_id,mem_id) values ('$aibag','$memId')";
         $reslut = mysqli_query($conn, $addaibag);
+        $update_aibag = "UPDATE `laundry_bag` SET `bag_status` ='2' Where `bad_id`='$aibag'";
+        $reslut = mysqli_query($conn, $update_aibag);
     }
 
     if (!$reslut) {

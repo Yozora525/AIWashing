@@ -7,6 +7,7 @@ $orderId = $_SESSION['orderId'];
 $sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$orderId}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sendbacktime = strtotime($_POST['add_sendback_time']);
     $backtime = date("Y-m-d H:i:s", $sendbacktime);
@@ -14,50 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $addtimereslut = mysqli_query($conn, $addtime);
 }
 
-/* 櫃子借用紀錄表 */
 $sql = "SELECT * FROM `cabinet_record`";
-$result = mysqli_query($conn, $sql);
-$record_row = mysqli_fetch_assoc($result);
-
-
-$sql = "SELECT * FROM `serve_store`";
-$result = mysqli_query($conn, $sql);
-$serve_row = mysqli_fetch_assoc($result);
-
-
-$sql = "SELECT * FROM `grid`";
-$grid_result = mysqli_query($conn, $sql);
-$grid = array();
-$i = 0;
-while ($grid[$i] = $grid_result->fetch_assoc()) {
-    $i++;
+$recordresult = mysqli_query($conn, $sql);
+$gridrow = mysqli_fetch_assoc($recordresult);
+if ($gridrow['order_id'] == $orderId) {
+    $gridnum = $gridrow['grid_num'];
 }
-
-
-if ($record_row['cabinet_id'] == $serve_row['store_id']) {//門市相同時
-    for ($i = 0; $i < count($grid); $i++) {
-        if ($record_row['grid_num'] == $grid[$i]['bag_id']) { //格子邊號相同時
-            if ($record_row['fettle'] != 1) {//確認使用狀態 
-                $record_row['grid_num'] = $grid[$i]['bag_id'];未使用時 格子
-                break;
-            } else {
-                break;
-            }
-        }
-
-
-
-        if ($grid[$i]['grid_status'] == 1) {
-            $aibag = $grid[$i]['bag_id'];
-            break;
-        }
-    }
-}
-
-
-
-
-
 mysqli_close($conn);
 ?>
 <html lang="en">
@@ -88,7 +51,6 @@ mysqli_close($conn);
                 <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
                 <p class="fs-5"><b>訂單詳情</b></p>
                 <span class="fs-6">訂單編號：<?php echo $row['order_id'] ?></span><br>
-                <span class="fs-6">集中櫃編號：<?php  ?></span><br>
 
                 <span class="fs-6">洗滌模式：<?php echo $row['wash_mode'] ?></span><br>
                 <span class="fs-6">脫水模式：<?php echo $row['dryout_mode'] ?></span><br>
@@ -97,6 +59,7 @@ mysqli_close($conn);
 
                 <span class="fs-6">送洗方式：<?php echo $row['sent_to'] ?></span><br>
                 <span class="fs-6">洗衣門市/地址：<?php echo $row['sentTo_address'] ?></span><br>
+                <span class="fs-6">洗衣格子編號：<?php echo $gridnum ?></span><br>
 
                 <span class="fs-6">領取方式：<?php echo $row['sent_back'] ?></span><br>
                 <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>
