@@ -33,7 +33,7 @@ $member_mem_id = $member_row['mem_id'];
         <div class="container">
             <form method="post" action="">
                 <br>
-                <h4>顯示現有的付款卡<button class="btn btn-success" type="button" onclick="location.href='AddCard.php'" value="">新增</button></h4>
+                <h4>顯示現有的付款卡 <button class="btn btn-success" type="button" onclick="location.href='AddCard.php'" value="">新增</button></h4>
                 <?php
                 $payment_sql = "SELECT * FROM `payment`";
                 $payment_result = mysqli_query($conn, $payment_sql);
@@ -43,11 +43,11 @@ $member_mem_id = $member_row['mem_id'];
                 ?>
                             <div class="card">
                                 <div class="card-header">
-                                    付款卡名稱： <?php echo $payment_row['card_name'] ?>
+                                    付款卡名稱：<?php echo $payment_row['card_name'] ?>
                                 </div>
                                 <div class="card-body">
-                                    <span class="fs-6">付款卡卡號: <?php echo $payment_row['card_num'] ?><br></span>
-                                    <span class="fs-6">到期日: <?php echo $payment_row['expired_month'] ?>/<?php echo $payment_row['expired_year'] ?><br></span>
+                                    <span class="fs-6">付款卡卡號：<?php echo $payment_row['card_num'] ?><br></span>
+                                    <span class="fs-6">到期日：<?php echo $payment_row['expired_month'] ?>/<?php echo $payment_row['expired_year'] ?><br></span>
                                 </div>
                             </div>
                             <br>

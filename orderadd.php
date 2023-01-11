@@ -46,6 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($WashMode == "" || $DehydrationMode == "" || $DryMode == "" || $FoldMode_Way == "" || $Aibag == "" || $SendTo_Way == "" || $SendBack_Way == "" || $creditcard == "") {
         echo "<script>alert('資訊不能為空！重新填寫');window.location.href='ChooseWashMode.php'</script>";
     } else {
+        // 訂單編號
+        $_SESSION['orderId'] = $orderId = IdProducer('O');
+
         /* 新增門市資料到櫃子紀錄表 */
         $serve_store_sql = "SELECT * FROM `serve_store`";
         $serve_store_result = mysqli_query($conn, $serve_store_sql);
@@ -53,8 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($serve_store_row['store_name'] = $sendto) {
             $serve_id = $serve_store_row['store_id'];
         }
+        $addserve = "INSERT into `cabinet_record`(cabinet_id,order_id) values ('$serve_id','$orderId')"; //門市id
+        $reslut = mysqli_query($conn, $addserve); //執行sql   
 
-        $addserve = "INSERT into `cabinet_record`(cabinet_id) values ('$serve_id')"; //門市id
 
         /* 計算碳點、碳排、碳稅 */
         $ListMode = [$WashMode, $DehydrationMode, $DryMode, $FoldMode_Way];
@@ -62,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $point = 0; // 碳點carbon_point
         $emission = 0; // 碳排(單位：公斤)carbon_emission
         $washTime = 0; // 洗衣時間(單位：秒)
+
 
         //! 撈出該模式下所需的碳排、點、稅，並加起來    -> 尚未測試(沒資料及table可能還會更改)
         for ($i = 0; $i < count($ListMode); $i++) {
@@ -84,8 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tax = $emission / 1000 * 3000; // 碳稅(每公噸3000)
 
 
-        // 訂單編號
-        $_SESSION['orderId'] = $orderId = IdProducer('O');
+
 
 
 

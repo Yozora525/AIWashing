@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone']; //post獲取表單裡的phone
     $memId = IdProducer('M');
 
+    /* 新增借用洗衣袋 */
     $sql = "SELECT * FROM `laundry_bag`";
     $laundry_bag_result = mysqli_query($conn, $sql);
     $laundry_bag = array();
@@ -34,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             break;
         }
     }
-
 
     if (!isset($_POST['submit'])) {
         exit("錯誤執行");

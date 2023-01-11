@@ -2,6 +2,7 @@
 <?php
 require_once('connect.php');
 session_start();
+/* 取件時間 */
 $orderId = $_SESSION['orderId'];
 $sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$orderId}'";
 $result = mysqli_query($conn, $sql);
@@ -12,6 +13,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $addtime = "UPDATE `washing_order` SET `sentBack_time` ='$backtime' Where `order_id`='$orderId'";
     $addtimereslut = mysqli_query($conn, $addtime);
 }
+
+/* 櫃子借用紀錄表 */
+$sql = "SELECT * FROM `cabinet_record`";
+$result = mysqli_query($conn, $sql);
+$record_row = mysqli_fetch_assoc($result);
+
+
+$sql = "SELECT * FROM `serve_store`";
+$result = mysqli_query($conn, $sql);
+$serve_row = mysqli_fetch_assoc($result);
+
+
+$sql = "SELECT * FROM `grid`";
+$grid_result = mysqli_query($conn, $sql);
+$grid = array();
+$i = 0;
+while ($grid[$i] = $grid_result->fetch_assoc()) {
+    $i++;
+}
+
+
+if ($record_row['cabinet_id'] == $serve_row['store_id']) {//門市相同時
+    for ($i = 0; $i < count($grid); $i++) {
+        if ($record_row['grid_num'] == $grid[$i]['bag_id']) { //格子邊號相同時
+            if ($record_row['fettle'] != 1) {//確認使用狀態 
+                $record_row['grid_num'] = $grid[$i]['bag_id'];未使用時 格子
+                break;
+            } else {
+                break;
+            }
+        }
+
+
+
+        if ($grid[$i]['grid_status'] == 1) {
+            $aibag = $grid[$i]['bag_id'];
+            break;
+        }
+    }
+}
+
+
+
+
+
 mysqli_close($conn);
 ?>
 <html lang="en">

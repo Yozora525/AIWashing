@@ -43,15 +43,17 @@ $member_mem_id = $member_row['mem_id'];
                 ?>
                             <div class="card">
                                 <div class="card-header">
-                                    AI洗衣袋編號： <?php echo $laundry_bag_row['bag_id'] ?>
+                                    AI洗衣袋編號：<?php echo $laundry_bag_row['bag_id'] ?>
                                 </div>
                                 <div class="card-body" data-detail="">
-                                        <?php echo $laundry_bag_row['bag_addTime'] ?>
+                                    <?php echo $laundry_bag_row['borrow_time'] ?>
+                                </div>
                             </div>
-                            <br>
-                <?php }
+                <?php
+                        }
                     }
-                } ?>
+                }
+                ?>
             </form>
         </div>
     </main>
