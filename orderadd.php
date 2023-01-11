@@ -129,10 +129,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
          values ('$orderId','$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way','$sendto','$sendBack','$point','$emission','$tax','$weight','$total','$sendprice')"; //向資料庫插入表單傳來的值的sql
         $reslut = mysqli_query($conn, $addorder); //執行sql        
 
-
-
-
-
     }
 
     if (!$reslut) {
