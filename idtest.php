@@ -42,7 +42,7 @@ include('templates/frame/head.html');
     <br>
 
     <?php
-    // 發票號碼 英文+8數字(invoice_id)
+    // 發票號碼 2英文+8數字(invoice_id)
     $invoice_random = "AB" .rand(11,99) .rand(100,1000) .rand(100,1000) ;
     echo $invoice_random;
     ?>
