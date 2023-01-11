@@ -48,7 +48,7 @@ session_start();
                 </div>
                 <div class="form-group">
                     <label>電 話：</label>
-                    <input type="password" class="form-control" placeholder="請輸入電話" name="phone">
+                    <input type="text" class="form-control" placeholder="請輸入電話" name="phone">
                     <div class="d-md-flex justify-content-md-end" style="margin-top: 1rem;">
                         <input type="button" class="btn btn-outline-success " onclick="window.alert('此功能尚未開放!');" value="手機驗證碼" />
                     </div>
