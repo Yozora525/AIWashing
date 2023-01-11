@@ -53,33 +53,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $serve_store_sql = "SELECT * FROM `serve_store`";
         $serve_store_result = mysqli_query($conn, $serve_store_sql);
         $serve_store_row = mysqli_fetch_assoc($serve_store_result);
-        if ($serve_store_row['store_name'] = $sendto) {
-            $serve_id = $serve_store_row['store_id'];
-        }
-        /* 洗衣格子 */
-        $sql = "SELECT * FROM `grid`";
-        $grid_result = mysqli_query($conn, $sql);
-        $grid = array();
-        $i = 0;
-        while ($grid[$i] = $grid_result->fetch_assoc()) {
-            $i++;
-        }
-        for ($i = 0; $i < count($grid); $i++) {
-            if ($grid[$i]['store_id'] == $serve_id) {
-                if ($grid[$i]['grid_status'] == 1)
-                    $grid_num = $grid[$i]['grid_id'];
-                if (!empty($grid_num))
-                    break;
+        if ($sendto != $SendTo_Panda) {
+            if ($serve_store_row['store_name'] = $sendto) {
+                $serve_id = $serve_store_row['store_id'];
             }
+            /* 洗衣格子 */
+            $sql = "SELECT * FROM `grid`";
+            $grid_result = mysqli_query($conn, $sql);
+            $grid = array();
+            $i = 0;
+            while ($grid[$i] = $grid_result->fetch_assoc()) {
+                $i++;
+            }
+            for ($i = 0; $i < count($grid); $i++) {
+                if ($grid[$i]['store_id'] == $serve_id) {
+                    if ($grid[$i]['grid_status'] == 1)
+                        $grid_num = $grid[$i]['grid_id'];
+                    if (!empty($grid_num))
+                        break;
+                }
+            }
+
+
+            //新增門市格子紀錄
+            $addserve = "INSERT into `cabinet_record`(cabinet_id,order_id,sendto_grid_num) values ('$serve_id','$orderId','$grid_num')";
+            $reslut = mysqli_query($conn, $addserve); //執行sql   
+            /* 更新格子使用狀態 */
+            $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where`grid_id`='$grid_num'";
+            $reslut = mysqli_query($conn, $update_gridstatus);
         }
-
-        //新增門市格子紀錄
-        $addserve = "INSERT into `cabinet_record`(cabinet_id,order_id,sendto_grid_num) values ('$serve_id','$orderId','$grid_num')";
-        $reslut = mysqli_query($conn, $addserve); //執行sql   
-        /* 更新格子使用狀態 */
-        $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where`grid_id`='$grid_num'";
-        $reslut = mysqli_query($conn, $update_gridstatus);
-
 
         /* 計算碳點、碳排、碳稅 */
         $ListMode = [$WashMode, $DehydrationMode, $DryMode, $FoldMode_Way];

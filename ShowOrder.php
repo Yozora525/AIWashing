@@ -7,6 +7,7 @@ $orderId = $_SESSION['orderId'];
 $sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$orderId}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
+$memId = $row['mem_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sendbacktime = strtotime($_POST['add_sendback_time']);
@@ -14,12 +15,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $addtime = "UPDATE `washing_order` SET `sentBack_time` ='$backtime' Where `order_id`='$orderId'";
     $addtimereslut = mysqli_query($conn, $addtime);
 }
+
+
 /* 顯示洗衣格子編號 */
-$sql = "SELECT * FROM `cabinet_record`";
-$recordresult = mysqli_query($conn, $sql);
-$gridrow = mysqli_fetch_assoc($recordresult);
-if ($gridrow['order_id'] == $orderId) {
-    $sendto_grid = $gridrow['sendto_grid_num'];
+if (stripos($row['sent_to'], "外送")) {
+    return false;
+} else {
+    $sql = "SELECT * FROM `cabinet_record`";
+    $recordresult = mysqli_query($conn, $sql);
+    $gridrow = mysqli_fetch_assoc($recordresult);
+    if ($gridrow['order_id'] == $orderId) {
+        $sendto_grid = $gridrow['sendto_grid_num'];
+    }
+    if (!empty($sendto_grid)) {
+        /* 更新洗衣格子使用狀態 */
+        $update_sendto_gridstatus = "UPDATE `grid` SET `grid_status` ='1' Where `grid_id`='$sendto_grid'";
+        $reslut = mysqli_query($conn, $update_sendto_gridstatus);
+    }
 }
 
 /* 門市 */
@@ -31,32 +43,35 @@ if ($serve_store_row['store_name'] = $row['sentBack_address']) {
 }
 
 /* 取衣格子 */
-$sql = "SELECT * FROM `grid`";
-$grid_result = mysqli_query($conn, $sql);
-$grid = array();
-$i = 0;
-while ($grid[$i] = $grid_result->fetch_assoc()) {
-    $i++;
-}
-for ($i = 0; $i < count($grid); $i++) {
-    if ($grid[$i]['store_id'] == $serve_id) {
-        if ($grid[$i]['grid_status'] == 1)
-            $grid_num = $grid[$i]['grid_id'];
-        if (!empty($grid_num))
-            break;
+if (stripos($row['sent_back'], "外送")) {
+    return false;
+} else {
+
+    $sql = "SELECT * FROM `grid`";
+    $grid_result = mysqli_query($conn, $sql);
+    $grid = array();
+    $i = 0;
+    while ($grid[$i] = $grid_result->fetch_assoc()) {
+        $i++;
     }
+    for ($i = 0; $i < count($grid); $i++) {
+        if ($grid[$i]['store_id'] == $serve_id) {
+            if ($grid[$i]['grid_status'] == 1)
+                $grid_num = $grid[$i]['grid_id'];
+            if (!empty($grid_num))
+                break;
+        }
+    }
+    //新增取衣門市格子紀錄
+    $addserve = "UPDATE `cabinet_record` SET `sendbuck_grid_num` ='$grid_num' Where `order_id`='$orderId'";
+    $reslut = mysqli_query($conn, $addserve); //執行sql   
+    /* 更新取衣格子使用狀態 */
+    $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where `grid_id`='$grid_num'";
+    $reslut = mysqli_query($conn, $update_gridstatus);
 }
-//新增取衣門市格子紀錄
-$addserve = "UPDATE `cabinet_record` SET `sendbuck_grid_num` ='$grid_num' Where `order_id`='$orderId'";
-$reslut = mysqli_query($conn, $addserve); //執行sql   
-/* 更新取衣格子使用狀態 */
-$update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where `grid_id`='$grid_num'";
-$reslut = mysqli_query($conn, $update_gridstatus);
 
 
-/* 更新洗衣格子使用狀態 */
-$update_sendto_gridstatus = "UPDATE `grid` SET `grid_status` ='1' Where `grid_id`='$sendto_grid'";
-$reslut = mysqli_query($conn, $update_sendto_gridstatus);
+
 mysqli_close($conn);
 ?>
 <html lang="en">
@@ -80,7 +95,7 @@ mysqli_close($conn);
 
     <main>
         <div class="container">
-            <form method="post" action="OrderManage.php">
+            <form method="post" action="test.php">
                 <!-- 訂單成立 -->
                 <br><br>
                 <p class="h1 text-success"><b>訂單成立!</b></p>
@@ -95,8 +110,9 @@ mysqli_close($conn);
 
                 <span class="fs-6">送洗方式：<?php echo $row['sent_to'] ?></span><br>
                 <span class="fs-6">洗衣門市/地址：<?php echo $row['sentTo_address'] ?></span><br>
-                <span class="fs-6">洗衣格子編號：<?php echo $sendto_grid ?></span><br>
-
+                <?php if (!empty($sendto_grid)) { ?>
+                    <span class="fs-6">洗衣格子編號：<?php echo $sendto_grid ?></span><br>
+                <?php } ?>
                 <span class="fs-6">領取方式：<?php echo $row['sent_back'] ?></span><br>
                 <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>
 
