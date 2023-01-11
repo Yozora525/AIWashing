@@ -9,7 +9,7 @@ include('templates/frame/head.html');
 
 <body>
     <?php
-    include('templates/frame/header.html');
+    include('templates/frame/header.php');
     ?>
 
     <?php
@@ -27,6 +27,26 @@ include('templates/frame/head.html');
     $id = IdProducer('D');
     echo $id;
     ?>
+
+    <br>
+
+    
+    <?php
+    // 發票隨機碼4碼!!
+    $comb = "0123456789";
+    $shfl = str_shuffle($comb);
+    $random = substr($shfl,0,4);
+    echo $random;
+    ?>
+
+    <br>
+
+    <?php
+    // 發票號碼 英文+8數字(invoice_id)
+    $invoice_random = "AB" .rand(11,99) .rand(100,1000) .rand(100,1000) ;
+    echo $invoice_random;
+    ?>
+
 
     <footer></footer>
 </body>
