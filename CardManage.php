@@ -47,7 +47,7 @@ $member_mem_id = $member_row['mem_id'];
                                 </div>
                                 <div class="card-body">
                                     <span class="fs-6">付款卡卡號：<?php echo $payment_row['card_num'] ?><br></span>
-                                    <span class="fs-6">到期日：<?php echo $payment_row['expired_month'] ?>/<?php echo $payment_row['expired_year'] ?><br></span>
+                                    <span class="fs-6">到期日：<?php echo $payment_row['expired_month'] ?> / <?php echo $payment_row['expired_year'] ?><br></span>
                                 </div>
                             </div>
                             <br>

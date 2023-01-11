@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+
     if (!isset($_POST['submit'])) {
         exit("錯誤執行");
     } //判斷是否有submit操作
@@ -48,11 +49,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($password != $confirm) {
         echo "<script>alert('兩次密碼不相同！重新填寫');window.location.href = 'signup.php'</script>";
     } else {
+        /* 註冊 */
         $singup = "INSERT into `member`(mem_id,mem_account,mem_name,mem_pwd,pwd_confirm,mem_phone) values ('$memId','$account','$username','$password','$confirm','$phone')"; //向資料庫插入表單傳來的值的sql
         $reslut = mysqli_query($conn, $singup);
-        $addaibag = "INSERT into `bag_borrow_record`(bad_id,mem_id) values ('$aibag','$memId')";
+        /* 新增洗衣袋 */
+        $addaibag = "INSERT into `bag_borrow_record`(bag_id,mem_id) values ('$aibag','$memId')";
         $reslut = mysqli_query($conn, $addaibag);
-        $update_aibag = "UPDATE `laundry_bag` SET `bag_status` ='2' Where `bad_id`='$aibag'";
+        /* 更新洗衣袋狀態 */
+        $update_aibag = "UPDATE `laundry_bag` SET `bag_status` ='2' Where `bag_id`='$aibag'";
         $reslut = mysqli_query($conn, $update_aibag);
     }
 

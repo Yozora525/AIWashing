@@ -2,7 +2,7 @@
 <?php
 require_once('connect.php');
 session_start();
-/* 取件時間 */
+/* 預計取回時間 */
 $orderId = $_SESSION['orderId'];
 $sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$orderId}'";
 $result = mysqli_query($conn, $sql);
@@ -57,11 +57,6 @@ $reslut = mysqli_query($conn, $update_gridstatus);
 /* 更新洗衣格子使用狀態 */
 $update_sendto_gridstatus = "UPDATE `grid` SET `grid_status` ='1' Where `grid_id`='$sendto_grid'";
 $reslut = mysqli_query($conn, $update_sendto_gridstatus);
-
-
-
-
-
 mysqli_close($conn);
 ?>
 <html lang="en">

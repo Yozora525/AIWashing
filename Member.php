@@ -5,7 +5,7 @@ require_once('connect.php');
 session_start();
 if (isset($_SESSION['login']) == false) {
     header('location:login.php');
-    exit; 
+    exit;
 }
 $memid = $_SESSION['login'];
 $sql = "SELECT `mem_name`,`mem_id` FROM `member` WHERE `mem_id`='{$memid}'";
@@ -63,9 +63,9 @@ mysqli_close($conn);
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
+                                            <p class="card-text"><small class="text-muted">會員編號 <?php echo $mem_id ?></small></p>
                                             <h5 class="card-title"><?php echo $name ?></h5>
-                                            <p class="card-text">累積碳點: 85</p>
-                                            <p class="card-text"><small class="text-muted">會員編號<?php echo $mem_id ?></small></p>
+                                            <p class="card-text">累積碳點： 85</p>
                                         </div>
                                     </div>
                                 </div>
