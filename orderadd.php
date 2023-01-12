@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $washTime = 0; // 洗衣時間(單位：秒)
 
 
-        //! 撈出該模式下所需的碳排、點、稅，並加起來    -> 尚未測試(沒資料及table可能還會更改)
+        //! 撈出該模式下所需的碳排、點、稅、時間，並加起來    -> 尚未測試
         for ($i = 0; $i < count($ListMode); $i++) {
             $sql = "select * from wash_mode where mode_name = {$ListMode[$i]}";
 
@@ -107,6 +107,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         }
+
+        // get current timestamp
+        $currentTimestamp = time();
+
+        $completeTime = date('Y-m-d H:i:s',$currentTimestamp + $washTime);
 
         /* 計算碳點、碳排、碳稅 */
         $tax = $emission / 1000 * 3000; // 碳稅(每公噸3000)
