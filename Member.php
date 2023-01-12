@@ -65,8 +65,8 @@ mysqli_close($conn);
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body text-black flex-grow-1 ms-3">
-                                    <h5 class="mb-1 fs-6">劉士豪</h5>
-                                    <small class="text-muted fs-8">會員編號</small>
+                                    <h5 class="mb-1 fs-6"><?php echo $name ?></h5>
+                                    <small class="text-muted fs-8">會員編號<?php echo $mem_id ?></small>
                                     <p class="mb-2 pb-1" style="color: #867b4a;">狂暴的排碳者vip111</p>
                                     <div class="d-flex justify-content-start rounded-3 p-2 mb-0 text-center"
                                         style="background-color: #efefef;">
