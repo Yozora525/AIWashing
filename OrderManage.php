@@ -7,11 +7,6 @@ $member_sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$member_memid}'";
 $member_result = mysqli_query($conn, $member_sql);
 $member_row = mysqli_fetch_assoc($member_result);
 $member_mem_id = $member_row['mem_id'];
-
-/* 顯示洗衣格子編號 */
-$sql = "SELECT * FROM `cabinet_record`";
-$recordresult = mysqli_query($conn, $sql);
-$gridrow = mysqli_fetch_assoc($recordresult);
 ?>
 
 <html lang="en">
@@ -64,13 +59,7 @@ $gridrow = mysqli_fetch_assoc($recordresult);
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗衣門市/地址： <?php echo $order_row['sentTo_address'] ?><br></span>
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">送洗方式： <?php echo $order_row['sent_back'] ?><br></span>
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">取衣門市/地址： <?php echo $order_row['sentBack_address'] ?><br></span>
-                                <?php
 
-                                if ($order_row['order_id'] == $gridrow['order_id']) {
-                                    if (!empty($gridrow['sendbuck_grid_num'])) { ?>
-                                        <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">取衣格子編號：<?php echo $gridrow['sendbuck_grid_num'] ?><br></span>
-                                <?php }
-                                } ?>
 
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">衣物重量：<?php echo $order_row['weight'] ?> kg<br></span>
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗衣總額： NT$ <?php echo $order_row['washing_price'] ?></span>
@@ -79,7 +68,7 @@ $gridrow = mysqli_fetch_assoc($recordresult);
                                 <p><br>
                                     <?php if ($order_row['order_status'] == '1') {
                                         $_SESSION['payid'] = $order_row['order_id'];
-                                        echo "<a href='CompleteCheckout.php?payid=" . $order_row['order_id'] . "' class='btn btn-success'>確認付款</a>"; ?>
+                                        echo "<a href='addinvoice.php?payid=" . $order_row['order_id'] . "' class='btn btn-success'>確認付款</a>"; ?>
                                     <?php }  ?>
 
                                 </p>

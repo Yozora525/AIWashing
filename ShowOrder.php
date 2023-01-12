@@ -2,27 +2,17 @@
 <?php
 require_once('connect.php');
 session_start();
-/* 預計取回時間 */
 $orderId = $_SESSION['orderId'];
 $sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$orderId}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $memId = $row['mem_id'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $sendbacktime = strtotime($_POST['add_sendback_time']);
-    $backtime = date("Y-m-d H:i:s", $sendbacktime);
-    $addtime = "UPDATE `washing_order` SET `sentBack_time` ='$backtime' Where `order_id`='$orderId'";
-    $addtimereslut = mysqli_query($conn, $addtime);
-}
-
-
 /* 顯示洗衣格子編號 */
 $sql = "SELECT * FROM `cabinet_record` WHERE `order_id`='{$orderId}'";
 $recordresult = mysqli_query($conn, $sql);
 $gridrow = mysqli_fetch_assoc($recordresult);
 $sendto_grid = $gridrow['sendto_grid_num'];
-
 
 /* 門市 */
 $serve_store_sql = "SELECT * FROM `serve_store`";
@@ -32,7 +22,7 @@ if ($serve_store_row['store_name'] = $row['sentBack_address']) {
     $serve_id = $serve_store_row['store_id'];
 }
 
-/* 取衣格子 */
+/* 新增取衣格子 */
 if ($row['sent_back'] != "外送取衣") {
     $sql = "SELECT * FROM `grid`";
     $grid_result = mysqli_query($conn, $sql);
@@ -52,7 +42,7 @@ if ($row['sent_back'] != "外送取衣") {
     //新增取衣門市格子紀錄
     $addserve = "UPDATE `cabinet_record` SET `sendbuck_grid_num` ='$grid_num' Where `order_id`='$orderId'";
     $reslut = mysqli_query($conn, $addserve);
-    /* 更新取衣格子使用狀態 */
+    //更新取衣格子使用狀態(格子表)
     $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where `grid_id`='$grid_num'";
     $reslut = mysqli_query($conn, $update_gridstatus);
 }
@@ -62,7 +52,26 @@ if (!empty($sendto_grid)) {
     $reslut = mysqli_query($conn, $update_sendto_gridstatus);
 }
 
-// 新增新的洗衣袋
+
+/* 洗衣袋 */
+// 更改舊的洗衣袋狀態(洗衣袋紀錄表)
+$sql = "SELECT * FROM `bag_borrow_record` where `mem_id`='{$memId}'";
+$old_AIbag_result = mysqli_query($conn, $sql);
+$old_AIbag = array();
+$i = 0;
+while ($old_AIbag[$i] = $old_AIbag_result->fetch_assoc()) {
+    $i++;
+}
+for ($i = 0; $i < count($old_AIbag); $i++) {
+    if ($old_AIbag[$i]['borrow_status'] == 1) {
+        $old_bagid = $old_AIbag[$i]['bag_id'];
+        $update_borrow_status = "UPDATE `bag_borrow_record` SET `borrow_status` ='2'where `bag_id`='$old_bagid' and `mem_id`='$memId'";
+        $reslut = mysqli_query($conn, $update_borrow_status);
+        break;
+    }
+}
+
+// 新增新的洗衣袋(洗衣袋紀錄表)
 $sql = "SELECT * FROM `laundry_bag`";
 $laundry_bag_result = mysqli_query($conn, $sql);
 $laundry_bag = array();
@@ -77,30 +86,18 @@ for ($i = 0; $i < count($laundry_bag); $i++) {
             break;
     }
 }
+
+// 新增新的洗衣袋(洗衣袋紀錄表)
 $addaibag = "INSERT into `bag_borrow_record`(bag_id,mem_id) values ('$aibag','$memId')";
 $reslut = mysqli_query($conn, $addaibag);
 
-// 更新新的洗衣袋在洗衣表的狀態
+// 更新新的洗衣袋狀態(洗衣表)
 $update_aibag = "UPDATE `laundry_bag` SET `bag_status` ='2' Where `bag_id`='$aibag'";
 $reslut = mysqli_query($conn, $update_aibag);
 
-/* 更改舊的洗衣袋狀態 */
-$sql = "SELECT * FROM `bag_borrow_record`";
-$result = mysqli_query($conn, $sql);
-$old_AIbag_record_row = mysqli_fetch_assoc($result);
-if ($old_AIbag_record_row['mem_id'] == $row['mem_id']) {
-    $old_bag_id = $old_AIbag_record_row['bag_id'];
-    if ($old_AIbag_record_row['borrow_time'] == $old_AIbag_record_row['return_time']) {
-        if ($old_AIbag_record_row['borrow_status'] == '1') {
-            $update_borrow_status = "UPDATE `bag_borrow_record` SET `borrow_status` ='2' Where `bag_id`='$old_bag_id' and `mem_id`='$memId'";
-            $reslut = mysqli_query($conn, $update_borrow_status);
-            // 更新舊的洗衣袋在洗衣表的狀態
-            $update_bag_status = "UPDATE `laundry_bag` SET `bag_status` ='1' Where `bag_id`='$old_bag_id'";
-            $reslut = mysqli_query($conn, $update_bag_status);
-        }
-    }
-}
-
+// 更新舊的洗衣袋狀態(洗衣表)
+$update_laundry_bag_status = "UPDATE `laundry_bag` SET `bag_status` ='1' Where `bag_id`='$old_bagid'";
+$reslut = mysqli_query($conn, $update_laundry_bag_status);
 
 
 

@@ -2,27 +2,27 @@
 <?php
 require_once('connect.php');
 session_start();
-$payId = $_GET['payid'];
 
-$sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$payId}'";
+$orderid = $_SESSION['checkpay_id'];
+$sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$orderid}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
-$_SESSION['checkpay_id']  = $row['order_id'];
+// 發票
+$sql = "SELECT * FROM `invoice` WHERE `order_id`='{$orderid}'";
+$result = mysqli_query($conn, $sql);
+$invoicerow = mysqli_fetch_assoc($result);
+
 /* 顯示洗衣格子編號 */
-$sql = "SELECT * FROM `cabinet_record`";
-$recordresult = mysqli_query($conn, $sql);
-$gridrow = mysqli_fetch_assoc($recordresult);
-if ($_SESSION['checkpay_id'] == $gridrow['order_id']) {
-    $sendbuck_grid_num = $gridrow['sendbuck_grid_num'];
+$sql = "SELECT * FROM `cabinet_record` WHERE `order_id`='{$orderid}'";
+$result = mysqli_query($conn, $sql);
+$gridrow = mysqli_fetch_assoc($result);
+if ($gridrow['order_id'] == $orderid) {
+    if (!empty($gridrow['sendbuck_grid_num'])) {
+        $grid_num = $gridrow['sendbuck_grid_num'];
+        $update_gridstatus = "UPDATE `grid` SET `grid_status` ='1' Where `grid_id`='$grid_num'";
+        $reslut = mysqli_query($conn, $update_gridstatus);
+    }
 }
-
-if (!empty($sendbuck_grid_num)) {
-    $update_gridstatus = "UPDATE `grid` SET `grid_status` ='1' Where `grid_id`='$sendbuck_grid_num'";
-    $reslut = mysqli_query($conn, $update_gridstatus);
-}
-
-
-
 mysqli_close($conn);
 
 ?>
@@ -52,43 +52,79 @@ mysqli_close($conn);
                 <p><img src="static/img/yes.png" alt="結帳成功!" class="ounded mx-auto d-block"></p>
                 <p class="h1 text-success text-center"><b>付款成功!</b></p>
                 <br>
-                <!-- <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
-                <span class="fs-6">訂單編號: O202212110874</span><br>
-                <span class="fs-6">付款金額: NT$ 955</span><br>
-                <span class="fs-6">收款方: AI智慧喜公司</span><br> -->
+                <?php
+                if (!empty($grid_num)) { ?>
+                    <p class="h1 text-success text-center">取衣格子編號：<?php echo $grid_num ?></p><br>
+                <?php } ?>
+
                 <div class="card">
                     <div class="card-header">
-                        <p class="text-center">發票</p>
-                        <span class="fs-6">訂單編號：<?php echo $row['order_id'] ?><br></span>
+                        <span class="fs-6 text-center">
+                            <h4>AI智慧喜</h4>
+                        </span>
+                        <span class="fs-6 text-center">
+                            <h3><?php echo $invoicerow['invoice_id'] ?></h3>
+                        </span>
                         <input type="hidden" name="payid[]" value="<?php echo $row['order_id'] ?>" readonly />
-                        <span class="fs-6">開立時間：<?php echo $row['order_time'] ?></span><br><!-- 改成發票的時間 -->
+                        <!-- 改成發票的時間 -->
+                        <span class="fs-6 text-center">
+                            <h6><?php echo $invoicerow['invoice_addTime'] ?></h6>
+                        </span>
+                        <span class="fs-6 text-center">
+                            <p>隨機碼：<?php echo $invoicerow['random_code'] ?>
+                                &nbsp;
+                                總額：NT$ <b><?php echo $row['total_price'] ?></b>
+                                <br>
+                            </p>
+                        </span>
+                        <span class="fs-6 text-center">
+                            <p>碳排放：<?php echo $row['carbon_emission'] ?>g
+                                &nbsp;
+                                碳點：<?php echo $row['carbon_point'] ?>
+                            </p>
+                        </span>
+                        <span class="fs-6 text-center">
+                            <span id="tax">
+                                <p>賣家編號：10944247&nbsp;&nbsp;碳稅：<?php echo $row['carbon_tax'] ?>
+                            </span>
+                            </p>
+                        </span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="fs-6 text-center">
+                            <h5>--------發票明細--------</h5>
+                        </span>
+                        <span class="fs-6">
+                            <h6>衣物重量：<?php echo $row['weight'] ?>kg</h6>
+                        </span><span class="fs-6 ">
+                            <h6>洗滌模式：<?php echo $row['wash_mode'] ?></h6>
+                        </span>
+                        <span class="fs-6">
+                            <h6>脫水模式：<?php echo $row['dryout_mode'] ?></h6>
+                        </span>
+                        <span class="fs-6">
+                            <h6>乾燥模式：<?php echo $row['drying_mode'] ?></h6>
+                        </span>
+                        <span class="fs-6">
+                            <h6>折衣模式：<?php echo $row['folding_mode'] ?></h6>
+                        </span>
 
-                        <span class="fs-6">隨機碼：9999</span>&nbsp;
-                        <span class="fs-6">公司名：AI智慧喜</span><br><br>
-                        <span class="fs-6">洗滌模式：<?php echo $row['wash_mode'] ?></span><br>
-                        <span class="fs-6">脫水模式：<?php echo $row['dryout_mode'] ?></span><br>
-                        <span class="fs-6">乾燥模式：<?php echo $row['drying_mode'] ?></span><br>
-                        <span class="fs-6">折衣模式：<?php echo $row['folding_mode'] ?></span><br>
+                        <span class="fs-6">
+                            <h6>送洗方式：<?php echo $row['sent_to'] ?></h6>
+                        </span>
+                        <span class="fs-6">
+                            <h6>洗衣門市/地址：<?php echo $row['sentTo_address'] ?></h6>
+                        </span>
 
-                        <span class="fs-6">送洗方式：<?php echo $row['sent_to'] ?></span><br>
-                        <span class="fs-6">洗衣門市/地址：<?php echo $row['sentTo_address'] ?></span><br>
+                        <span class="fs-6">
+                            <h6>領取方式：<?php echo $row['sent_back'] ?></h6>
+                        </span>
+                        <span class="fs-6">
+                            <h6>取衣門市/地址：<?php echo $row['sentBack_address'] ?></h6>
+                        </span>
 
-                        <span class="fs-6">領取方式：<?php echo $row['sent_back'] ?></span><br>
-                        <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>
-                        <?php
-                        if (!empty($sendbuck_grid_num)) { ?>
-                            <span class="fs-6">取衣格子編號：<?php echo $sendbuck_grid_num ?></span><br>
-                        <?php } ?>
-                        <span class="fs-6">衣物重量：<?php echo $row['weight'] ?>kg</span><br>
-                        <span class="fs-6">洗衣總額：NT$ <?php echo $row['washing_price']   ?></span><br>
-                        <span class="fs-6">運費：NT$ <?php echo $row['sentprice'] ?></span><br>
-                        <span class="fs-6">碳排放：<?php echo $row['carbon_emission'] ?>g</span><br>
-                        <span class="fs-6">碳點：<?php echo $row['carbon_point'] ?></span><br>
-
-                        <span id="tax" style="display:none">碳稅：<?php echo $row['carbon_tax'] ?></span><br>
-
-
-                        <p class="fs-6">總額：NT$ <b style="color:red"><?php echo $row['total_price'] ?></b></p>
                     </div>
                 </div>
                 <!-- 等待時間00:00時 自動出現下一步按紐 --><br>
