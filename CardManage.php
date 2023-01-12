@@ -2,6 +2,10 @@
 <?php
 require_once('connect.php');
 session_start();
+if (isset($_SESSION['login']) == false) {
+    header('location:login.php');
+    exit;
+}
 $member_memid = $_SESSION['login'];
 $member_sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$member_memid}'";
 $member_result = mysqli_query($conn, $member_sql);
