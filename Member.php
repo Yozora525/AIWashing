@@ -24,7 +24,7 @@ mysqli_close($conn);
     <link rel="stylesheet" href="static/css/all.css">
     <link rel="stylesheet" href="static/css/header.css" />
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
-    <script src="../static/js/member.js"></script>
+    <script src="static/js/member.js"></script>
 
     <title>會員管理</title>
     <style>
@@ -221,7 +221,8 @@ mysqli_close($conn);
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                                <input type="button" id="submot_message" onclick="messageGo();" value="確認"
+                                <!-- 後端給大頭貼id -->
+                                <input type="button" id="submot_message" onclick="messageGo('<?php  ?>');" value="確認"
                                     class="btn btn-primary" data-bs-dismiss="modal">
                             </div>
                         </form>
