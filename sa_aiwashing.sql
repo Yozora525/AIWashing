@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1:3307
--- 產生時間： 2023-01-12 05:44:49
+-- 產生時間： 2023-01-12 17:47:47
 -- 伺服器版本： 10.4.14-MariaDB
 -- PHP 版本： 7.2.34
 
@@ -60,23 +60,71 @@ CREATE TABLE `bag_borrow_record` (
   `borrow_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:租借中,2:已歸還)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='洗衣袋租借紀錄表';
 
+--
+-- 傾印資料表的資料 `bag_borrow_record`
+--
+
+INSERT INTO `bag_borrow_record` (`bag_id`, `mem_id`, `borrow_time`, `return_time`, `borrow_status`) VALUES
+('B1673338278326', 'M1673504218335', '2023-01-12 14:16:58', '2023-01-12 14:16:58', 1);
+
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `cabinet_grid`
+-- 資料表結構 `cabinet_record`
 --
 
-CREATE TABLE `cabinet_grid` (
+CREATE TABLE `cabinet_record` (
+  `order_id` varchar(64) NOT NULL COMMENT '訂單編號',
+  `cabinet_id` varchar(64) NOT NULL COMMENT 'AI櫃門市編號(store_id)',
+  `sendto_grid_num` varchar(64) DEFAULT NULL COMMENT '送洗格子編號(grid_id)',
+  `sendbuck_grid_num` varchar(64) DEFAULT NULL COMMENT '取衣格子編號(grid_id)',
+  `pick_code` varchar(24) NOT NULL COMMENT '取貨碼'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='AI櫃紀錄表';
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `delivery_method`
+--
+
+CREATE TABLE `delivery_method` (
+  `delivery_id` varchar(64) NOT NULL COMMENT '運送編號',
+  `delivery_name` varchar(64) NOT NULL COMMENT '運送名稱',
+  `delivery_type` int(11) NOT NULL COMMENT '型態(1:送洗,2:領回)',
+  `delivery_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)',
+  `delivery_price` int(11) DEFAULT NULL COMMENT '運送基本定價(每公里)',
+  `delivery_recodeTime` datetime NOT NULL DEFAULT current_timestamp() COMMENT '運送方式加入時間'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='運送方式表';
+
+--
+-- 傾印資料表的資料 `delivery_method`
+--
+
+INSERT INTO `delivery_method` (`delivery_id`, `delivery_name`, `delivery_type`, `delivery_status`, `delivery_price`, `delivery_recodeTime`) VALUES
+('D1673178468095', '到店送洗', 1, 1, 0, '2022-12-31 13:19:12'),
+('D1673178468096', '到店取衣', 2, 1, 0, '2022-12-31 13:22:17'),
+('D1673178468097', '外送洗衣', 1, 1, 20, '2022-12-31 13:22:50'),
+('D1673178468098', '外送取衣', 2, 1, 20, '2022-12-31 13:23:53'),
+('D1673178468099', '集中櫃送洗', 1, 1, 10, '2023-01-08 15:45:18'),
+('D1673178468100', '集中櫃取衣', 2, 1, 10, '2023-01-08 15:47:18');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `grid`
+--
+
+CREATE TABLE `grid` (
   `grid_id` varchar(64) NOT NULL COMMENT '格子編號',
   `store_id` varchar(64) NOT NULL COMMENT 'AI櫃門市編號',
   `grid_status` int(11) NOT NULL DEFAULT 1 COMMENT '	格子狀態(1:可使用,2:借出,0:停用)	'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='AI櫃格子表';
 
 --
--- 傾印資料表的資料 `cabinet_grid`
+-- 傾印資料表的資料 `grid`
 --
 
-INSERT INTO `cabinet_grid` (`grid_id`, `store_id`, `grid_status`) VALUES
+INSERT INTO `grid` (`grid_id`, `store_id`, `grid_status`) VALUES
 ('G00000001', 'S1673336326249', 1),
 ('G00000002', 'S1673336326249', 1),
 ('G00000003', 'S1673336326249', 1),
@@ -141,47 +189,6 @@ INSERT INTO `cabinet_grid` (`grid_id`, `store_id`, `grid_status`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `cabinet_record`
---
-
-CREATE TABLE `cabinet_record` (
-  `order_id` varchar(64) NOT NULL COMMENT '訂單編號',
-  `cabinet_id` varchar(64) NOT NULL COMMENT 'AI櫃門市編號(store_id)',
-  `sendto_grid_num` varchar(64) DEFAULT NULL COMMENT '送洗格子編號(grid_id)',
-  `sendbuck_grid_num` varchar(64) DEFAULT NULL COMMENT '取衣格子編號(grid_id)',
-  `pick_code` varchar(24) NOT NULL COMMENT '取貨碼'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='AI櫃紀錄表';
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `delivery_method`
---
-
-CREATE TABLE `delivery_method` (
-  `delivery_id` varchar(64) NOT NULL COMMENT '運送編號',
-  `delivery_name` varchar(64) NOT NULL COMMENT '運送名稱',
-  `delivery_type` int(11) NOT NULL COMMENT '型態(1:送洗,2:領回)',
-  `delivery_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)',
-  `delivery_price` int(11) DEFAULT NULL COMMENT '運送基本定價(每公里)',
-  `delivery_recodeTime` datetime NOT NULL DEFAULT current_timestamp() COMMENT '運送方式加入時間'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='運送方式表';
-
---
--- 傾印資料表的資料 `delivery_method`
---
-
-INSERT INTO `delivery_method` (`delivery_id`, `delivery_name`, `delivery_type`, `delivery_status`, `delivery_price`, `delivery_recodeTime`) VALUES
-('D1673178468095', '到店送洗', 1, 1, 0, '2022-12-31 13:19:12'),
-('D1673178468096', '到店取衣', 2, 1, 0, '2022-12-31 13:22:17'),
-('D1673178468097', '外送洗衣', 1, 1, 20, '2022-12-31 13:22:50'),
-('D1673178468098', '外送取衣', 2, 1, 20, '2022-12-31 13:23:53'),
-('D1673178468099', '集中櫃送洗', 1, 1, 10, '2023-01-08 15:45:18'),
-('D1673178468100', '集中櫃取衣', 2, 1, 10, '2023-01-08 15:47:18');
-
--- --------------------------------------------------------
-
---
 -- 資料表結構 `invoice`
 --
 
@@ -209,7 +216,7 @@ CREATE TABLE `laundry_bag` (
 --
 
 INSERT INTO `laundry_bag` (`bag_id`, `bag_addTime`, `bag_status`) VALUES
-('B1673338278326', '2022-12-31 12:12:58', 1),
+('B1673338278326', '2022-12-31 12:12:58', 2),
 ('B1673338278327', '2022-12-31 12:15:58', 1),
 ('B1673338278328', '2023-01-12 00:31:38', 1),
 ('B1673338278329', '2023-01-12 00:31:38', 1),
@@ -242,6 +249,13 @@ CREATE TABLE `member` (
   `mem_points` int(64) DEFAULT NULL COMMENT '會員擁有點數'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='會員表';
 
+--
+-- 傾印資料表的資料 `member`
+--
+
+INSERT INTO `member` (`mem_id`, `mem_account`, `mem_pwd`, `pwd_confirm`, `mem_name`, `mem_phone`, `mem_status`, `mem_points`) VALUES
+('M1673504218335', 'H225814948', '10944222', '10944222', 'Unii', '0938238127', 1, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -273,6 +287,13 @@ CREATE TABLE `payment` (
   `card_time` datetime NOT NULL DEFAULT current_timestamp() COMMENT '付款卡註冊時間',
   `card_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:正常,0:停用)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='付款卡表';
+
+--
+-- 傾印資料表的資料 `payment`
+--
+
+INSERT INTO `payment` (`card_id`, `mem_id`, `card_num`, `card_name`, `owner_name`, `expired_month`, `expired_year`, `security_code`, `card_time`, `card_status`) VALUES
+('C1673504637706', 'M1673504218335', '1111555588889999', 'Unii的卡卡', '黃仟儀', '7', '2050', '111', '2023-01-12 14:23:57', 1);
 
 -- --------------------------------------------------------
 
@@ -388,12 +409,6 @@ ALTER TABLE `bag_borrow_record`
   ADD PRIMARY KEY (`bag_id`,`mem_id`,`borrow_time`);
 
 --
--- 資料表索引 `cabinet_grid`
---
-ALTER TABLE `cabinet_grid`
-  ADD PRIMARY KEY (`grid_id`);
-
---
 -- 資料表索引 `cabinet_record`
 --
 ALTER TABLE `cabinet_record`
@@ -404,6 +419,12 @@ ALTER TABLE `cabinet_record`
 --
 ALTER TABLE `delivery_method`
   ADD PRIMARY KEY (`delivery_id`);
+
+--
+-- 資料表索引 `grid`
+--
+ALTER TABLE `grid`
+  ADD PRIMARY KEY (`grid_id`);
 
 --
 -- 資料表索引 `invoice`
