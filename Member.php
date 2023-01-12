@@ -120,8 +120,8 @@ mysqli_close($conn);
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                             <div class="text-center m-3">
-                                                <input class="form-check-input" type="radio" value="black"
-                                                    name="avatar_frame">
+                                                <input class="form-check-input" type="radio" value="<?php echo $member_avatar_frame['frame_id'] ?>"
+                                                    name="avatar_frame"  data-frameID="<?php echo $member_avatar_frame['frame_id'] ?>">
                                                     vip4
                                             </div>
                                         </div>
@@ -133,8 +133,8 @@ mysqli_close($conn);
                                             </div>
                                         </div>
                                         <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="#C3AAA6"
-                                                name="avatar_frame">
+                                            <input class="form-check-input" type="radio" value="FRAME002"
+                                                name="avatar_frame"  data-frameID="FRAME002">
                                                 vip4
                                         </div>
 
@@ -145,20 +145,20 @@ mysqli_close($conn);
                                             </div>
                                         </div>
                                         <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="#A9B7AA"
-                                                name="avatar_frame">
+                                            <input class="form-check-input" type="radio" value="FRAME003"
+                                                name="avatar_frame"  data-frameID="FRAME003">
                                                 vip4
                                         </div>
 
                                         <div class="img-hover">
-                                            <div class="img_border" style="border: .4rem solid #5cb5ac;">
+                                            <div class="img_border" style="border: .4rem solid #5cb5ac;" >
                                                 <a href="#"><img src="static/img/user.png"
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                         </div>
                                         <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="#5cb5ac"
-                                                name="avatar_frame">
+                                            <input class="form-check-input" type="radio" value="FRAME004"
+                                                name="avatar_frame"  data-frameID="FRAME004">
                                                 vip4
                                         </div>
                                     </div>
@@ -175,8 +175,8 @@ mysqli_close($conn);
                                             </div>
                                         </div>
                                         <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="pink"
-                                                name="avatar_frame">
+                                            <input class="form-check-input" type="radio" value="FRAME005"
+                                                name="avatar_frame"  data-frameID="FRAME005">
                                                 vip4
                                         </div>
 
@@ -187,8 +187,8 @@ mysqli_close($conn);
                                             </div>
                                         </div>
                                         <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="rgb(205, 187, 72)"
-                                                name="avatar_frame">
+                                            <input class="form-check-input" type="radio" value="FRAME006"
+                                                name="avatar_frame"  data-frameID="FRAME006">
                                                 vip4
                                         </div>
 
@@ -199,8 +199,8 @@ mysqli_close($conn);
                                             </div>
                                         </div>
                                         <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="#EFF0EA"
-                                                name="avatar_frame">
+                                            <input class="form-check-input" type="radio" value="FRAME007"
+                                                name="avatar_frame"  data-frameID="FRAME007">
                                                 vip4
                                         </div>
 
@@ -211,8 +211,8 @@ mysqli_close($conn);
                                             </div>
                                         </div>
                                         <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="#BECBD3"
-                                                name="avatar_frame">
+                                            <input class="form-check-input" type="radio" value="FRAME008"
+                                                name="avatar_frame"  data-frameID="FRAME008">
                                                 vip4
                                         </div>
                                         
