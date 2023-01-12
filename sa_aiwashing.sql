@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1:3307
--- 產生時間： 2023-01-11 17:47:27
+-- 產生時間： 2023-01-12 05:39:19
 -- 伺服器版本： 10.4.14-MariaDB
 -- PHP 版本： 7.2.34
 
@@ -56,7 +56,8 @@ CREATE TABLE `bag_borrow_record` (
   `bag_id` varchar(128) NOT NULL COMMENT '洗衣袋編號',
   `mem_id` varchar(64) NOT NULL COMMENT '會員編號',
   `borrow_time` datetime NOT NULL DEFAULT current_timestamp() COMMENT '租借時間',
-  `return_time` datetime DEFAULT current_timestamp() COMMENT '歸還時間'
+  `return_time` datetime NOT NULL DEFAULT current_timestamp() COMMENT '歸還時間',
+  `borrow_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:租借中,2:已歸還)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='洗衣袋租借紀錄表';
 
 -- --------------------------------------------------------
