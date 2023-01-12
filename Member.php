@@ -60,7 +60,7 @@ mysqli_close($conn);
                             <div class="col-md-4 flex-shrink-0 ">
                                 <div class="img_border">
                                     <!-- 在img_border 的地方加入style="色碼" 即可換頭像 -->
-                                    <img src="../static/img/user.png" class="img-thumbnail rounded-5" alt="頭像">
+                                    <img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像">
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -116,7 +116,7 @@ mysqli_close($conn);
                                         <div class="img-hover">
                                             <div class="img_border" style="border: .4rem solid black;">
                                                 <!-- 在img_border 的地方加入style="色碼" 即可換頭像 -->
-                                                <a href="#"><img src="../static/img/user.png"
+                                                <a href="#"><img src="static/img/user.png"
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                             <div class="text-center m-3">
@@ -128,7 +128,7 @@ mysqli_close($conn);
 
                                         <div class="img-hover">
                                             <div class="img_border" style="border: .4rem solid #C3AAA6;">
-                                                <a href="#"><img src="../static/img/user.png"
+                                                <a href="#"><img src="static/img/user.png"
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                         </div>
@@ -140,7 +140,7 @@ mysqli_close($conn);
 
                                         <div class="img-hover">
                                             <div class="img_border" style="border: .4rem solid #A9B7AA;">
-                                                <a href="#"><img src="../static/img/user.png"
+                                                <a href="#"><img src="static/img/user.png"
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                         </div>
@@ -152,7 +152,7 @@ mysqli_close($conn);
 
                                         <div class="img-hover">
                                             <div class="img_border" style="border: .4rem solid #5cb5ac;">
-                                                <a href="#"><img src="../static/img/user.png"
+                                                <a href="#"><img src="static/img/user.png"
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                         </div>
@@ -170,7 +170,7 @@ mysqli_close($conn);
 
                                         <div class="img-hover">
                                             <div class="img_border" style="border: .4rem solid pink;">
-                                                <a href="#"><img src="../static/img/user.png"
+                                                <a href="#"><img src="static/img/user.png"
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                         </div>
@@ -182,7 +182,7 @@ mysqli_close($conn);
 
                                         <div class="img-hover">
                                             <div class="img_border" style="border: .4rem solid rgb(205, 187, 72);">
-                                                <a href="#"><img src="../static/img/user.png"
+                                                <a href="#"><img src="static/img/user.png"
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                         </div>
@@ -194,7 +194,7 @@ mysqli_close($conn);
 
                                         <div class="img-hover">
                                             <div class="img_border" style="border: .4rem solid #EFF0EA;">
-                                                <a href="#"><img src="../static/img/user.png"
+                                                <a href="#"><img src="static/img/user.png"
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                         </div>
@@ -206,7 +206,7 @@ mysqli_close($conn);
 
                                         <div class="img-hover">
                                             <div class="img_border" style="border: .4rem solid #BECBD3;">
-                                                <a href="#"><img src="../static/img/user.png"
+                                                <a href="#"><img src="static/img/user.png"
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                         </div>
@@ -232,8 +232,8 @@ mysqli_close($conn);
     </main>
     <footer></footer>
 
-    <script src="../static/lib/Frontend_lib/jquery/jquery-3.1.0.js"></script>
-    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/lib/Frontend_lib/jquery/jquery-3.1.0.js"></script>
+    <script src="static/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
