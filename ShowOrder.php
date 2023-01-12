@@ -18,21 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 /* 顯示洗衣格子編號 */
-if (stripos($row['sent_to'], "外送")) {
-    return false;
-} else {
-    $sql = "SELECT * FROM `cabinet_record`";
-    $recordresult = mysqli_query($conn, $sql);
-    $gridrow = mysqli_fetch_assoc($recordresult);
-    if ($gridrow['order_id'] == $orderId) {
-        $sendto_grid = $gridrow['sendto_grid_num'];
-    }
-    if (!empty($sendto_grid)) {
-        /* 更新洗衣格子使用狀態 */
-        $update_sendto_gridstatus = "UPDATE `grid` SET `grid_status` ='1' Where `grid_id`='$sendto_grid'";
-        $reslut = mysqli_query($conn, $update_sendto_gridstatus);
-    }
-}
+$sql = "SELECT * FROM `cabinet_record` WHERE `order_id`='{$orderId}'";
+$recordresult = mysqli_query($conn, $sql);
+$gridrow = mysqli_fetch_assoc($recordresult);
+$sendto_grid = $gridrow['sendto_grid_num'];
+
 
 /* 門市 */
 $serve_store_sql = "SELECT * FROM `serve_store`";
@@ -43,10 +33,7 @@ if ($serve_store_row['store_name'] = $row['sentBack_address']) {
 }
 
 /* 取衣格子 */
-if (stripos($row['sent_back'], "外送")) {
-    return false;
-} else {
-
+if ($row['sent_back'] != "外送取衣") {
     $sql = "SELECT * FROM `grid`";
     $grid_result = mysqli_query($conn, $sql);
     $grid = array();
@@ -64,11 +51,56 @@ if (stripos($row['sent_back'], "外送")) {
     }
     //新增取衣門市格子紀錄
     $addserve = "UPDATE `cabinet_record` SET `sendbuck_grid_num` ='$grid_num' Where `order_id`='$orderId'";
-    $reslut = mysqli_query($conn, $addserve); //執行sql   
+    $reslut = mysqli_query($conn, $addserve);
     /* 更新取衣格子使用狀態 */
     $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where `grid_id`='$grid_num'";
     $reslut = mysqli_query($conn, $update_gridstatus);
 }
+/* 更新洗衣格子使用狀態 */
+if (!empty($sendto_grid)) {
+    $update_sendto_gridstatus = "UPDATE `grid` SET `grid_status` ='1' Where `grid_id`='$sendto_grid'";
+    $reslut = mysqli_query($conn, $update_sendto_gridstatus);
+}
+
+// 新增新的洗衣袋
+$sql = "SELECT * FROM `laundry_bag`";
+$laundry_bag_result = mysqli_query($conn, $sql);
+$laundry_bag = array();
+$i = 0;
+while ($laundry_bag[$i] = $laundry_bag_result->fetch_assoc()) {
+    $i++;
+}
+for ($i = 0; $i < count($laundry_bag); $i++) {
+    if ($laundry_bag[$i]['bag_status'] == 1) {
+        $aibag = $laundry_bag[$i]['bag_id'];
+        if (!empty($aibag))
+            break;
+    }
+}
+$addaibag = "INSERT into `bag_borrow_record`(bag_id,mem_id) values ('$aibag','$memId')";
+$reslut = mysqli_query($conn, $addaibag);
+
+// 更新新的洗衣袋在洗衣表的狀態
+$update_aibag = "UPDATE `laundry_bag` SET `bag_status` ='2' Where `bag_id`='$aibag'";
+$reslut = mysqli_query($conn, $update_aibag);
+
+/* 更改舊的洗衣袋狀態 */
+$sql = "SELECT * FROM `bag_borrow_record`";
+$result = mysqli_query($conn, $sql);
+$old_AIbag_record_row = mysqli_fetch_assoc($result);
+if ($old_AIbag_record_row['mem_id'] == $row['mem_id']) {
+    $old_bag_id = $old_AIbag_record_row['bag_id'];
+    if ($old_AIbag_record_row['borrow_time'] == $old_AIbag_record_row['return_time']) {
+        if ($old_AIbag_record_row['borrow_status'] == '1') {
+            $update_borrow_status = "UPDATE `bag_borrow_record` SET `borrow_status` ='2' Where `bag_id`='$old_bag_id' and `mem_id`='$memId'";
+            $reslut = mysqli_query($conn, $update_borrow_status);
+            // 更新舊的洗衣袋在洗衣表的狀態
+            $update_bag_status = "UPDATE `laundry_bag` SET `bag_status` ='1' Where `bag_id`='$old_bag_id'";
+            $reslut = mysqli_query($conn, $update_bag_status);
+        }
+    }
+}
+
 
 
 
@@ -95,7 +127,7 @@ mysqli_close($conn);
 
     <main>
         <div class="container">
-            <form method="post" action="test.php">
+            <form method="post" action="OrderManage.php">
                 <!-- 訂單成立 -->
                 <br><br>
                 <p class="h1 text-success"><b>訂單成立!</b></p>
@@ -118,7 +150,7 @@ mysqli_close($conn);
 
                 <span class="fs-6">衣物重量：<?php echo $row['weight'] ?>kg</span><br>
                 <span class="fs-6">洗衣總額：NT$ <?php echo $row['washing_price'] ?></span><br>
-                <span class="fs-6">運費：NT$ <?php echo $row['sendprice'] ?></span><br>
+                <span class="fs-6">運費：NT$ <?php echo $row['sentprice'] ?></span><br>
                 <span class="fs-6">碳點：<?php echo $row['carbon_point'] ?></span><br>
                 <p class="fs-5"><b>總額：NT$ <?php echo $row['total_price'] ?></b></p>
                 <p><input type="submit" value="前往付款" class="btn btn-success" onclick="" /></p>

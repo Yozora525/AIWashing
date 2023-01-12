@@ -7,6 +7,9 @@ $member_sql = "SELECT `mem_id` FROM `member` WHERE `mem_id`='{$member_memid}'";
 $member_result = mysqli_query($conn, $member_sql);
 $member_row = mysqli_fetch_assoc($member_result);
 $member_mem_id = $member_row['mem_id'];
+
+
+
 ?>
 
 <html lang="en">
@@ -40,16 +43,18 @@ $member_mem_id = $member_row['mem_id'];
                 if ($laundry_bag_result->num_rows > 0) {
                     while ($laundry_bag_row = $laundry_bag_result->fetch_assoc()) {
                         if ($member_mem_id == $laundry_bag_row['mem_id']) {
+                            if ($laundry_bag_row['borrow_status'] == '1') {
                 ?>
-                            <div class="card">
-                                <div class="card-header">
-                                    AI洗衣袋編號：<?php echo $laundry_bag_row['bag_id'] ?>
+                                <div class="card">
+                                    <div class="card-header">
+                                        AI洗衣袋編號：<?php echo $laundry_bag_row['bag_id'] ?>
+                                    </div>
+                                    <div class="card-body" data-detail="">
+                                        <?php echo $laundry_bag_row['borrow_time'] ?>
+                                    </div>
                                 </div>
-                                <div class="card-body" data-detail="">
-                                    <?php echo $laundry_bag_row['borrow_time'] ?>
-                                </div>
-                            </div>
                 <?php
+                            }
                         }
                     }
                 }

@@ -129,9 +129,11 @@ $mem_id = $row['mem_id'];
                             if ($laundry_bag_result->num_rows > 0) {
                                 while ($laundry_bag_row = $laundry_bag_result->fetch_assoc()) {
                                     if ($mem_id == $laundry_bag_row['mem_id']) {
+                                        if ($laundry_bag_row['borrow_status'] == '1') {
                             ?>
-                                        <option value="<?php echo $laundry_bag_row['bag_id'] ?>"><?php echo $laundry_bag_row['bag_id'] ?></option>
-                            <?php }
+                                            <option value="<?php echo $laundry_bag_row['bag_id'] ?>"><?php echo $laundry_bag_row['bag_id'] ?></option>
+                            <?php      }
+                                    }
                                 }
                             } ?>
                         </select>

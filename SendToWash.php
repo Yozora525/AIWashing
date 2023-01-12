@@ -8,16 +8,10 @@ $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 
 /* 顯示洗衣格子編號 */
-if (stripos($row['sent_to'], "外送")) {
-    return false;
-} else {
-    $sql = "SELECT * FROM `cabinet_record`";
-    $recordresult = mysqli_query($conn, $sql);
-    $gridrow = mysqli_fetch_assoc($recordresult);
-    if ($gridrow['order_id'] == $orderId) {
-        $sendto_grid_num = $gridrow['sendto_grid_num'];
-    }
-}
+$sql = "SELECT * FROM `cabinet_record` WHERE `order_id`='{$orderId}'";
+$recordresult = mysqli_query($conn, $sql);
+$gridrow = mysqli_fetch_assoc($recordresult);
+
 mysqli_close($conn);
 ?>
 <html lang="en">
@@ -59,15 +53,15 @@ mysqli_close($conn);
 
                 <span class="fs-6">送洗方式：<?php echo $row['sent_to'] ?></span><br>
                 <span class="fs-6">洗衣門市/地址：<?php echo $row['sentTo_address'] ?></span><br>
-                <?php if (!empty($sendto_grid_num)) {?>
-                    <span class="fs-6">洗衣格子編號：<?php echo $sendto_grid_num ?></span><br>
+                <?php if (!empty($gridrow['sendto_grid_num'])) { ?>
+                    <span class="fs-6">洗衣格子編號：<?php echo $gridrow['sendto_grid_num'] ?></span><br>
                 <?php } ?>
                 <span class="fs-6">領取方式：<?php echo $row['sent_back'] ?></span><br>
                 <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>
 
                 <!-- <span class="fs-6">衣物重量: 0.8kg</span><br> -->
                 <span class="fs-6">洗衣總額：NT$ <?php echo $row['washing_price']   ?></span><br>
-                <span class="fs-6">運費：NT$ <?php echo $row['sendprice'] ?></span><br>
+                <span class="fs-6">運費：NT$ <?php echo $row['sentprice'] ?></span><br>
                 <span class="fs-6">碳稅：NT$ <?php echo $row['carbon_tax'] ?></span><br>
                 <span class="fs-6">碳點：<?php echo $row['carbon_point'] ?></span><br>
                 <p class="fs-5"><b>總額: NT$ <?php echo $row['total_price']   ?></b></p>

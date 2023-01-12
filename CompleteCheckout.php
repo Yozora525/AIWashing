@@ -8,6 +8,20 @@ $sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$payId}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $_SESSION['checkpay_id']  = $row['order_id'];
+/* 顯示洗衣格子編號 */
+$sql = "SELECT * FROM `cabinet_record`";
+$recordresult = mysqli_query($conn, $sql);
+$gridrow = mysqli_fetch_assoc($recordresult);
+if ($_SESSION['checkpay_id'] == $gridrow['order_id']) {
+    $sendbuck_grid_num = $gridrow['sendbuck_grid_num'];
+}
+
+if (!empty($sendbuck_grid_num)) {
+    $update_gridstatus = "UPDATE `grid` SET `grid_status` ='1' Where `grid_id`='$sendbuck_grid_num'";
+    $reslut = mysqli_query($conn, $update_gridstatus);
+}
+
+
 
 mysqli_close($conn);
 
@@ -47,7 +61,8 @@ mysqli_close($conn);
                         <p class="text-center">發票</p>
                         <span class="fs-6">訂單編號：<?php echo $row['order_id'] ?><br></span>
                         <input type="hidden" name="payid[]" value="<?php echo $row['order_id'] ?>" readonly />
-                        <span class="fs-6">開立時間：<?php echo $row['order_time'] ?></span><br>
+                        <span class="fs-6">開立時間：<?php echo $row['order_time'] ?></span><br><!-- 改成發票的時間 -->
+
                         <span class="fs-6">隨機碼：9999</span>&nbsp;
                         <span class="fs-6">公司名：AI智慧喜</span><br><br>
                         <span class="fs-6">洗滌模式：<?php echo $row['wash_mode'] ?></span><br>
@@ -60,10 +75,13 @@ mysqli_close($conn);
 
                         <span class="fs-6">領取方式：<?php echo $row['sent_back'] ?></span><br>
                         <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>
-
+                        <?php
+                        if (!empty($sendbuck_grid_num)) { ?>
+                            <span class="fs-6">取衣格子編號：<?php echo $sendbuck_grid_num ?></span><br>
+                        <?php } ?>
                         <span class="fs-6">衣物重量：<?php echo $row['weight'] ?>kg</span><br>
                         <span class="fs-6">洗衣總額：NT$ <?php echo $row['washing_price']   ?></span><br>
-                        <span class="fs-6">運費：NT$ <?php echo $row['sendprice'] ?></span><br>
+                        <span class="fs-6">運費：NT$ <?php echo $row['sentprice'] ?></span><br>
                         <span class="fs-6">碳排放：<?php echo $row['carbon_emission'] ?>g</span><br>
                         <span class="fs-6">碳點：<?php echo $row['carbon_point'] ?></span><br>
 
