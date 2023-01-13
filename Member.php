@@ -19,14 +19,14 @@ $point = 0;
 
 $sql = "SELECT * FROM `washing_order`";
 $carbon_result = mysqli_query($conn, $sql);
-                            if ($carbon_result->num_rows > 0) {
-                                while ($carbonrow = $carbon_result->fetch_assoc()) {
-                                   if($mem_id==$carbonrow['mem_id']){
-                                    $emission += $carbonrow['carbon_emission'];
-                                    $point += $carbonrow['carbon_point'];
-                                }
-                                }
-                            } 
+if ($carbon_result->num_rows > 0) {
+    while ($carbonrow = $carbon_result->fetch_assoc()) {
+        if ($mem_id == $carbonrow['mem_id']) {
+            $emission += $carbonrow['carbon_emission'];
+            $point += $carbonrow['carbon_point'];
+        }
+    }
+}
 
 mysqli_close($conn);
 ?>
