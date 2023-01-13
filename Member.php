@@ -15,6 +15,12 @@ $mem_id = $row['mem_id'];
 $name = $row['mem_name'];
 mysqli_close($conn);
 
+$sql = "SELECT `carbon_emission`,`carbon_point` FROM `washing_order` WHERE `mem_id`='{$memid}'";
+$result = mysqli_query($conn, $sql);
+$carbonrow = mysqli_fetch_assoc($result);
+$emission += $carbonrow['carbon_emission'];
+$point += $carbonrow['carbon_point'];
+
 ?>
 
 <head>
@@ -70,7 +76,7 @@ mysqli_close($conn);
                                     <span class="mb-1 fs-6">
                                         <h1><?php echo $name ?></h1>
                                     </span>
-                                    <p class="mb-2 pb-1" style="color: #867b4a;">狂暴的排碳者vip111</p>
+                                    <p class="mb-2 pb-1" style="color: #867b4a;">狂暴的排碳者</p>
                                     <div class="d-flex justify-content-start rounded-3 p-2 mb-0 text-center" style="background-color: #efefef;">
                                         <!-- <div>
                                                     <p class="small text-muted mb-1 fs-6">Articles</p>
@@ -78,11 +84,11 @@ mysqli_close($conn);
                                                 </div> -->
                                         <div class="px-3">
                                             <p class="small text-muted mb-1 fs-8">累計排碳量</p>
-                                            <p class="mb-0 fs-4">976</p>
+                                            <p class="mb-0 fs-4"><?php echo $emission ?></p>
                                         </div>
                                         <div>
                                             <p class="small text-muted mb-1 fs-8">累計碳點</p>
-                                            <p class="mb-0 fs-4">85</p>
+                                            <p class="mb-0 fs-4"><?php echo $point ?></p>
                                         </div>
                                     </div>
                                     <!-- Button trigger modal -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1:3307
--- 產生時間： 2023-01-13 10:00:11
+-- 產生時間： 2023-01-13 10:38:13
 -- 伺服器版本： 10.4.14-MariaDB
 -- PHP 版本： 7.2.34
 
@@ -213,7 +213,7 @@ CREATE TABLE `laundry_bag` (
 --
 
 INSERT INTO `laundry_bag` (`bag_id`, `bag_addTime`, `bag_status`) VALUES
-('B1673338278326', '2022-12-31 12:12:58', 1),
+('B1673338278326', '2022-12-31 12:12:58', 2),
 ('B1673338278327', '2022-12-31 12:15:58', 1),
 ('B1673338278328', '2023-01-12 00:31:38', 1),
 ('B1673338278329', '2023-01-12 00:31:38', 1),
@@ -324,7 +324,7 @@ CREATE TABLE `washing_order` (
   `dryout_mode` varchar(11) NOT NULL COMMENT '脫水模式',
   `drying_mode` varchar(11) NOT NULL COMMENT '乾衣模式',
   `folding_mode` varchar(11) NOT NULL COMMENT '摺衣模式',
-  `washing_time` int(11) NOT NULL COMMENT '預計洗衣時長',
+  `washing_time` datetime NOT NULL COMMENT '預計洗衣完成時間',
   `washing_price` int(11) NOT NULL COMMENT '洗衣總額(洗脫乾摺)',
   `sent_to` varchar(11) NOT NULL COMMENT '送洗方式',
   `sentTo_address` varchar(128) DEFAULT NULL COMMENT '送洗門市或地址',
