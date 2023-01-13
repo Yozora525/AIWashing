@@ -54,8 +54,16 @@ mysqli_close($conn);
                 <br>
                 <?php
                 if (!empty($grid_num)) { ?>
-                    <p class="h1 text-success text-center">取衣格子編號：<?php echo $grid_num ?></p><br>
-                <?php } ?>
+                    <p class="h1 text-success text-center">取衣格子編號：<?php echo $grid_num ?>
+                    &nbsp;
+                    開櫃碼：<?php
+                    $comb = "abcdefghijklmnopqrstuvwxyz0123456789";
+                    $shfl = str_shuffle($comb);
+                    $random = substr($shfl,0,8);
+                    echo $random;
+                    ?></p><br>
+                <?php } 
+                ?>
 
                 <div class="card">
                     <div class="card-header">
