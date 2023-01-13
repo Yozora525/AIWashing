@@ -1,35 +1,36 @@
-function messageGo(frameID){
-    var frame_id = $(":checked")[0].value; 
-    console.log(frameID);                   
-      $.ajax({
-          //告訴程式表單要傳送到哪裡                                         
-          url:"Member.php",                                                              
-          //需要傳送的資料
-          data:{
-            'frameID': frameID
-        }, 
-           //使用POST方法     
-          type : "POST",                                                                    
-          //接收回傳資料的格式，在這個例子中，只要是接收true就可以了
-          dataType:'json', 
-           //傳送失敗則跳出失敗訊息      
-          error:function(jqXHR){                                                                 
-          //資料傳送失敗後就會執行這個function內的程式，可以在這裡寫入要執行的程式  
-          console.log(data);
-          alert("失敗");
-          alert(jqXHR.statusText);
-          alert(jqXHR.responseText);
-          },
-          //傳送成功則跳出成功訊息
-          success:function(data){                                                           
-          //資料傳送成功後就會執行這個function內的程式，可以在這裡寫入要執行的程式  
-          alert("成功");
-          }
-      }) ;
-  };
-  
-//   $(document).ready(function(){
-//     $("#submot_message").click(function(){
-//         alert(frame_id);
-//     });
-//   });
+$(document).ready(function(){
+    $("[data-btn='confirm-change-frame']").on("click",function(){
+        // 檢查是否有選擇頭像框
+        if ($("[name='avatar_frame']:checked").length == 0) {
+            alert("請選擇要更換的頭像框!");
+            return;
+        }
+
+        $.ajax({
+            url: "setMemberFrame.php",
+            type: "POST",
+            async: true,
+            dataType: "json",
+            data: {
+                'frameId': $("[name='avatar_frame']:checked")[0].value
+            },
+            success: function(data) {
+                console.log(data);
+
+                // change data-user-frame border color
+                // border: .4rem solid #color;
+                $("[data-user-frame]")[0].style.border = ".4rem solid " + data.data[1];
+
+                // alert success message
+                alert('成功');
+
+            },
+            error: function(jqXHR) {
+                alert(jqXHR.statusText);
+                alert(jqXHR.responseText);
+            }
+        });
+    });
+
+});
+

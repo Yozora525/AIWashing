@@ -24,6 +24,7 @@ mysqli_close($conn);
     <link rel="stylesheet" href="static/css/all.css">
     <link rel="stylesheet" href="static/css/header.css" />
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <script src="static/lib/Frontend_lib/jquery/jquery.min.js"></script>
     <script src="static/js/member.js"></script>
 
     <title>會員管理</title>
@@ -58,7 +59,7 @@ mysqli_close($conn);
                     <div class="card mb-3 p-2" style=" border-radius: 15px;">
                         <div class="row g-0">
                             <div class="col-md-4 flex-shrink-0 ">
-                                <div class="img_border">
+                                <div class="img_border" data-user-frame>
                                     <!-- 在img_border 的地方加入style="色碼" 即可換頭像 -->
                                     <img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像">
                                 </div>
@@ -106,7 +107,6 @@ mysqli_close($conn);
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="" method="post">
                             <div class="container-fluid">
                                 <div class="row">
 
@@ -222,10 +222,9 @@ mysqli_close($conn);
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
                                 <!-- 後端給大頭貼id -->
-                                <input type="button" id="submot_message" onclick="messageGo('<?php  ?>');" value="確認"
+                                <input type="button" data-btn="confirm-change-frame" value="確認"
                                     class="btn btn-primary" data-bs-dismiss="modal">
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>
