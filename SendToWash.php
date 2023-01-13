@@ -60,6 +60,7 @@ mysqli_close($conn);
                 <span class="fs-6">取衣門市/地址：<?php echo $row['sentBack_address'] ?></span><br>
 
                 <!-- <span class="fs-6">衣物重量: 0.8kg</span><br> -->
+                <span class="fs-6">衣物重量：3kg</span><br>
                 <span class="fs-6">洗衣總額：NT$ <?php echo $row['washing_price']   ?></span><br>
                 <span class="fs-6">運費：NT$ <?php echo $row['sentprice'] ?></span><br>
                 <span class="fs-6">碳稅：NT$ <?php echo $row['carbon_tax'] ?></span><br>

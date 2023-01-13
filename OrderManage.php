@@ -55,6 +55,8 @@ $member_mem_id = $member_row['mem_id'];
                             <div class="card-body">
                                 <span class="fs-6">碳點： <?php echo $order_row['carbon_point'] ?><br></span>
                                 <span class="fs-6">碳排放： <?php echo $order_row['carbon_emission'] ?><br></span>
+                                <span class="fs-6">碳稅： <?php echo $order_row['carbon_tax'] ?><br></span>
+                                <span class="fs-6">總額： NT$ <?php echo $order_row['total_price'] ?><br></span>
                                 <a class="card-link" data-seemore="<?php echo $order_row['order_id'] ?>" onclick="ShowDetailData('<?php echo $order_row['order_id'] ?>')">查看詳情<br></a>
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">洗滌模式： <?php echo $order_row['wash_mode'] ?><br></span>
                                 <span class="fs-6 dis_none" data-detail="<?php echo $order_row['order_id'] ?>">脫水模式： <?php echo $order_row['dryout_mode'] ?><br></span>

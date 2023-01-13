@@ -59,7 +59,7 @@ mysqli_close($conn);
                 <?php
                 if (!empty($grid_num)) { ?>
                     <p class="h1 text-success text-center">
-                        開櫃碼：<?php echo $random; ?>
+                        開櫃碼：<?php echo $random ?>
                     </p><br>
                     <p class="h1 text-success text-center">
                         取衣格子編號：<?php echo $grid_num ?>
