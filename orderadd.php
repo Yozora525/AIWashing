@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sendprice = $sent_to_price + $sent_back_price;
 
         /* 計算總額 $washing_price是洗衣總額 */
-        $total = /* $washing_price + */ $sendprice;
+        $total =  $washing_price + $sendprice;
 
 
         /*新增訂單資料*/
