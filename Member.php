@@ -120,8 +120,7 @@ mysqli_close($conn);
                                                         class="img-thumbnail rounded-5" alt="頭像"></a>
                                             </div>
                                             <div class="text-center m-3">
-                                                <input class="form-check-input" type="radio" value="<?php echo $member_avatar_frame['frame_id'] ?>"
-                                                    name="avatar_frame"  data-frameID="<?php echo $member_avatar_frame['frame_id'] ?>">
+                                                <input class="form-check-input" type="radio" value="F1673338241919" name="avatar_frame">
                                                     vip4
                                             </div>
                                         </div>
