@@ -74,7 +74,7 @@ $member_mem_id = $member_row['mem_id'];
                                 <p><br>
                                     <?php if ($order_row['order_status'] == '1') {
                                         $_SESSION['payid'] = $order_row['order_id'];
-                                        echo "<a href='addinvoice.php?payid=" . $order_row['order_id'] . "' class='btn btn-success'>確認付款</a>"; ?>
+                                        echo "<a href='addinvoice.php?payid=" . $order_row['order_id'] . "&point=".$order_row['carbon_point']."&tax=".$order_row['carbon_tax']."&emission=".$order_row['carbon_emission']."&total=".$order_row['total_price']."' class='btn btn-success'>確認付款</a>"; ?>
                                     <?php }  ?>
 
                                 </p>
