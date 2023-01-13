@@ -137,9 +137,7 @@ $frame_id = $memframerow['frame_id'];
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row">
-
                                 <div class="col-6 col-sm-6 hover-overlay ripple shadow-1-strong" data-mdb-ripple-color="light">
-
                                     <?php
                                     //抓出會員擁有頭像id
                                     $sql = "SELECT * FROM `member_avatar_frame` WHERE `mem_id`='{$memid}'";
@@ -164,17 +162,14 @@ $frame_id = $memframerow['frame_id'];
                                                     </div>
                                                 </div>
 
-                                    <?php }
+                                    <?php
+                                            }
                                         }
                                     }
-                                    mysqli_close($conn); ?>
-
-
-
-
-
-
-                                    <div class="img-hover">
+                                    mysqli_close($conn);
+                                    ?>
+                                </div>
+                                <!--     <div class="img-hover">
                                         <div class="img_border" style="border: .4rem solid #C3AAA6;">
                                             <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
                                         </div>
@@ -250,7 +245,7 @@ $frame_id = $memframerow['frame_id'];
                                         vip4
                                     </div>
 
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="modal-footer">
