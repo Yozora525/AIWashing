@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!$reslut) {
         die('Error: ' . mysqli_error($conn)); //如果sql執行失敗輸出錯誤
     } else {
-        echo "<script>alert('訂單輸入成功');window.location.href='SendToWash.php'</script>"; //成功輸出註冊成功
+        // echo "<script>alert('訂單輸入成功');window.location.href='SendToWash.php'</script>"; //成功輸出註冊成功
     }
 }
 mysqli_close($conn);
