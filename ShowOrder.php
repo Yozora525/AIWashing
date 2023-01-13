@@ -8,6 +8,16 @@ $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $memId = $row['mem_id'];
 
+// 加入預計取衣服時間 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $add_sendback_time = $_POST['add_sendback_time'];
+    $add_sql_time = date("Y-m-d H:i:s", strtotime($add_sendback_time));
+    if ($row['order_id'] == $orderId) {
+        $update_sentBack_time = "UPDATE `washing_order` SET `sentBack_time` ='$add_sql_time' WHERE `order_id`='{$orderId}'";
+        $reslut = mysqli_query($conn, $update_sentBack_time);
+    }
+}
+
 /* 顯示洗衣格子編號 */
 $sql = "SELECT * FROM `cabinet_record` WHERE `order_id`='{$orderId}'";
 $recordresult = mysqli_query($conn, $sql);

@@ -48,7 +48,7 @@ mysqli_close($conn);
     include('templates/frame/header.php');
     ?>
 
-<main>
+    <main>
         <div class="container mb-4">
             <br>
             <div class="row">
@@ -66,11 +66,12 @@ mysqli_close($conn);
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body text-black flex-grow-1 ms-3">
-                                    <h5 class="mb-1 fs-6"><?php echo $name ?></h5>
-                                    <small class="text-muted fs-8">會員編號<?php echo $mem_id ?></small>
+                                    <small class="text-muted fs-8">會員編號 <?php echo $mem_id ?></small>
+                                    <span class="mb-1 fs-6">
+                                        <h1><?php echo $name ?></h1>
+                                    </span>
                                     <p class="mb-2 pb-1" style="color: #867b4a;">狂暴的排碳者vip111</p>
-                                    <div class="d-flex justify-content-start rounded-3 p-2 mb-0 text-center"
-                                        style="background-color: #efefef;">
+                                    <div class="d-flex justify-content-start rounded-3 p-2 mb-0 text-center" style="background-color: #efefef;">
                                         <!-- <div>
                                                     <p class="small text-muted mb-1 fs-6">Articles</p>
                                                     <p class="mb-0 fs-6">41</p>
@@ -86,8 +87,7 @@ mysqli_close($conn);
                                     </div>
                                     <!-- Button trigger modal -->
                                     <div class="d-flex pt-1">
-                                        <button type="button" class="btn btn-outline-primary me-1 flex-grow-1 m-1"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal">換頭像框</button>
+                                        <button type="button" class="btn btn-outline-primary me-1 flex-grow-1 m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">換頭像框</button>
                                         <!-- <button type="button" class="btn btn-primary flex-grow-1">換頭像框</button> -->
                                     </div>
                                 </div>
@@ -112,123 +112,106 @@ mysqli_close($conn);
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="row">
+                        <div class="container-fluid">
+                            <div class="row">
 
-                                    <div class="col-6 col-sm-6 hover-overlay ripple shadow-1-strong"
-                                        data-mdb-ripple-color="light">
+                                <div class="col-6 col-sm-6 hover-overlay ripple shadow-1-strong" data-mdb-ripple-color="light">
 
-                                        <div class="img-hover">
-                                            <div class="img_border" style="border: .4rem solid black;">
-                                                <!-- 在img_border 的地方加入style="色碼" 即可換頭像 -->
-                                                <a href="#"><img src="static/img/user.png"
-                                                        class="img-thumbnail rounded-5" alt="頭像"></a>
-                                            </div>
-                                            <div class="text-center m-3">
-                                                <input class="form-check-input" type="radio" value="F1673338241919" name="avatar_frame">
-                                                    vip4
-                                            </div>
-                                        </div>
-
-                                        <div class="img-hover">
-                                            <div class="img_border" style="border: .4rem solid #C3AAA6;">
-                                                <a href="#"><img src="static/img/user.png"
-                                                        class="img-thumbnail rounded-5" alt="頭像"></a>
-                                            </div>
+                                    <div class="img-hover">
+                                        <div class="img_border" style="border: .4rem solid black;">
+                                            <!-- 在img_border 的地方加入style="色碼" 即可換頭像 -->
+                                            <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
                                         </div>
                                         <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="FRAME002"
-                                                name="avatar_frame"  data-frameID="FRAME002">
-                                                vip4
-                                        </div>
-
-                                        <div class="img-hover">
-                                            <div class="img_border" style="border: .4rem solid #A9B7AA;">
-                                                <a href="#"><img src="static/img/user.png"
-                                                        class="img-thumbnail rounded-5" alt="頭像"></a>
-                                            </div>
-                                        </div>
-                                        <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="FRAME003"
-                                                name="avatar_frame"  data-frameID="FRAME003">
-                                                vip4
-                                        </div>
-
-                                        <div class="img-hover">
-                                            <div class="img_border" style="border: .4rem solid #5cb5ac;" >
-                                                <a href="#"><img src="static/img/user.png"
-                                                        class="img-thumbnail rounded-5" alt="頭像"></a>
-                                            </div>
-                                        </div>
-                                        <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="FRAME004"
-                                                name="avatar_frame"  data-frameID="FRAME004">
-                                                vip4
+                                            <input class="form-check-input" type="radio" value="F1673338241919" name="avatar_frame">
+                                            vip4
                                         </div>
                                     </div>
 
+                                    <div class="img-hover">
+                                        <div class="img_border" style="border: .4rem solid #C3AAA6;">
+                                            <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
+                                        </div>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <input class="form-check-input" type="radio" value="FRAME002" name="avatar_frame" data-frameID="FRAME002">
+                                        vip4
+                                    </div>
 
+                                    <div class="img-hover">
+                                        <div class="img_border" style="border: .4rem solid #A9B7AA;">
+                                            <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
+                                        </div>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <input class="form-check-input" type="radio" value="FRAME003" name="avatar_frame" data-frameID="FRAME003">
+                                        vip4
+                                    </div>
 
-                                    <div class="col-6 col-sm-6">
-
-
-                                        <div class="img-hover">
-                                            <div class="img_border" style="border: .4rem solid pink;">
-                                                <a href="#"><img src="static/img/user.png"
-                                                        class="img-thumbnail rounded-5" alt="頭像"></a>
-                                            </div>
+                                    <div class="img-hover">
+                                        <div class="img_border" style="border: .4rem solid #5cb5ac;">
+                                            <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
                                         </div>
-                                        <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="FRAME005"
-                                                name="avatar_frame"  data-frameID="FRAME005">
-                                                vip4
-                                        </div>
-
-                                        <div class="img-hover">
-                                            <div class="img_border" style="border: .4rem solid rgb(205, 187, 72);">
-                                                <a href="#"><img src="static/img/user.png"
-                                                        class="img-thumbnail rounded-5" alt="頭像"></a>
-                                            </div>
-                                        </div>
-                                        <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="FRAME006"
-                                                name="avatar_frame"  data-frameID="FRAME006">
-                                                vip4
-                                        </div>
-
-                                        <div class="img-hover">
-                                            <div class="img_border" style="border: .4rem solid #EFF0EA;">
-                                                <a href="#"><img src="static/img/user.png"
-                                                        class="img-thumbnail rounded-5" alt="頭像"></a>
-                                            </div>
-                                        </div>
-                                        <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="FRAME007"
-                                                name="avatar_frame"  data-frameID="FRAME007">
-                                                vip4
-                                        </div>
-
-                                        <div class="img-hover">
-                                            <div class="img_border" style="border: .4rem solid #BECBD3;">
-                                                <a href="#"><img src="static/img/user.png"
-                                                        class="img-thumbnail rounded-5" alt="頭像"></a>
-                                            </div>
-                                        </div>
-                                        <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="FRAME008"
-                                                name="avatar_frame"  data-frameID="FRAME008">
-                                                vip4
-                                        </div>
-                                        
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <input class="form-check-input" type="radio" value="FRAME004" name="avatar_frame" data-frameID="FRAME004">
+                                        vip4
                                     </div>
                                 </div>
+
+
+
+                                <div class="col-6 col-sm-6">
+
+
+                                    <div class="img-hover">
+                                        <div class="img_border" style="border: .4rem solid pink;">
+                                            <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
+                                        </div>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <input class="form-check-input" type="radio" value="FRAME005" name="avatar_frame" data-frameID="FRAME005">
+                                        vip4
+                                    </div>
+
+                                    <div class="img-hover">
+                                        <div class="img_border" style="border: .4rem solid rgb(205, 187, 72);">
+                                            <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
+                                        </div>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <input class="form-check-input" type="radio" value="FRAME006" name="avatar_frame" data-frameID="FRAME006">
+                                        vip4
+                                    </div>
+
+                                    <div class="img-hover">
+                                        <div class="img_border" style="border: .4rem solid #EFF0EA;">
+                                            <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
+                                        </div>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <input class="form-check-input" type="radio" value="FRAME007" name="avatar_frame" data-frameID="FRAME007">
+                                        vip4
+                                    </div>
+
+                                    <div class="img-hover">
+                                        <div class="img_border" style="border: .4rem solid #BECBD3;">
+                                            <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
+                                        </div>
+                                    </div>
+                                    <div class="text-center m-3">
+                                        <input class="form-check-input" type="radio" value="FRAME008" name="avatar_frame" data-frameID="FRAME008">
+                                        vip4
+                                    </div>
+
+                                </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                                <!-- 後端給大頭貼id -->
-                                <input type="button" data-btn="confirm-change-frame" value="確認"
-                                    class="btn btn-primary" data-bs-dismiss="modal">
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                            <!-- 後端給大頭貼id -->
+                            <input type="button" data-btn="confirm-change-frame" value="確認" class="btn btn-primary" data-bs-dismiss="modal">
+                        </div>
                     </div>
                 </div>
             </div>
