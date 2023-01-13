@@ -57,8 +57,6 @@ $data = json_encode([
 
 $oRes = httpRequest($data);
 
-if($oRes == 'OK'){
-    header('location:CompleteCheckout.php');
-}
+header('location:CompleteCheckout.php');
 
 ?>
