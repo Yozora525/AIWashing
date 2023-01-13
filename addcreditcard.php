@@ -10,6 +10,8 @@ $mem_id = $row['mem_id'];
 
 function IdProducer(string $Feature)
 {
+    //date_default_timezone_set('時區');
+    date_default_timezone_set('Asia/Taipei');
     // get current timestamp
     $timestamp =  microtime(true);
     $timestamp = (string) $timestamp * 1000;

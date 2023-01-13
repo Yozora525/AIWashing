@@ -10,6 +10,8 @@ $mem_id = $row['mem_id'];
 // IdProducer 製造Id的 function, 給Id特徵即可生成獨一無二的Id
 function IdProducer(string $Feature)
 {
+    //date_default_timezone_set('時區');
+    date_default_timezone_set('Asia/Taipei');
     // get current timestamp
     $timestamp =  microtime(true);
     $timestamp = (string) $timestamp * 1000;
@@ -110,7 +112,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         }
-        $time = date("H:i:s", strtotime($washTime)); //需要的時間
+        // $time = date("H:i:s", strtotime($washTime)); //需要的時間
+        //date_default_timezone_set('時區');
+        date_default_timezone_set('Asia/Taipei');
         $now = time(); //現在的時間
         $finaltime = $washTime + $now; //加總後預計完成時間
         $complete_washing_time = date("Y-m-d H:i:s", $finaltime);
@@ -145,3 +149,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 mysqli_close($conn);
+?>

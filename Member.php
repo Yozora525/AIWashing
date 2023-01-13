@@ -17,8 +17,6 @@ $name = $row['mem_name'];
 
 //計算累積碳點
 $emission = 0;
-$point = 0;
-
 $sql = "SELECT * FROM `washing_order`";
 $carbon_result = mysqli_query($conn, $sql);
 if ($carbon_result->num_rows > 0) {
@@ -28,16 +26,17 @@ if ($carbon_result->num_rows > 0) {
         }
     }
 }
-$update_mission = "UPDATE `member` SET `mem_points` ='$point' Where `mem_id`='$mem_id'";
-$reslut = mysqli_query($conn, $update_mission);
 
 //抓出會員擁有頭像id
-$sql = "SELECT * FROM `member_avatar_frame` WHERE `mem_id`='{$memid}'";
+$sql = "SELECT * FROM `member_avatar_frame` WHERE `mem_id` = '{$memid}' and `memFrame_status` = 2 ";
 $result = mysqli_query($conn, $sql);
 $memframerow = mysqli_fetch_assoc($result);
 $frame_id = $memframerow['frame_id'];
 
-
+$sql = "SELECT * FROM `avatar_frame` WHERE `frame_id`='{$frame_id }'";
+$result = mysqli_query($conn, $sql);
+$color_row = mysqli_fetch_assoc($result);
+$frame_color = $color_row['frame_color'];
 ?>
 
 <head>
@@ -82,7 +81,7 @@ $frame_id = $memframerow['frame_id'];
                     <div class="card mb-3 p-2" style=" border-radius: 15px;">
                         <div class="row g-0">
                             <div class="col-md-4 flex-shrink-0 ">
-                                <div class="img_border" data-user-frame>
+                                <div class="img_border" data-user-frame style="border: .4rem solid <?php echo $frame_color ?>;">
                                     <!-- 在img_border 的地方加入style="色碼" 即可換頭像 -->
                                     <img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像">
                                 </div>
@@ -144,26 +143,26 @@ $frame_id = $memframerow['frame_id'];
                                     $frame_result = mysqli_query($conn, $sql);
                                     if ($frame_result->num_rows > 0) {
                                         while ($order_row = $frame_result->fetch_assoc()) {
-                                            if ($frame_id = $memframerow['frame_id']) {
-                                                $sql = "SELECT * FROM `avatar_frame` WHERE `frame_id`='{$frame_id}'";
+                                            // if ($frame_id = $memframerow['frame_id']) {
+                                                $sql = "SELECT * FROM `avatar_frame` WHERE `frame_id`='{$order_row['frame_id']}'";
                                                 $result = mysqli_query($conn, $sql);
                                                 $color_row = mysqli_fetch_assoc($result);
                                                 $frame_color = $color_row['frame_color'];
                                                 $vip = $color_row['frame_levelName'];
                                     ?>
                                                 <div class="img-hover">
-                                                    <div class="img_border" style="border: .4rem solid black;">
+                                                    <div class="img_border" style="border: .4rem solid <?php echo $frame_color ?>;">
                                                         <!-- 在img_border 的地方加入style="色碼" 即可換頭像 -->
                                                         <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
                                                     </div>
                                                     <div class="text-center m-3">
-                                                        <input class="form-check-input" type="radio" value="<?php echo $frame_color ?>" name="avatar_frame">
+                                                        <input class="form-check-input" type="radio" value="<?php echo $order_row['frame_id'] ?>" name="avatar_frame">
                                                         <?php echo $vip ?>
                                                     </div>
                                                 </div>
 
                                     <?php
-                                            }
+                                            // }
                                         }
                                     }
                                     mysqli_close($conn);

@@ -2,6 +2,8 @@
 require_once('connect.php');
 function IdProducer(string $Feature)
 {
+    //date_default_timezone_set('時區');
+    date_default_timezone_set('Asia/Taipei');
     $timestamp =  microtime(true);
     $timestamp = (string) $timestamp * 1000;
     $id = $Feature . $timestamp;
