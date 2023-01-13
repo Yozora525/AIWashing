@@ -75,16 +75,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
 
-            //新增門市格子紀錄
+/*             //新增門市格子紀錄
             $addserve = "INSERT into `cabinet_record`(cabinet_id,order_id,sendto_grid_num) values ('$serve_id','$orderId','$grid_num')";
             $reslut = mysqli_query($conn, $addserve);   
-            /* 更新格子使用狀態 */
+            // 更新格子使用狀態
             $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where`grid_id`='$grid_num'";
             $reslut = mysqli_query($conn, $update_gridstatus);
-        } else {
-            $add_cabinet_record_order_id = "INSERT into `cabinet_record`(order_id) values ('$orderId')";
+ */        } else {
+/*             $add_cabinet_record_order_id = "INSERT into `cabinet_record`(order_id) values ('$orderId')";
             $reslut = mysqli_query($conn, $add_cabinet_record_order_id);
-        }
+ */        }
 
         /* 計算碳點、碳排、碳稅 */
         $ListMode = [$WashMode, $DehydrationMode, $DryMode, $FoldMode_Way];
@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         //! 撈出該模式下所需的碳排、點、稅、時間，並加起來    -> 尚未測試
         for ($i = 0; $i < count($ListMode); $i++) {
-            $sql = "select * from wash_mode where mode_name = {$ListMode[$i]}";
+            $sql = "SELECT * from `wash_mode` where `mode_name` = {$ListMode[$i]}";
 
             // 找出每公斤的碳點、碳排
             $res = mysqli_query($conn, $sql);
@@ -104,15 +104,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (mysqli_num_rows($res) > 0) {
 
                 while ($row = mysqli_fetch_assoc($res)) {
-                    $point += $weight * $row["mode_point"];
-                    $emission += $weight * $row["carbonEmissions"];
-                    $washTime += $row["mode_needTime"];
+                    echo $point += $weight * $row["mode_point"];
+                    echo $emission += $weight * $row["carbonEmissions"];
+                    echo $washTime += $row["mode_needTime"];
                 }
             }
         }
 
         // get current timestamp
-        $currentTimestamp = time();
+         echo $currentTimestamp = time();
 
         $completeTime = date('Y-m-d H:i:s', $currentTimestamp + $washTime);
 
@@ -135,16 +135,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         /*新增訂單資料*/
-        $addorder = "INSERT into `washing_order`(order_id,mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back,sentTo_address,sentBack_address,carbon_point,carbon_emission,carbon_tax,`weight`,total_price,sentprice)
-         values ('$orderId','$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way','$sendto','$sendBack','$point','$emission','$tax','$weight','$total','$sendprice')"; //向資料庫插入表單傳來的值的sql
-        $reslut = mysqli_query($conn, $addorder); //執行sql        
+        // $addorder = "INSERT into `washing_order`(order_id,mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back,sentTo_address,sentBack_address,carbon_point,carbon_emission,carbon_tax,`weight`,total_price,sentprice)
+        //  values ('$orderId','$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way','$sendto','$sendBack','$point','$emission','$tax','$weight','$total','$sendprice')"; //向資料庫插入表單傳來的值的sql
+        // $reslut = mysqli_query($conn, $addorder); //執行sql        
 
     }
 
     if (!$reslut) {
         die('Error: ' . mysqli_error($conn)); //如果sql執行失敗輸出錯誤
     } else {
-        // echo "<script>alert('訂單輸入成功');window.location.href='SendToWash.php'</script>"; //成功輸出註冊成功
+        echo "<script>alert('訂單輸入成功');window.location.href='SendToWash.php'</script>"; //成功輸出註冊成功
     }
 }
 mysqli_close($conn);
