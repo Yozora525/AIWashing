@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1:3307
--- 產生時間： 2023-01-12 17:47:47
+-- 產生時間： 2023-01-13 04:01:55
 -- 伺服器版本： 10.4.14-MariaDB
 -- PHP 版本： 7.2.34
 
@@ -44,7 +44,11 @@ CREATE TABLE `avatar_frame` (
 
 INSERT INTO `avatar_frame` (`frame_id`, `frame_color`, `frame_levelName`, `frame_points`, `frame_recordTime`, `frame_status`) VALUES
 ('F1673338241919', '#7D7DFF', '等級一', 30, '2022-12-31 12:20:47', 1),
-('F1673338255333', '#00AEAE', '等級二', 50, '2022-12-31 12:22:47', 1);
+('F1673338255320', '#00AEAE', '等級二', 50, '2022-12-31 12:22:47', 1),
+('F1673338255321', '#00AEAE', '等級三', 100, '2023-01-13 10:50:23', 1),
+('F1673338255322', '#00AEAE', '等級四', 150, '2023-01-13 10:50:23', 1),
+('F1673338255323', '#00AEAE', '等級五', 300, '2023-01-13 10:50:23', 1),
+('F1673338255324', '#00AEAE', '等級六', 500, '2023-01-13 10:50:23', 1);
 
 -- --------------------------------------------------------
 
@@ -57,7 +61,7 @@ CREATE TABLE `bag_borrow_record` (
   `mem_id` varchar(64) NOT NULL COMMENT '會員編號',
   `borrow_time` datetime NOT NULL DEFAULT current_timestamp() COMMENT '租借時間',
   `return_time` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '歸還時間',
-  `borrow_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:租借中,2:已歸還)'
+  `borrow_status` int(11) NOT NULL DEFAULT 1 COMMENT '狀態(1:租借中,2:已歸還,0:停用)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='洗衣袋租借紀錄表';
 
 --
@@ -65,7 +69,12 @@ CREATE TABLE `bag_borrow_record` (
 --
 
 INSERT INTO `bag_borrow_record` (`bag_id`, `mem_id`, `borrow_time`, `return_time`, `borrow_status`) VALUES
-('B1673338278326', 'M1673504218335', '2023-01-12 14:16:58', '2023-01-12 14:16:58', 1);
+('B1673338278326', 'M1673504218335', '2023-01-12 14:16:58', '2023-01-13 10:36:33', 2),
+('B1673338278327', 'M1673546874918', '2023-01-13 02:07:54', '2023-01-13 02:13:26', 2),
+('B1673338278327', 'M1673546874918', '2023-01-13 02:15:08', '2023-01-13 02:15:08', 1),
+('B1673338278328', 'M1673504218335', '2023-01-13 10:34:50', '2023-01-13 10:34:50', 1),
+('B1673338278328', 'M1673504218335', '2023-01-13 10:36:33', '2023-01-13 10:36:33', 1),
+('B1673338278329', 'M1673546874918', '2023-01-13 02:13:26', '2023-01-13 10:35:33', 1);
 
 -- --------------------------------------------------------
 
@@ -80,6 +89,15 @@ CREATE TABLE `cabinet_record` (
   `sendbuck_grid_num` varchar(64) DEFAULT NULL COMMENT '取衣格子編號(grid_id)',
   `pick_code` varchar(24) NOT NULL COMMENT '取貨碼'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='AI櫃紀錄表';
+
+--
+-- 傾印資料表的資料 `cabinet_record`
+--
+
+INSERT INTO `cabinet_record` (`order_id`, `cabinet_id`, `sendto_grid_num`, `sendbuck_grid_num`, `pick_code`) VALUES
+('O1673547157068', '', NULL, 'G00000001', ''),
+('O1673547303391', '', NULL, NULL, ''),
+('O1673577388822', '', NULL, 'G00000001', '');
 
 -- --------------------------------------------------------
 
@@ -199,6 +217,15 @@ CREATE TABLE `invoice` (
   `random_code` varchar(4) NOT NULL COMMENT '隨機碼'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='發票表';
 
+--
+-- 傾印資料表的資料 `invoice`
+--
+
+INSERT INTO `invoice` (`invoice_id`, `order_id`, `invoice_addTime`, `random_code`) VALUES
+('HJ-19538662', 'O1673577388822', '2023-01-13 10:36:39', '1205'),
+('HJ-60923978', 'O1673547303391', '2023-01-13 02:15:15', '2781'),
+('HJ-90379190', 'O1673547157068', '2023-01-13 02:13:36', '4206');
+
 -- --------------------------------------------------------
 
 --
@@ -216,9 +243,9 @@ CREATE TABLE `laundry_bag` (
 --
 
 INSERT INTO `laundry_bag` (`bag_id`, `bag_addTime`, `bag_status`) VALUES
-('B1673338278326', '2022-12-31 12:12:58', 2),
-('B1673338278327', '2022-12-31 12:15:58', 1),
-('B1673338278328', '2023-01-12 00:31:38', 1),
+('B1673338278326', '2022-12-31 12:12:58', 1),
+('B1673338278327', '2022-12-31 12:15:58', 2),
+('B1673338278328', '2023-01-12 00:31:38', 2),
 ('B1673338278329', '2023-01-12 00:31:38', 1),
 ('B1673338278330', '2023-01-12 00:31:38', 1),
 ('B1673338278331', '2023-01-12 00:31:38', 1),
@@ -254,7 +281,8 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`mem_id`, `mem_account`, `mem_pwd`, `pwd_confirm`, `mem_name`, `mem_phone`, `mem_status`, `mem_points`) VALUES
-('M1673504218335', 'H225814948', '10944222', '10944222', 'Unii', '0938238127', 1, NULL);
+('M1673504218335', 'H225814948', '10944222', '10944222', 'Unii', '0938238127', 1, NULL),
+('M1673546874918', 'H225101010', '10944222', '10944222', '黃大仟儀', '0900880880', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -263,11 +291,18 @@ INSERT INTO `member` (`mem_id`, `mem_account`, `mem_pwd`, `pwd_confirm`, `mem_na
 --
 
 CREATE TABLE `member_avatar_frame` (
-  `frame_id` varchar(11) NOT NULL COMMENT '頭像框編號',
-  `mem_id` varchar(11) NOT NULL COMMENT '會員編號',
-  `memFrame_recordTime` datetime NOT NULL COMMENT '會員加入頭像框時間',
-  `memFrame_status` int(11) NOT NULL DEFAULT 1 COMMENT '會員頭像框狀態(1:正常,0:停用)'
+  `frame_id` varchar(64) NOT NULL COMMENT '頭像框編號',
+  `mem_id` varchar(64) NOT NULL COMMENT '會員編號',
+  `memFrame_recordTime` datetime NOT NULL DEFAULT current_timestamp() COMMENT '會員加入頭像框時間',
+  `memFrame_status` int(11) NOT NULL DEFAULT 1 COMMENT '會員頭像框狀態(1:未使用,2:使用中,0:停用)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='會員擁有頭像框表';
+
+--
+-- 傾印資料表的資料 `member_avatar_frame`
+--
+
+INSERT INTO `member_avatar_frame` (`frame_id`, `mem_id`, `memFrame_recordTime`, `memFrame_status`) VALUES
+('F1673338241919', 'M1673504218335', '2023-01-13 11:00:31', 2);
 
 -- --------------------------------------------------------
 
@@ -293,7 +328,8 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`card_id`, `mem_id`, `card_num`, `card_name`, `owner_name`, `expired_month`, `expired_year`, `security_code`, `card_time`, `card_status`) VALUES
-('C1673504637706', 'M1673504218335', '1111555588889999', 'Unii的卡卡', '黃仟儀', '7', '2050', '111', '2023-01-12 14:23:57', 1);
+('C1673504637706', 'M1673504218335', '1111555588889999', 'Unii的卡卡', '黃仟儀', '7', '2050', '111', '2023-01-12 14:23:57', 1),
+('C1673547076210', 'M1673546874918', '1111111111111111', '黃大仟儀的卡卡', '黃仟儀', '2', '2060', '060', '2023-01-13 02:11:16', 1);
 
 -- --------------------------------------------------------
 
@@ -356,6 +392,15 @@ CREATE TABLE `washing_order` (
   `total_price` int(11) NOT NULL COMMENT '整筆訂單總額',
   `order_status` int(11) NOT NULL DEFAULT 1 COMMENT '訂單狀態(1:處理中, 2:完成, 3:取消)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='訂單紀錄表';
+
+--
+-- 傾印資料表的資料 `washing_order`
+--
+
+INSERT INTO `washing_order` (`order_id`, `mem_id`, `bag_id`, `weight`, `wash_mode`, `dryout_mode`, `drying_mode`, `folding_mode`, `washing_time`, `washing_price`, `sent_to`, `sentTo_address`, `sent_back`, `sentBack_address`, `sentBack_time`, `sentprice`, `order_time`, `carbon_emission`, `carbon_tax`, `carbon_point`, `total_price`, `order_status`) VALUES
+('O1673547157068', 'M1673546874918', 'B1673338278327', 3, '熱水', '弱脫水', '電熱烘乾', '手工', 0, 0, '外送洗衣', '1233333333', '集中櫃取衣', '中壢大江櫃', '0000-00-00 00:00:00', 30, '2023-01-13 02:12:37', 0, 0, 0, 30, 2),
+('O1673547303391', 'M1673546874918', 'B1673338278328', 3, '熱水', '強脫水', '日曬', '手工', 0, 0, '外送洗衣', '111', '外送取衣', '111', '0000-00-00 00:00:00', 40, '2023-01-13 02:15:03', 0, 0, 0, 40, 1),
+('O1673577388822', 'M1673504218335', 'B1673338278328', 3, '強力', '強脫水', '電熱烘乾', '不折', 0, 0, '外送洗衣', '123', '集中櫃取衣', '中壢大江櫃', '0000-00-00 00:00:00', 30, '2023-01-13 10:36:28', 0, 0, 0, 30, 1);
 
 -- --------------------------------------------------------
 
