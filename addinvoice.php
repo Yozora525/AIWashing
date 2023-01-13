@@ -57,11 +57,11 @@ $data = json_encode([
 
 $oRes = httpRequest($data);
 
-if ($oRes == 'ok') {
+// if ($oRes == 'ok') {
     header('location:CompleteCheckout.php');
-} else {
-    echo '<script>發生錯誤，請稍後再試!</script>';
-}
+// } else {
+//     echo '發生錯誤，請稍後再試!';
+// }
 
 
 
