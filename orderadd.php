@@ -73,17 +73,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         break;
                 }
             }
-
-
-            //新增門市格子紀錄
-            $addserve = "INSERT into `cabinet_record`(cabinet_id,order_id,sendto_grid_num) values ('$serve_id','$orderId','$grid_num')";
-            $reslut = mysqli_query($conn, $addserve);   
-            // 更新格子使用狀態
-            $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where`grid_id`='$grid_num'";
-            $reslut = mysqli_query($conn, $update_gridstatus);
-        } else {
-            $add_cabinet_record_order_id = "INSERT into `cabinet_record`(order_id) values ('$orderId')";
-            $reslut = mysqli_query($conn, $add_cabinet_record_order_id);
+                //新增門市格子紀錄
+                $addserve = "INSERT into `cabinet_record`(cabinet_id,order_id,sendto_grid_num) values ('$serve_id','$orderId','$grid_num')";
+                $reslut = mysqli_query($conn, $addserve);   
+                // 更新格子使用狀態
+                $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where`grid_id`='$grid_num'";
+                $reslut = mysqli_query($conn, $update_gridstatus);
+            } else {
+                $add_cabinet_record_order_id = "INSERT into `cabinet_record`(order_id) values ('$orderId')";
+                $reslut = mysqli_query($conn, $add_cabinet_record_order_id);
         }
 
         /* 計算碳點、碳排、碳稅 */
@@ -92,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $point = 0; // 碳點carbon_point
         $emission = 0; // 碳排(單位：公斤)carbon_emission
         $washTime = 0; // 洗衣時間(單位：秒)
-        
+
 
 
         //! 撈出該模式下所需的碳排、點、稅、時間，並加起來    -> 尚未測試
@@ -105,18 +103,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (mysqli_num_rows($res) > 0) {
 
                 while ($row = mysqli_fetch_assoc($res)) {
-                    echo $point += $row["mode_point"];
-                    echo $emission += $weight * $row["carbonEmissions"];
-                    echo $washTime += $row["mode_needTime"];
-                    echo $washing_price += $weight * $row["mode_price"];
+                    $point += $row["mode_point"];
+                    $emission += $weight * $row["carbonEmissions"];
+                    $washTime += $row["mode_needTime"];
+                    $washing_price += $weight * $row["mode_price"];
                 }
             }
         }
-
-        // get current timestamp
-         echo $currentTimestamp = time();
-
-        $completeTime = date('Y-m-d H:i:s', $currentTimestamp + $washTime);
+        $time = date("H:i:s", strtotime($washTime)); //需要的時間
+        $now = time(); //現在的時間
+        $finaltime = $washTime + $now; //加總後預計完成時間
+        $complete_washing_time = date("Y-m-d H:i:s", $finaltime);
 
         /* 計算碳點、碳排、碳稅 */
         $tax = $emission / 1000 * 3000; // 碳稅(每公噸3000)
@@ -131,16 +128,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sent_to_price = $sent_to_row['delivery_price'];
         $sent_back_price = $sent_back_row['delivery_price'];
         $sendprice = $sent_to_price + $sent_back_price;
-
         /* 計算總額 $washing_price是洗衣總額 */
         $total =  $washing_price + $sendprice + $tax;
 
 
         /*新增訂單資料*/
-        $addorder = "INSERT into `washing_order`(order_id,mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back,sentTo_address,sentBack_address,carbon_point,carbon_emission,carbon_tax,`weight`,total_price,sentprice ,washing_price)
-        values ('$orderId','$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way','$sendto','$sendBack','$point','$emission','$tax','$weight','$total','$sendprice','$washing_price')"; //向資料庫插入表單傳來的值的sql
-        $reslut = mysqli_query($conn, $addorder); //執行sql        
-
+        $addorder = "INSERT into `washing_order`(order_id,mem_id,bag_id,wash_mode,dryout_mode,drying_mode,folding_mode,sent_to,sent_back,sentTo_address,sentBack_address,carbon_point,carbon_emission,carbon_tax,`weight`,total_price,sentprice,washing_price,washing_time)
+        values ('$orderId','$mem_id','$Aibag','$WashMode','$DehydrationMode','$DryMode','$FoldMode_Way','$SendTo_Way','$SendBack_Way','$sendto','$sendBack','$point','$emission','$tax','$weight','$total','$sendprice','$washing_price','$complete_washing_time')"; //向資料庫插入表單傳來的值的sql
+        $reslut = mysqli_query($conn, $addorder);    
     }
 
     if (!$reslut) {

@@ -53,6 +53,7 @@ $member_mem_id = $member_row['mem_id'];
                             </div>
                             <!-- data-seemore 及 data-detail 值要給訂單編號 -->
                             <div class="card-body">
+                                <span class="fs-6">取衣時間： <?php echo $order_row['sentBack_time'] ?><br></span>
                                 <span class="fs-6">碳點： <?php echo $order_row['carbon_point'] ?><br></span>
                                 <span class="fs-6">碳排放： <?php echo $order_row['carbon_emission'] ?><br></span>
                                 <span class="fs-6">碳稅： <?php echo $order_row['carbon_tax'] ?><br></span>
@@ -76,7 +77,7 @@ $member_mem_id = $member_row['mem_id'];
                                 <p><br>
                                     <?php if ($order_row['order_status'] == '1') {
                                         $_SESSION['payid'] = $order_row['order_id'];
-                                        echo "<a href='addinvoice.php?payid=" . $order_row['order_id'] . "&point=".$order_row['carbon_point']."&tax=".$order_row['carbon_tax']."&emission=".$order_row['carbon_emission']."&total=".$order_row['total_price']."' class='btn btn-success'>確認付款</a>"; ?>
+                                        echo "<a href='addinvoice.php?payid=" . $order_row['order_id'] . "&point=" . $order_row['carbon_point'] . "&tax=" . $order_row['carbon_tax'] . "&emission=" . $order_row['carbon_emission'] . "&total=" . $order_row['total_price'] . "' class='btn btn-success'>確認付款</a>"; ?>
                                     <?php }  ?>
 
                                 </p>

@@ -108,9 +108,6 @@ $reslut = mysqli_query($conn, $update_aibag);
 // 更新舊的洗衣袋狀態(洗衣表)
 $update_laundry_bag_status = "UPDATE `laundry_bag` SET `bag_status` ='1' Where `bag_id`='$old_bagid'";
 $reslut = mysqli_query($conn, $update_laundry_bag_status);
-
-
-
 mysqli_close($conn);
 ?>
 <html lang="en">
@@ -137,7 +134,9 @@ mysqli_close($conn);
             <form method="post" action="OrderManage.php">
                 <!-- 訂單成立 -->
                 <br><br>
-                <p class="h1 text-success"><b>訂單成立!</b></p>
+                <p class="h1 text-success"><b>訂單成立！</b></p>
+                <p class="h4"><b>取衣時間：<?php echo $row['sentBack_time'] ?></b></p>
+
                 <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
                 <p class="fs-5"><b>訂單詳情</b></p>
                 <span class="fs-6">訂單編號：<?php echo $row['order_id'] ?></span><br>

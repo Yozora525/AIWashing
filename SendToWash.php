@@ -38,7 +38,7 @@ mysqli_close($conn);
                 <br>
                 <p>預計完成的時間：</p>
                 <!-- 剩下的時間 -->
-                <p class="h1 text-success"><b>2022-12-28 12:28</b></p>
+                <p class="h1 text-success"><b><?php echo $row['washing_time'] ?></b></p>
                 <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
 
                 <label for="start">約定取件時間：</label>
