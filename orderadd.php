@@ -75,16 +75,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
 
-/*             //新增門市格子紀錄
+            //新增門市格子紀錄
             $addserve = "INSERT into `cabinet_record`(cabinet_id,order_id,sendto_grid_num) values ('$serve_id','$orderId','$grid_num')";
             $reslut = mysqli_query($conn, $addserve);   
             // 更新格子使用狀態
             $update_gridstatus = "UPDATE `grid` SET `grid_status` ='2' Where`grid_id`='$grid_num'";
             $reslut = mysqli_query($conn, $update_gridstatus);
- */        } else {
-/*             $add_cabinet_record_order_id = "INSERT into `cabinet_record`(order_id) values ('$orderId')";
+        } else {
+            $add_cabinet_record_order_id = "INSERT into `cabinet_record`(order_id) values ('$orderId')";
             $reslut = mysqli_query($conn, $add_cabinet_record_order_id);
- */        }
+        }
 
         /* 計算碳點、碳排、碳稅 */
         $ListMode = [$WashMode, $DehydrationMode, $DryMode, $FoldMode_Way];
