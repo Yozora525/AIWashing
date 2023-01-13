@@ -37,7 +37,7 @@ $result = mysqli_query($conn, $sql);
 $memframerow = mysqli_fetch_assoc($result);
 $frame_id = $memframerow['frame_id'];
 
-mysqli_close($conn);
+
 ?>
 
 <head>
@@ -139,24 +139,40 @@ mysqli_close($conn);
                             <div class="row">
 
                                 <div class="col-6 col-sm-6 hover-overlay ripple shadow-1-strong" data-mdb-ripple-color="light">
-                                
-                                <?php
-                                        $sql = "SELECT * FROM `member_avatar_frame` WHERE `mem_id`='{$memid}'";
-                                        $result = mysqli_query($conn, $sql);
-                                        if ($order_result->num_rows > 0) {
-                                        while ($order_row = $order_result->fetch_assoc()) {
-                                        if ($member_mem_id == $order_row['mem_id']) {
-                                ?>
-                                    <div class="img-hover">
-                                        <div class="img_border" style="border: .4rem solid black;">
-                                            <!-- 在img_border 的地方加入style="色碼" 即可換頭像 -->
-                                            <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
-                                        </div>
-                                        <div class="text-center m-3">
-                                            <input class="form-check-input" type="radio" value="F1673338241919" name="avatar_frame">
-                                            vip4
-                                        </div>
-                                    </div>
+
+                                    <?php
+                                    //抓出會員擁有頭像id
+                                    $sql = "SELECT * FROM `member_avatar_frame` WHERE `mem_id`='{$memid}'";
+                                    $frame_result = mysqli_query($conn, $sql);
+                                    if ($frame_result->num_rows > 0) {
+                                        while ($order_row = $frame_result->fetch_assoc()) {
+                                            if ($frame_id = $memframerow['frame_id']) {
+                                                $sql = "SELECT * FROM `avatar_frame` WHERE `frame_id`='{$frame_id}'";
+                                                $result = mysqli_query($conn, $sql);
+                                                $color_row = mysqli_fetch_assoc($result);
+                                                $frame_color = $color_row['frame_color'];
+                                                $vip = $color_row['frame_levelName'];
+                                    ?>
+                                                <div class="img-hover">
+                                                    <div class="img_border" style="border: .4rem solid black;">
+                                                        <!-- 在img_border 的地方加入style="色碼" 即可換頭像 -->
+                                                        <a href="#"><img src="static/img/user.png" class="img-thumbnail rounded-5" alt="頭像"></a>
+                                                    </div>
+                                                    <div class="text-center m-3">
+                                                        <input class="form-check-input" type="radio" value="<?php echo $frame_color ?>" name="avatar_frame">
+                                                        <?php echo $vip ?>
+                                                    </div>
+                                                </div>
+
+                                    <?php }
+                                        }
+                                    }
+                                    mysqli_close($conn); ?>
+
+
+
+
+
 
                                     <div class="img-hover">
                                         <div class="img_border" style="border: .4rem solid #C3AAA6;">
