@@ -14,8 +14,11 @@ $row = mysqli_fetch_assoc($result);
 $mem_id = $row['mem_id'];
 $name = $row['mem_name'];
 
-//計算累計碳排
+
+//計算累積碳點
 $emission = 0;
+$point = 0;
+
 $sql = "SELECT * FROM `washing_order`";
 $carbon_result = mysqli_query($conn, $sql);
 if ($carbon_result->num_rows > 0) {
@@ -25,6 +28,8 @@ if ($carbon_result->num_rows > 0) {
         }
     }
 }
+$update_mission = "UPDATE `member` SET `mem_points` ='$point' Where `mem_id`='$mem_id'";
+$reslut = mysqli_query($conn, $update_mission);
 
 //抓出會員擁有頭像id
 $sql = "SELECT * FROM `member_avatar_frame` WHERE `mem_id`='{$memid}'";
