@@ -13,14 +13,22 @@ $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $mem_id = $row['mem_id'];
 $name = $row['mem_name'];
+
+$emission = 0;
+$point = 0;
+
+$sql = "SELECT * FROM `washing_order`";
+$carbon_result = mysqli_query($conn, $sql);
+                            if ($carbon_result->num_rows > 0) {
+                                while ($carbonrow = $carbon_result->fetch_assoc()) {
+                                   if($mem_id==$carbonrow['mem_id']){
+                                    $emission += $carbonrow['carbon_emission'];
+                                    $point += $carbonrow['carbon_point'];
+                                }
+                                }
+                            } 
+
 mysqli_close($conn);
-
-$sql = "SELECT `carbon_emission`,`carbon_point` FROM `washing_order` WHERE `mem_id`='{$memid}'";
-$result = mysqli_query($conn, $sql);
-$carbonrow = mysqli_fetch_assoc($result);
-$emission += $carbonrow['carbon_emission'];
-$point += $carbonrow['carbon_point'];
-
 ?>
 
 <head>
