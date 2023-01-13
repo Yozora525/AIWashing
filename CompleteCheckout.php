@@ -7,6 +7,7 @@ $orderid = $_SESSION['checkpay_id'];
 $sql = "SELECT * FROM `washing_order` WHERE `order_id`='{$orderid}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
+$memid=$row['mem_id'];
 // 發票
 $sql = "SELECT * FROM `invoice` WHERE `order_id`='{$orderid}'";
 $result = mysqli_query($conn, $sql);
@@ -23,10 +24,57 @@ if ($gridrow['order_id'] == $orderid) {
         $reslut = mysqli_query($conn, $update_gridstatus);
     }
 }
-
+//開櫃碼
 $comb = "abcdefghijklmnopqrstuvwxyz0123456789";
 $shfl = str_shuffle($comb);
 $random = substr($shfl, 0, 8);
+
+
+/* 頭像框 */
+$emission = 0;
+$point = 0;
+$sql = "SELECT * FROM `washing_order`";
+$carbon_result = mysqli_query($conn, $sql);
+if ($carbon_result->num_rows > 0) {
+    while ($carbonrow = $carbon_result->fetch_assoc()) {
+        if ($memid == $carbonrow['mem_id']) {
+            $point += $carbonrow['carbon_point'];
+        }
+    }
+}
+$update_point="UPDATE `member` SET `mem_points`='$point' Where `mem_id`='$memid'"; 
+$point_reslut=mysqli_query($conn,$update_point);
+
+
+$sql = "SELECT * FROM `avatar_frame` ";
+$frame_result = mysqli_query($conn, $sql);
+$frameid = array();
+// echo $frame_result->num_rows ;
+if ($frame_result->num_rows > 0) {
+    while ($framerow = $frame_result->fetch_assoc()) {
+        // echo $framerow['frame_id'];
+        if ($point >= $framerow['frame_points']) {
+            array_push($frameid,$framerow['frame_id']);
+        }
+        
+    }
+}
+
+
+/* 新增頭相框 */
+for ($i=0; $i < count($frameid); $i++) { 
+    $sql = "SELECT * FROM `member_avatar_frame` WHERE `mem_id`='{$memid}' and `frame_id` = '{$frameid[$i]}'";
+    $memframe_result = mysqli_query($conn, $sql);
+    // $memframerow = mysqli_fetch_assoc($memframe_result);
+    if ($memframe_result->num_rows ==0) {
+        $addframe = "INSERT into `member_avatar_frame`(frame_id,mem_id,memFrame_status) values ('{$frameid[$i]}','{$memid}','1')";
+        $reslut = mysqli_query($conn, $addframe);
+    }
+
+}
+
+
+
 mysqli_close($conn);
 
 ?>

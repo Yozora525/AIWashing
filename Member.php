@@ -8,25 +8,29 @@ if (isset($_SESSION['login']) == false) {
     exit;
 }
 $memid = $_SESSION['login'];
-$sql = "SELECT `mem_name`,`mem_id` FROM `member` WHERE `mem_id`='{$memid}'";
+$sql = "SELECT * FROM `member` WHERE `mem_id`='{$memid}'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $mem_id = $row['mem_id'];
 $name = $row['mem_name'];
 
+//計算累計碳排
 $emission = 0;
-$point = 0;
-
 $sql = "SELECT * FROM `washing_order`";
 $carbon_result = mysqli_query($conn, $sql);
 if ($carbon_result->num_rows > 0) {
     while ($carbonrow = $carbon_result->fetch_assoc()) {
         if ($mem_id == $carbonrow['mem_id']) {
             $emission += $carbonrow['carbon_emission'];
-            $point += $carbonrow['carbon_point'];
         }
     }
 }
+
+//抓出會員擁有頭像id
+$sql = "SELECT * FROM `member_avatar_frame` WHERE `mem_id`='{$memid}'";
+$result = mysqli_query($conn, $sql);
+$memframerow = mysqli_fetch_assoc($result);
+$frame_id = $memframerow['frame_id'];
 
 mysqli_close($conn);
 ?>
@@ -96,7 +100,7 @@ mysqli_close($conn);
                                         </div>
                                         <div>
                                             <p class="small text-muted mb-1 fs-8">累計碳點</p>
-                                            <p class="mb-0 fs-4"><?php echo $point ?></p>
+                                            <p class="mb-0 fs-4"><?php echo $row['mem_points'] ?></p>
                                         </div>
                                     </div>
                                     <!-- Button trigger modal -->
@@ -130,7 +134,14 @@ mysqli_close($conn);
                             <div class="row">
 
                                 <div class="col-6 col-sm-6 hover-overlay ripple shadow-1-strong" data-mdb-ripple-color="light">
-
+                                
+                                <?php
+                                        $sql = "SELECT * FROM `member_avatar_frame` WHERE `mem_id`='{$memid}'";
+                                        $result = mysqli_query($conn, $sql);
+                                        if ($order_result->num_rows > 0) {
+                                        while ($order_row = $order_result->fetch_assoc()) {
+                                        if ($member_mem_id == $order_row['mem_id']) {
+                                ?>
                                     <div class="img-hover">
                                         <div class="img_border" style="border: .4rem solid black;">
                                             <!-- 在img_border 的地方加入style="色碼" 即可換頭像 -->
