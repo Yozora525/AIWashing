@@ -95,6 +95,11 @@ mysqli_close($conn);
                         </div>
                     </div>
                 </div>
+
+                <!-- 會員條碼 -->
+                <div class="col-12 col-md-6">
+                    <img src="static/img/barcode.png" width="400" class="img-thumbnail rounded-5" alt="條碼">
+                </div>
             </div>
         </div>
 

@@ -36,6 +36,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 break;
         }
     }
+    /* 新增註冊頭相框 */
+    $sql = "SELECT * FROM `avatar_frame`";
+    $avatar_frame_result = mysqli_query($conn, $sql);
+    $avatar_frame = array();
+    $s = 0;
+    while ($avatar_frame[$s] = $avatar_frame_result->fetch_assoc()) {
+        $s++;
+    }
+    for ($s = 0; $s < count($avatar_frame); $s++) {
+        if ($avatar_frame[$s]['frame_points'] == 0) {
+            $frame = $avatar_frame[$s]['frame_id'];
+            if (!empty($frame))
+                break;
+        }
+    }
 
 
     if (!isset($_POST['submit'])) {
@@ -58,6 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /* 更新洗衣袋狀態 */
         $update_aibag = "UPDATE `laundry_bag` SET `bag_status` ='2' Where `bag_id`='$aibag'";
         $reslut = mysqli_query($conn, $update_aibag);
+
+        /* 新增頭相框 */
+        $addframe = "INSERT into `member_avatar_frame`(frame_id,mem_id,memFrame_status) values ('$frame','$memId','2')";
+        $reslut = mysqli_query($conn, $addframe);
     }
 
     if (!$reslut) {
