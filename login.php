@@ -47,7 +47,7 @@ if (isset($_SESSION['login']) == true) {
                 <br>
                 <div class="d-grid gap-2">
                     <input class="btn btn-success" type="submit" onclick="" value="登入">
-                    <button class="btn btn-primary" type="button">以碳治郎帳號授權登入</button>
+                    <a href="loginTan.php"><button class="btn btn-primary" type="button">以碳治郎帳號授權登入</button></a>
                 </div>
             </form>
             <p class="text-center">

@@ -135,7 +135,7 @@ mysqli_close($conn);
                 <!-- 訂單成立 -->
                 <br><br>
                 <p class="h1 text-success"><b>訂單成立！</b></p>
-                <p class="h4"><b>取衣時間：<?php echo $row['sentBack_time'] ?></b></p>
+                <p class="h4"><b>取衣時間：<?php echo $add_sql_time ?></b></p>
 
                 <hr style="background-color:rgb(25, 25, 47); height:1px; border:none;" />
                 <p class="fs-5"><b>訂單詳情</b></p>

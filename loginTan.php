@@ -2,7 +2,7 @@
 // require_once('connect.php');
 function httpRequest() {
     $ch = curl_init();
-    $url = 'http://140.135.43.61:3000/accounts/J334251732/';
+    $url = 'http://192.168.0.233:3000/accounts/J334251732/';
     curl_setopt($ch, CURLOPT_URL, $url);
     // curl_setopt($ch, CURLOPT_POST, 0);
     // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
@@ -22,22 +22,23 @@ function httpRequest() {
 
 $oRes = httpRequest();
 
-echo $oRes;
+// echo $oRes;
 //  $oRes = json_encode($oRes);
 //  echo $oRes;
 
-$sql = "SELECT * FROM `member` WHERE `mem_id`=''";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
-    if ($result->num_rows > 0) {
-        session_start();
-        if (isset($_SESSION['login']) == true) {
-            header('location:member.php'); //改成會員界面
-            exit;  //記得要跳出來，不然會重複轉址過多次
-    }
-}
-
-
-
+// $sql = "SELECT * FROM `member` WHERE `mem_id`='5'";
+// $result = mysqli_query($conn, $sql);
+// $row = mysqli_fetch_assoc($result);
+//     if ($result->num_rows > 0) {
+//         session_start();
+//         if (isset($_SESSION['login']) == true) {
+//             header('location:member.php'); //改成會員界面
+//             exit;  //記得要跳出來，不然會重複轉址過多次
+//     }   else{
+    session_start();
+        $_SESSION['login'] = '5'; // session
+        echo "<script>window.location.href = 'member.php'</script>";
+//     }
+// }
 
 ?>

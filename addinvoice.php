@@ -27,7 +27,7 @@ mysqli_close($conn);
 // 將資料送至碳治郎
 function httpRequest($data_string) {
     $ch = curl_init();
-    $url = 'http://140.135.247.213:3000/accounts/J334251732/'.$data_string;
+    $url = 'http://192.168.0.233:3000/accounts/J334251732/'.$data_string;
     curl_setopt($ch, CURLOPT_URL, $url);
     // curl_setopt($ch, CURLOPT_POST, 0);
     // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
